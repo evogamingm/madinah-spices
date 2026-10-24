@@ -168,6 +168,64 @@
       width: 100%;
     }
 
+    /* Sliding Banner Section (Auto Hide On Scroll) */
+    .hero-banner-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow);
+      max-height: 280px;
+      transition: all 0.5s ease-in-out;
+      opacity: 1;
+    }
+
+    .hero-banner-wrapper.hide-on-scroll {
+      opacity: 0;
+      max-height: 0;
+      margin-bottom: 0;
+      pointer-events: none;
+    }
+
+    .banner-slider {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+      width: 100%;
+    }
+
+    .banner-slide {
+      min-width: 100%;
+      position: relative;
+      height: 240px;
+    }
+
+    .banner-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7);
+    }
+
+    .banner-caption {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+      left: 25px;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .banner-caption h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary-gold);
+      margin-bottom: 5px;
+    }
+
+    .banner-caption p {
+      font-size: 0.95rem;
+    }
+
     /* Search & Categories */
     .controls-section {
       margin-bottom: 25px;
@@ -223,32 +281,6 @@
       background-color: var(--herbal-green);
       color: white;
       border-color: var(--herbal-green);
-    }
-    .category-btn.featured-btn {
-      border: 1px solid var(--primary-gold);
-      color: var(--warm-amber);
-    }
-    .category-btn.featured-btn.active {
-      background: linear-gradient(135deg, var(--primary-gold), var(--warm-amber));
-      color: white;
-    }
-
-    /* Featured Banner */
-    .featured-section {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(46, 90, 68, 0.15));
-      border: 1px solid var(--primary-gold);
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-
-    .featured-section h2 {
-      font-size: 1.3rem;
-      color: var(--warm-amber);
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     /* Product Grid */
@@ -595,6 +627,95 @@
       margin-right: 5px;
     }
 
+    /* Scroll To Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      width: 45px;
+      height: 45px;
+      background-color: var(--herbal-green);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 1500;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--header-bg);
+      border-top: 1px solid var(--border-color);
+      margin-top: 40px;
+      padding: 40px 20px 20px 20px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-col h3 {
+      font-size: 1.2rem;
+      color: var(--herbal-green);
+      margin-bottom: 15px;
+      font-weight: 800;
+    }
+    [data-theme="dark"] .footer-col h3 {
+      color: var(--primary-gold);
+    }
+
+    .footer-col p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .footer-col i {
+      color: var(--primary-gold);
+      margin-left: 8px;
+    }
+
+    .footer-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
     @media (max-width: 600px) {
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -604,6 +725,9 @@
       .product-title { font-size: 0.95rem; }
       .product-info { padding: 10px; }
       .weight-btn { font-size: 0.68rem; padding: 3px 1px; }
+      .banner-slide { height: 180px; }
+      .banner-caption h2 { font-size: 1.2rem; }
+      .banner-caption p { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -639,16 +763,42 @@
 
   <!-- Content Container -->
   <div class="main-container">
+
+    <!-- Auto-Hiding Promotional Banner Slider -->
+    <div class="hero-banner-wrapper" id="heroBanner">
+      <div class="banner-slider" id="bannerSlider">
+        <div class="banner-slide">
+          <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=80" alt="بهارات طازجة">
+          <div class="banner-caption">
+            <h2>عطارة المدينة المنورة</h2>
+            <p>أجود التوابل والبهارات الطبيعية مطحونة طازجة يومياً 🌿</p>
+          </div>
+        </div>
+        <div class="banner-slide">
+          <img src="https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80" alt="مكسرات ممتازة">
+          <div class="banner-caption">
+            <h2>مكسرات وياميش فاخر</h2>
+            <p>طعم طازج ومذاق استثنائي يزين مائدتك 🌰</p>
+          </div>
+        </div>
+        <div class="banner-slide">
+          <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=80" alt="زيوت طبيعية">
+          <div class="banner-caption">
+            <h2>زيوت طبيعية معصورة بكر</h2>
+            <p>نقاء طبيعي 100% لصحتك وجمالك ✨</p>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <!-- Controls (Search & Filter) -->
     <div class="controls-section">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="ابحث عن بهارات، أعشاب، زيوت، مكسرات...">
+        <input type="text" id="searchInput" placeholder="ابحث عن بهارات، أعشاب، زيوت، سكر، مكرونة...">
       </div>
       <div class="categories-nav" id="categoriesNav">
         <button class="category-btn active" data-cat="all">الكل</button>
-        <button class="category-btn featured-btn" data-cat="blends"><i class="fa-solid fa-star"></i> خلطات المدينة</button>
         <button class="category-btn" data-cat="spices">بهارات وعطارة</button>
         <button class="category-btn" data-cat="herbs">أعشاب طبيعية</button>
         <button class="category-btn" data-cat="nuts">مكسرات وياميش</button>
@@ -657,17 +807,41 @@
       </div>
     </div>
 
-    <!-- Featured Section -->
-    <div class="featured-section" id="featuredSection">
-      <h2><i class="fa-solid fa-crown"></i> خلطات المدينة الخاصة (مميزة)</h2>
-      <div class="products-grid" id="featuredGrid"></div>
-    </div>
-
     <!-- Main Products Section -->
     <h3 style="margin-bottom: 15px; font-weight: 800;" id="sectionTitle">كل المنتجات</h3>
     <div class="products-grid" id="productsGrid"></div>
 
   </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>عطارة المدينة المنورة</h3>
+        <p>متجركم الأول للتوابل، الأعشاب الطبيعية، والمستلزمات الغذائية العالية الجودة في حدائق الأهرام و6 أكتوبر.</p>
+        <p><i class="fa-solid fa-location-dot"></i> حدائق الأهرام / 6 أكتوبر</p>
+        <p><i class="fa-solid fa-phone"></i> للتواصل والطلب: 01030043129</p>
+      </div>
+      
+      <div class="footer-col">
+        <h3>لماذا تختارنا؟</h3>
+        <div class="footer-features">
+          <div class="feature-item"><i class="fa-solid fa-truck-fast"></i> توصيل سريع وآمن للباب</div>
+          <div class="feature-item"><i class="fa-solid fa-shield-halved"></i> ضمان الجودة والتعويض</div>
+          <div class="feature-item"><i class="fa-solid fa-seedling"></i> خامات نقية طازجة 100%</div>
+          <div class="feature-item"><i class="fa-solid fa-hand-holding-dollar"></i> أفضل الأسعار التنافسية</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      جميع الحقوق محفوظة &copy; عطارة المدينة المنورة 2026
+    </div>
+  </footer>
+
+  <!-- Scroll To Top Button -->
+  <button class="scroll-to-top" id="scrollTopBtn" title="العودة للأعلى">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
   <!-- Cart Drawer Overlay -->
   <div class="cart-drawer-overlay" id="cartOverlay"></div>
@@ -678,9 +852,7 @@
       <h3>سلة التسوق <i class="fa-solid fa-cart-shopping"></i></h3>
       <button class="close-cart-btn" id="closeCartBtn"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="cart-items" id="cartItemsContainer">
-      <!-- Dynamic Cart Items -->
-    </div>
+    <div class="cart-items" id="cartItemsContainer"></div>
     <div class="cart-footer">
       <div class="summary-line">
         <span>المجموع الفرعي:</span>
@@ -743,27 +915,33 @@
   </div>
 
   <script>
-    // Product Database
+    // Updated Product Database With Exact Images
     const products = [
-      { id: 1, name: "خلطة المدينة المهرية اللذيذة", category: "blends", basePrice: 200, rating: 5, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80", isFeatured: true },
-      { id: 2, name: "خلطة بهارات المحشي الخاصة", category: "blends", basePrice: 180, rating: 5, image: "https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=400&q=80", isFeatured: true },
-      { id: 3, name: "بهارات الكبسة والسعودي الملكية", category: "blends", basePrice: 220, rating: 5, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80", isFeatured: true },
-      { id: 4, name: "كمون بلدي مطحون طازج", category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80" },
-      { id: 5, name: "فلفل أسود فاخر مطحون", category: "spices", basePrice: 320, rating: 4.9, image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" },
-      { id: 6, name: "كركم هندي نقّي", category: "spices", basePrice: 160, rating: 4.7, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" },
-      { id: 7, name: "كزبرة جافة مطحونة", category: "spices", basePrice: 120, rating: 4.6, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80" },
-      { id: 8, name: "يانسون نجمي طبيعي", category: "herbs", basePrice: 280, rating: 4.8, image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=400&q=80" },
-      { id: 9, name: "بابونج زهرة كاملة", category: "herbs", basePrice: 200, rating: 4.9, image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
-      { id: 10, name: "نعناع مجفف أسواني", category: "herbs", basePrice: 150, rating: 4.7, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80" },
-      { id: 11, name: "فستق حلبي حمصة فاخرة", category: "nuts", basePrice: 750, rating: 5, image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" },
-      { id: 12, name: "كاجو محمص سوبر", category: "nuts", basePrice: 680, rating: 4.9, image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" },
-      { id: 13, name: "عين جمل أمريكي عين واحدة", category: "nuts", basePrice: 420, rating: 4.8, image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=400&q=80" },
-      { id: 14, name: "زيت حبة البركة معصور على البارد", category: "oils", basePrice: 400, rating: 5, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=400&q=80" },
-      { id: 15, name: "زيت زيتون بكر ممتاز سيوي", category: "oils", basePrice: 350, rating: 4.9, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" },
-      { id: 16, name: "بن برازيلي محمّص طازج", category: "groceries", basePrice: 380, rating: 5, image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80" },
-      { id: 17, name: "ملح بحري نقي عالي الجودة", category: "groceries", basePrice: 40, rating: 4.7, image: "https://images.unsplash.com/photo-1518110165387-a3a8e9e1f579?auto=format&fit=crop&w=400&q=80" },
-      { id: 18, name: "سكر أبيض ناصع فاخر", category: "groceries", basePrice: 45, rating: 4.6, image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80" },
-      { id: 19, name: "مكرونة أنواع مشكلة (1 كجم)", category: "groceries", basePrice: 35, rating: 4.5, image: "https://images.unsplash.com/photo-1621996346565-e3d5d6288330?auto=format&fit=crop&w=400&q=80" }
+      // بهارات وعطارة
+      { id: 1, name: "كمون بلدي مطحون طازج", category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80" },
+      { id: 2, name: "فلفل أسود فاخر مطحون", category: "spices", basePrice: 320, rating: 4.9, image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" },
+      { id: 3, name: "كركم هندي نقّي", category: "spices", basePrice: 160, rating: 4.7, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" },
+      { id: 4, name: "كزبرة جافة مطحونة", category: "spices", basePrice: 120, rating: 4.6, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80" },
+
+      // أعشاب طبيعية
+      { id: 5, name: "يانسون نجمي طبيعي", category: "herbs", basePrice: 280, rating: 4.8, image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=400&q=80" },
+      { id: 6, name: "بابونج زهرة كاملة", category: "herbs", basePrice: 200, rating: 4.9, image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
+      { id: 7, name: "نعناع مجفف أسواني", category: "herbs", basePrice: 150, rating: 4.7, image: "https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=400&q=80" },
+
+      // مكسرات وياميش
+      { id: 8, name: "فستق حلبي حمصة فاخرة", category: "nuts", basePrice: 750, rating: 5, image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" },
+      { id: 9, name: "كاجو محمص سوبر", category: "nuts", basePrice: 680, rating: 4.9, image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" },
+      { id: 10, name: "عين جمل أمريكي", category: "nuts", basePrice: 420, rating: 4.8, image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=400&q=80" },
+
+      // زيوت طبيعية
+      { id: 11, name: "زيت حبة البركة معصور", category: "oils", basePrice: 400, rating: 5, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=400&q=80" },
+      { id: 12, name: "زيت زيتون بكر ممتاز سيوي", category: "oils", basePrice: 350, rating: 4.9, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" },
+
+      // مكرونة وبقالة (مع الصور الدقيقة)
+      { id: 13, name: "بن برازيلي محمّص طازج", category: "groceries", basePrice: 380, rating: 5, image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80" },
+      { id: 14, name: "ملح بحري نقي عالي الجودة", category: "groceries", basePrice: 40, rating: 4.7, image: "https://images.unsplash.com/photo-1518110165387-a3a8e9e1f579?auto=format&fit=crop&w=400&q=80" },
+      { id: 15, name: "سكر أبيض ناصع فاخر", category: "groceries", basePrice: 45, rating: 4.6, image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80" },
+      { id: 16, name: "مكرونة أنواع مشكلة (1 كجم)", category: "groceries", basePrice: 35, rating: 4.5, image: "https://images.unsplash.com/photo-1621996346565-e3d5d6288330?auto=format&fit=crop&w=400&q=80" }
     ];
 
     // Standard Preset Weights
@@ -776,13 +954,12 @@
     };
 
     // State Variables
-    let selectedWeights = {}; // holds current weight state for each product
+    let selectedWeights = {};
     let cart = [];
     const shippingFee = 30;
 
     // DOM Elements
     const productsGrid = document.getElementById('productsGrid');
-    const featuredGrid = document.getElementById('featuredGrid');
     const searchInput = document.getElementById('searchInput');
     const categoryBtns = document.querySelectorAll('.category-btn');
     const themeToggleBtn = document.getElementById('themeToggleBtn');
@@ -801,17 +978,52 @@
     const paymentMethodSelect = document.getElementById('paymentMethod');
     const instapayBox = document.getElementById('instapayBox');
     const copyInstaBtn = document.getElementById('copyInstaBtn');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const heroBanner = document.getElementById('heroBanner');
 
     // Initialize Page
     function init() {
-      // Set Default Weights
       products.forEach(p => { 
         selectedWeights[p.id] = { type: 'preset', key: '250g', val: 250, unit: 'g', ratio: 0.25, label: '250 جرام' }; 
       });
 
       renderProducts(products);
-      renderFeatured();
       setupTheme();
+      initBannerSlider();
+      setupScrollEvents();
+    }
+
+    // Banner Slider Logic
+    function initBannerSlider() {
+      const slider = document.getElementById('bannerSlider');
+      let currentSlide = 0;
+      const totalSlides = 3;
+
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        slider.style.transform = `translateX(${currentSlide * 100}%)`;
+      }, 4000);
+    }
+
+    // Auto-Hide Banner and Scroll-To-Top Button Logic
+    function setupScrollEvents() {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 80) {
+          heroBanner.classList.add('hide-on-scroll');
+        } else {
+          heroBanner.classList.remove('hide-on-scroll');
+        }
+
+        if (window.scrollY > 300) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
 
     // Theme Setup
@@ -833,13 +1045,7 @@
       themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
-    // Render Featured
-    function renderFeatured() {
-      const featuredItems = products.filter(p => p.isFeatured);
-      featuredGrid.innerHTML = featuredItems.map(p => createProductCardHTML(p)).join('');
-    }
-
-    // Render Main Products
+    // Render Products
     function renderProducts(items) {
       if (items.length === 0) {
         productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 20px;">لا توجد منتجات مطابقة لجميع نتائج البحث.</p>`;
@@ -878,7 +1084,6 @@
                 </button>
               </div>
 
-              <!-- Custom Weight Input Section -->
               <div class="custom-weight-box ${current.type === 'custom' ? 'active' : ''}" id="custom-box-${product.id}">
                 <input type="number" id="custom-val-${product.id}" value="${current.type === 'custom' ? current.val : 10}" min="1" oninput="updateCustomWeight(${product.id})">
                 <select id="custom-unit-${product.id}" onchange="updateCustomWeight(${product.id})">
@@ -903,7 +1108,7 @@
     }
 
     function getCategoryName(cat) {
-      const map = { blends: 'خلطات المدينة', spices: 'بهارات', herbs: 'أعشاب', nuts: 'مكسرات', oils: 'زيوت', groceries: 'بقالة' };
+      const map = { spices: 'بهارات', herbs: 'أعشاب', nuts: 'مكسرات', oils: 'زيوت', groceries: 'بقالة' };
       return map[cat] || 'عام';
     }
 
@@ -1011,11 +1216,9 @@
 
     // Update Cart UI
     function updateCartUI() {
-      // Badge
       const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
       cartBadge.innerText = totalCount;
 
-      // Cart List
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">سلة التسوق فارغة حالياً.</p>`;
         subtotalPrice.innerText = `0 ج.م`;
@@ -1038,7 +1241,6 @@
         </div>
       `).join('');
 
-      // Calculations
       const sub = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       subtotalPrice.innerText = `${sub.toFixed(1)} ج.م`;
       totalPrice.innerText = `${(sub + shippingFee).toFixed(1)} ج.م`;
