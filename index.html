@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* تعريف خط Momken المخصص لعنوان المتجر */
+    /* تعريف خط Momken المخصص لعنوان المتجر (يعمل دائماً) */
     @font-face {
       font-family: 'MomkenFont';
       src: url('Momken-Regular.otf') format('opentype');
@@ -116,7 +116,7 @@
       font-size: 1.3rem;
     }
 
-    /* تطبيق خط Momken خصيصاً على عنوان المتجر */
+    /* تطبيق خط Momken على العنوان في الحالتين */
     .logo-text h1 {
       font-family: 'MomkenFont', 'Tajawal', sans-serif !important;
       font-size: 1.6rem;
@@ -936,15 +936,15 @@
       <form id="checkoutForm">
         <div class="form-group">
           <label data-i18n="labelName">الاسم بالكامل *</label>
-          <input type="text" id="custName" required placeholder="مثال: أحمد محمد">
+          <input type="text" id="custName" required placeholder="مثال: أحمد محمد" data-i18n-placeholder="phName">
         </div>
         <div class="form-group">
           <label data-i18n="labelPhone">رقم الهاتف / الواتساب *</label>
-          <input type="tel" id="custPhone" required placeholder="010xxxxxxxx">
+          <input type="tel" id="custPhone" required placeholder="010xxxxxxxx" data-i18n-placeholder="phPhone">
         </div>
         <div class="form-group">
           <label data-i18n="labelAddress">العنوان بالتفصيل *</label>
-          <textarea id="custAddress" rows="2" required placeholder="اسم المنطقة (حدائق الأهرام/أكتوبر)، شارع، رقم العمارة، الشقة"></textarea>
+          <textarea id="custAddress" rows="2" required placeholder="اسم المنطقة (حدائق الأهرام/أكتوبر)، شارع، رقم العمارة، الشقة" data-i18n-placeholder="phAddress"></textarea>
         </div>
         <div class="form-group">
           <label data-i18n="labelPayment">طريقة الدفع *</label>
@@ -1027,14 +1027,18 @@
         noResults: 'لا توجد منتجات مطابقة لجميع نتائج البحث.',
         copiedMsg: 'تم نسخ رقم InstaPay بنجاح!',
         addFirstMsg: 'برجاء إضافة منتجات للسلة أولاً!',
-        enterValidWeight: 'برجاء كتابة وزن صحيح!'
+        enterValidWeight: 'برجاء كتابة وزن صحيح!',
+        currency: 'ج.م',
+        phName: 'مثال: أحمد محمد',
+        phPhone: '010xxxxxxxx',
+        phAddress: 'اسم المنطقة (حدائق الأهرام/أكتوبر)، شارع، رقم العمارة، الشقة'
       },
       en: {
         topBarDelivery: '<i class="fa-solid fa-location-dot"></i> Fast Delivery to: Hadayek El Ahram - 6th of October',
         topBarPhone: '<i class="fa-solid fa-phone"></i> Direct Order: 01030043129',
-        storeTitle: 'Al-Madinah Spices',
+        storeTitle: 'عطارة المدينة المنورة',
         storeSub: 'Finest Spices & Natural Herbs',
-        banner1Title: 'Al-Madinah Spices',
+        banner1Title: 'عطارة المدينة المنورة',
         banner1Desc: 'Finest natural spices ground fresh daily 🌿',
         banner2Title: 'Premium Nuts & Yamish',
         banner2Desc: 'Fresh taste and exceptional flavor for your table 🌰',
@@ -1048,7 +1052,7 @@
         catOils: 'Natural Oils',
         catGroceries: 'Pasta & Grocery',
         allProducts: 'All Products',
-        footerStoreName: 'Al-Madinah Spices',
+        footerStoreName: 'عطارة المدينة المنورة',
         footerDesc: 'Your premier store for spices, natural herbs, and high-quality food supplies in Hadayek El Ahram & 6th of October.',
         footerLocation: '<i class="fa-solid fa-location-dot"></i> Hadayek El Ahram / 6th of October',
         footerPhone: '<i class="fa-solid fa-phone"></i> Contact & Order: 01030043129',
@@ -1083,7 +1087,11 @@
         noResults: 'No products match your search results.',
         copiedMsg: 'InstaPay number copied successfully!',
         addFirstMsg: 'Please add products to the cart first!',
-        enterValidWeight: 'Please enter a valid weight!'
+        enterValidWeight: 'Please enter a valid weight!',
+        currency: 'EGP',
+        phName: 'Ex: Ahmed Mohamed',
+        phPhone: '010xxxxxxxx',
+        phAddress: 'Area name (Hadayek El Ahram/October), street, building no., apartment'
       }
     };
 
@@ -1302,7 +1310,14 @@
         }
       });
 
-      // Translate search placeholder
+      // Translate placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+          el.placeholder = translations[lang][key];
+        }
+      });
+
       if (searchInput) {
         searchInput.placeholder = translations[lang].searchPlaceholder;
       }
@@ -1375,6 +1390,7 @@
       const current = selectedWeights[product.id] || { type: 'preset', key: '250g', ratio: 0.25 };
       const calculatedPrice = (product.basePrice * current.ratio).toFixed(1);
       const productName = product.name[currentLang] || product.name['ar'];
+      const currency = translations[currentLang].currency;
 
       return `
         <div class="product-card" data-id="${product.id}">
@@ -1413,7 +1429,7 @@
             <div class="product-price-action">
               <div>
                 <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">${translations[currentLang].priceLabel}</span>
-                <span class="product-price" id="price-${product.id}">${calculatedPrice} ج.م</span>
+                <span class="product-price" id="price-${product.id}">${calculatedPrice} ${currency}</span>
               </div>
               <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
                 ${translations[currentLang].addToCartBtn}
@@ -1502,9 +1518,10 @@
       const product = products.find(p => p.id === productId);
       const current = selectedWeights[productId];
       const newPrice = (product.basePrice * current.ratio).toFixed(1);
+      const currency = translations[currentLang].currency;
       
       const priceElem = document.getElementById(`price-${productId}`);
-      if (priceElem) priceElem.innerText = `${newPrice} ج.م`;
+      if (priceElem) priceElem.innerText = `${newPrice} ${currency}`;
     }
 
     // Add Item To Cart
@@ -1542,11 +1559,12 @@
     function updateCartUI() {
       const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
       cartBadge.innerText = totalCount;
+      const currency = translations[currentLang].currency;
 
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">${translations[currentLang].emptyCart}</p>`;
-        subtotalPrice.innerText = `0 ج.م`;
-        totalPrice.innerText = `0 ج.م`;
+        subtotalPrice.innerText = `0 ${currency}`;
+        totalPrice.innerText = `0 ${currency}`;
         return;
       }
 
@@ -1554,7 +1572,7 @@
         <div class="cart-item">
           <div class="cart-item-info">
             <h4>${item.name}</h4>
-            <p>${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel} - ${item.price} ج.م</p>
+            <p>${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel} - ${item.price} ${currency}</p>
           </div>
           <div class="cart-item-controls">
             <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
@@ -1566,8 +1584,8 @@
       `).join('');
 
       const sub = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      subtotalPrice.innerText = `${sub.toFixed(1)} ج.م`;
-      totalPrice.innerText = `${(sub + shippingFee).toFixed(1)} ج.م`;
+      subtotalPrice.innerText = `${sub.toFixed(1)} ${currency}`;
+      totalPrice.innerText = `${(sub + shippingFee).toFixed(1)} ${currency}`;
     }
 
     window.updateQty = function(index, delta) {
@@ -1652,12 +1670,13 @@
       const phone = document.getElementById('custPhone').value;
       const address = document.getElementById('custAddress').value;
       const payment = paymentMethodSelect.value === 'instapay' ? 'إنستا باي (InstaPay)' : (currentLang === 'ar' ? 'الدفع عند الاستلام (كاش)' : 'Cash on Delivery');
+      const currency = translations[currentLang].currency;
 
       const subTotalVal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       const totalVal = subTotalVal + shippingFee;
 
       let orderListText = cart.map((item, idx) => 
-        `${idx + 1}. *${item.name}*\n   - ${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel}\n   - ${currentLang === 'ar' ? 'الكمية' : 'Qty'}: ${item.qty}\n   - ${currentLang === 'ar' ? 'السعر' : 'Price'}: ${item.price * item.qty} ج.م`
+        `${idx + 1}. *${item.name}*\n   - ${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel}\n   - ${currentLang === 'ar' ? 'الكمية' : 'Qty'}: ${item.qty}\n   - ${currentLang === 'ar' ? 'السعر' : 'Price'}: ${item.price * item.qty} ${currency}`
       ).join('\n\n');
 
       let whatsappMsg = currentLang === 'ar' ? 
