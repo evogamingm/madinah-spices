@@ -12,6 +12,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
+    /* تعريف خط Momken المخصص لعنوان المتجر */
+    @font-face {
+      font-family: 'MomkenFont';
+      src: url('Momken-Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     :root {
       --primary-gold: #D4AF37;
       --primary-hover: #b89528;
@@ -68,6 +76,7 @@
       gap: 10px;
     }
     .top-bar i { color: var(--primary-gold); margin-left: 5px; }
+    [lang="en"] .top-bar i { margin-left: 0; margin-right: 5px; }
 
     /* Header */
     header {
@@ -107,9 +116,11 @@
       font-size: 1.3rem;
     }
 
+    /* تطبيق خط Momken خصيصاً على عنوان المتجر */
     .logo-text h1 {
-      font-size: 1.4rem;
-      font-weight: 800;
+      font-family: 'MomkenFont', 'Tajawal', sans-serif !important;
+      font-size: 1.6rem;
+      font-weight: normal;
       color: var(--herbal-green);
       line-height: 1.2;
     }
@@ -125,10 +136,10 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
     }
 
-    .theme-toggle-btn, .cart-icon-btn {
+    .theme-toggle-btn, .lang-toggle-btn, .cart-icon-btn {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
       color: var(--text-main);
@@ -139,7 +150,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
+      font-weight: bold;
       position: relative;
     }
 
@@ -157,6 +169,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    [lang="en"] .cart-badge {
+      right: auto;
+      left: -5px;
     }
 
     /* Main Container */
@@ -192,6 +208,9 @@
       transition: transform 0.6s ease-in-out;
       width: 100%;
     }
+    [lang="en"] .banner-slider {
+      direction: ltr;
+    }
 
     .banner-slide {
       min-width: 100%;
@@ -213,6 +232,9 @@
       left: 25px;
       color: white;
       text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    [lang="en"] .banner-caption {
+      text-align: left;
     }
 
     .banner-caption h2 {
@@ -247,6 +269,9 @@
       outline: none;
       box-shadow: var(--shadow);
     }
+    [lang="en"] .search-box input {
+      padding: 14px 15px 14px 45px;
+    }
 
     .search-box i {
       position: absolute;
@@ -254,6 +279,10 @@
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-muted);
+    }
+    [lang="en"] .search-box i {
+      right: auto;
+      left: 18px;
     }
 
     .categories-nav {
@@ -312,6 +341,10 @@
       font-size: 0.75rem;
       font-weight: bold;
       z-index: 1;
+    }
+    [lang="en"] .product-badge {
+      right: auto;
+      left: 10px;
     }
 
     .product-img {
@@ -471,6 +504,16 @@
       flex-direction: column;
       box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     }
+    [lang="en"] .cart-drawer {
+      left: auto;
+      right: -400px;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      transition: right 0.3s ease;
+    }
+    [lang="en"] .cart-drawer.open {
+      right: 0;
+      left: auto;
+    }
 
     .cart-drawer.open { left: 0; }
     .cart-drawer-overlay.open { display: block; }
@@ -626,6 +669,10 @@
       cursor: pointer;
       margin-right: 5px;
     }
+    [lang="en"] .copy-btn {
+      margin-right: 0;
+      margin-left: 5px;
+    }
 
     /* Scroll To Top Button */
     .scroll-to-top {
@@ -648,6 +695,10 @@
       visibility: hidden;
       transition: all 0.3s ease;
       z-index: 1500;
+    }
+    [lang="en"] .scroll-to-top {
+      left: auto;
+      right: 25px;
     }
 
     .scroll-to-top.visible {
@@ -693,6 +744,10 @@
       color: var(--primary-gold);
       margin-left: 8px;
     }
+    [lang="en"] .footer-col i {
+      margin-left: 0;
+      margin-right: 8px;
+    }
 
     .footer-features {
       display: flex;
@@ -731,12 +786,12 @@
     }
   </style>
 </head>
-<body data-theme="light">
+<body data-theme="light" lang="ar" dir="rtl">
 
   <!-- Top Announcement Bar -->
   <div class="top-bar">
-    <span><i class="fa-solid fa-location-dot"></i> التوصيل سريع إلى: حدائق الأهرام - 6 أكتوبر</span>
-    <span><i class="fa-solid fa-phone"></i> الطلب المباشر: 01030043129</span>
+    <span data-i18n="topBarDelivery"><i class="fa-solid fa-location-dot"></i> التوصيل سريع إلى: حدائق الأهرام - 6 أكتوبر</span>
+    <span data-i18n="topBarPhone"><i class="fa-solid fa-phone"></i> الطلب المباشر: 01030043129</span>
   </div>
 
   <!-- Main Header -->
@@ -745,11 +800,12 @@
       <div class="logo-section">
         <div class="logo-icon"><i class="fa-solid fa-mortar-pestle"></i></div>
         <div class="logo-text">
-          <h1>عطارة المدينة المنورة</h1>
-          <p>أجود أنواع البهارات والأعشاب الطبيعية</p>
+          <h1 data-i18n="storeTitle">عطارة المدينة المنورة</h1>
+          <p data-i18n="storeSub">أجود أنواع البهارات والأعشاب الطبيعية</p>
         </div>
       </div>
       <div class="header-actions">
+        <button class="lang-toggle-btn" id="langToggleBtn" title="Change Language">EN</button>
         <button class="theme-toggle-btn" id="themeToggleBtn" title="تغيير المظهر">
           <i class="fa-solid fa-moon"></i>
         </button>
@@ -770,22 +826,22 @@
         <div class="banner-slide">
           <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=80" alt="بهارات طازجة">
           <div class="banner-caption">
-            <h2>عطارة المدينة المنورة</h2>
-            <p>أجود التوابل والبهارات الطبيعية مطحونة طازجة يومياً 🌿</p>
+            <h2 data-i18n="banner1Title">عطارة المدينة المنورة</h2>
+            <p data-i18n="banner1Desc">أجود التوابل والبهارات الطبيعية مطحونة طازجة يومياً 🌿</p>
           </div>
         </div>
         <div class="banner-slide">
           <img src="https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80" alt="مكسرات ممتازة">
           <div class="banner-caption">
-            <h2>مكسرات وياميش فاخر</h2>
-            <p>طعم طازج ومذاق استثنائي يزين مائدتك 🌰</p>
+            <h2 data-i18n="banner2Title">مكسرات وياميش فاخر</h2>
+            <p data-i18n="banner2Desc">طعم طازج ومذاق استثنائي يزين مائدتك 🌰</p>
           </div>
         </div>
         <div class="banner-slide">
           <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=80" alt="زيوت طبيعية">
           <div class="banner-caption">
-            <h2>زيوت طبيعية معصورة بكر</h2>
-            <p>نقاء طبيعي 100% لصحتك وجمالك ✨</p>
+            <h2 data-i18n="banner3Title">زيوت طبيعية معصورة بكر</h2>
+            <p data-i18n="banner3Desc">نقاء طبيعي 100% لصحتك وجمالك ✨</p>
           </div>
         </div>
       </div>
@@ -798,17 +854,17 @@
         <input type="text" id="searchInput" placeholder="ابحث عن بهارات، أعشاب، زيوت، سكر، مكرونة...">
       </div>
       <div class="categories-nav" id="categoriesNav">
-        <button class="category-btn active" data-cat="all">الكل</button>
-        <button class="category-btn" data-cat="spices">بهارات وعطارة</button>
-        <button class="category-btn" data-cat="herbs">أعشاب طبيعية</button>
-        <button class="category-btn" data-cat="nuts">مكسرات وياميش</button>
-        <button class="category-btn" data-cat="oils">زيوت طبيعية</button>
-        <button class="category-btn" data-cat="groceries">مكرونة وبقالة</button>
+        <button class="category-btn active" data-cat="all" data-i18n="catAll">الكل</button>
+        <button class="category-btn" data-cat="spices" data-i18n="catSpices">بهارات وعطارة</button>
+        <button class="category-btn" data-cat="herbs" data-i18n="catHerbs">أعشاب طبيعية</button>
+        <button class="category-btn" data-cat="nuts" data-i18n="catNuts">مكسرات وياميش</button>
+        <button class="category-btn" data-cat="oils" data-i18n="catOils">زيوت طبيعية</button>
+        <button class="category-btn" data-cat="groceries" data-i18n="catGroceries">مكرونة وبقالة</button>
       </div>
     </div>
 
     <!-- Main Products Section -->
-    <h3 style="margin-bottom: 15px; font-weight: 800;" id="sectionTitle">كل المنتجات</h3>
+    <h3 style="margin-bottom: 15px; font-weight: 800;" id="sectionTitle" data-i18n="allProducts">كل المنتجات</h3>
     <div class="products-grid" id="productsGrid"></div>
 
   </div>
@@ -817,23 +873,23 @@
   <footer>
     <div class="footer-container">
       <div class="footer-col">
-        <h3>عطارة المدينة المنورة</h3>
-        <p>متجركم الأول للتوابل، الأعشاب الطبيعية، والمستلزمات الغذائية العالية الجودة في حدائق الأهرام و6 أكتوبر.</p>
-        <p><i class="fa-solid fa-location-dot"></i> حدائق الأهرام / 6 أكتوبر</p>
-        <p><i class="fa-solid fa-phone"></i> للتواصل والطلب: 01030043129</p>
+        <h3 data-i18n="footerStoreName">عطارة المدينة المنورة</h3>
+        <p data-i18n="footerDesc">متجركم الأول للتوابل، الأعشاب الطبيعية، والمستلزمات الغذائية العالية الجودة في حدائق الأهرام و6 أكتوبر.</p>
+        <p data-i18n="footerLocation"><i class="fa-solid fa-location-dot"></i> حدائق الأهرام / 6 أكتوبر</p>
+        <p data-i18n="footerPhone"><i class="fa-solid fa-phone"></i> للتواصل والطلب: 01030043129</p>
       </div>
       
       <div class="footer-col">
-        <h3>لماذا تختارنا؟</h3>
+        <h3 data-i18n="footerWhyUs">لماذا تختارنا؟</h3>
         <div class="footer-features">
-          <div class="feature-item"><i class="fa-solid fa-truck-fast"></i> توصيل سريع وآمن للباب</div>
-          <div class="feature-item"><i class="fa-solid fa-shield-halved"></i> ضمان الجودة والتعويض</div>
-          <div class="feature-item"><i class="fa-solid fa-seedling"></i> خامات نقية طازجة 100%</div>
-          <div class="feature-item"><i class="fa-solid fa-hand-holding-dollar"></i> أفضل الأسعار التنافسية</div>
+          <div class="feature-item" data-i18n="feature1"><i class="fa-solid fa-truck-fast"></i> توصيل سريع وآمن للباب</div>
+          <div class="feature-item" data-i18n="feature2"><i class="fa-solid fa-shield-halved"></i> ضمان الجودة والتعويض</div>
+          <div class="feature-item" data-i18n="feature3"><i class="fa-solid fa-seedling"></i> خامات نقية طازجة 100%</div>
+          <div class="feature-item" data-i18n="feature4"><i class="fa-solid fa-hand-holding-dollar"></i> أفضل الأسعار التنافسية</div>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom" data-i18n="footerRights">
       جميع الحقوق محفوظة &copy; عطارة المدينة المنورة 2026
     </div>
   </footer>
@@ -849,24 +905,24 @@
   <!-- Cart Drawer -->
   <div class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <h3>سلة التسوق <i class="fa-solid fa-cart-shopping"></i></h3>
+      <h3 data-i18n="cartTitle">سلة التسوق <i class="fa-solid fa-cart-shopping"></i></h3>
       <button class="close-cart-btn" id="closeCartBtn"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="cart-items" id="cartItemsContainer"></div>
     <div class="cart-footer">
       <div class="summary-line">
-        <span>المجموع الفرعي:</span>
+        <span data-i18n="subtotal">المجموع الفرعي:</span>
         <span id="subtotalPrice">0 ج.م</span>
       </div>
       <div class="summary-line">
-        <span>شحن (حدائق الأهرام/6 أكتوبر):</span>
+        <span data-i18n="shipping">شحن (حدائق الأهرام/6 أكتوبر):</span>
         <span id="shippingPrice">30 ج.م</span>
       </div>
       <div class="summary-line total">
-        <span>الإجمالي النهائي:</span>
+        <span data-i18n="finalTotal">الإجمالي النهائي:</span>
         <span id="totalPrice">0 ج.م</span>
       </div>
-      <button class="checkout-btn" id="openCheckoutBtn">إتمام الطلب <i class="fa-solid fa-arrow-left"></i></button>
+      <button class="checkout-btn" id="openCheckoutBtn" data-i18n="checkoutBtn">إتمام الطلب <i class="fa-solid fa-arrow-left"></i></button>
     </div>
   </div>
 
@@ -874,40 +930,40 @@
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3>بيانات الطلب والتوصيل</h3>
+        <h3 data-i18n="modalTitle">بيانات الطلب والتوصيل</h3>
         <button class="close-cart-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <form id="checkoutForm">
         <div class="form-group">
-          <label>الاسم بالكامل *</label>
+          <label data-i18n="labelName">الاسم بالكامل *</label>
           <input type="text" id="custName" required placeholder="مثال: أحمد محمد">
         </div>
         <div class="form-group">
-          <label>رقم الهاتف / الواتساب *</label>
+          <label data-i18n="labelPhone">رقم الهاتف / الواتساب *</label>
           <input type="tel" id="custPhone" required placeholder="010xxxxxxxx">
         </div>
         <div class="form-group">
-          <label>العنوان بالتفصيل *</label>
+          <label data-i18n="labelAddress">العنوان بالتفصيل *</label>
           <textarea id="custAddress" rows="2" required placeholder="اسم المنطقة (حدائق الأهرام/أكتوبر)، شارع، رقم العمارة، الشقة"></textarea>
         </div>
         <div class="form-group">
-          <label>طريقة الدفع *</label>
+          <label data-i18n="labelPayment">طريقة الدفع *</label>
           <select id="paymentMethod">
-            <option value="cod">الدفع عند الاستلام (كاش)</option>
-            <option value="instapay">إنستا باي (InstaPay)</option>
+            <option value="cod" data-i18n="payCod">الدفع عند الاستلام (كاش)</option>
+            <option value="instapay" data-i18n="payInstapay">إنستا باي (InstaPay)</option>
           </select>
         </div>
 
         <div class="instapay-box" id="instapayBox">
-          <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">رقم حساب InstaPay للتحويل:</p>
+          <p style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;" data-i18n="instaTitle">رقم حساب InstaPay للتحويل:</p>
           <div style="display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 5px 10px; border-radius: 5px; color: #000;">
             <span id="instapayNum" style="font-weight: bold; font-family: monospace;">01030043129</span>
-            <button type="button" class="copy-btn" id="copyInstaBtn">نسخ الرقم</button>
+            <button type="button" class="copy-btn" id="copyInstaBtn" data-i18n="copyBtn">نسخ الرقم</button>
           </div>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">* برجاء إرفاق صورة إيصال التحويل في الشات بعد الانتقال للواتساب.</p>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;" data-i18n="instaNote">* برجاء إرفاق صورة إيصال التحويل في الشات بعد الانتقال للواتساب.</p>
         </div>
 
-        <button type="submit" class="checkout-btn" style="background-color: #25D366; margin-top: 15px;">
+        <button type="submit" class="checkout-btn" style="background-color: #25D366; margin-top: 15px;" data-i18n="whatsappBtn">
           إرسال الطلب عبر الواتساب <i class="fa-brands fa-whatsapp"></i>
         </button>
       </form>
@@ -915,42 +971,263 @@
   </div>
 
   <script>
-    // Updated Product Database With Exact Images
+    // Translations Dictionary
+    const translations = {
+      ar: {
+        topBarDelivery: '<i class="fa-solid fa-location-dot"></i> التوصيل سريع إلى: حدائق الأهرام - 6 أكتوبر',
+        topBarPhone: '<i class="fa-solid fa-phone"></i> الطلب المباشر: 01030043129',
+        storeTitle: 'عطارة المدينة المنورة',
+        storeSub: 'أجود أنواع البهارات والأعشاب الطبيعية',
+        banner1Title: 'عطارة المدينة المنورة',
+        banner1Desc: 'أجود التوابل والبهارات الطبيعية مطحونة طازجة يومياً 🌿',
+        banner2Title: 'مكسرات وياميش فاخر',
+        banner2Desc: 'طعم طازج ومذاق استثنائي يزين مائدتك 🌰',
+        banner3Title: 'زيوت طبيعية معصورة بكر',
+        banner3Desc: 'نقاء طبيعي 100% لصحتك وجمالك ✨',
+        searchPlaceholder: 'ابحث عن بهارات، أعشاب، زيوت، سكر، مكرونة...',
+        catAll: 'الكل',
+        catSpices: 'بهارات وعطارة',
+        catHerbs: 'أعشاب طبيعية',
+        catNuts: 'مكسرات وياميش',
+        catOils: 'زيوت طبيعية',
+        catGroceries: 'مكرونة وبقالة',
+        allProducts: 'كل المنتجات',
+        footerStoreName: 'عطارة المدينة المنورة',
+        footerDesc: 'متجركم الأول للتوابل، الأعشاب الطبيعية، والمستلزمات الغذائية العالية الجودة في حدائق الأهرام و6 أكتوبر.',
+        footerLocation: '<i class="fa-solid fa-location-dot"></i> حدائق الأهرام / 6 أكتوبر',
+        footerPhone: '<i class="fa-solid fa-phone"></i> للتواصل والطلب: 01030043129',
+        footerWhyUs: 'لماذا تختارنا؟',
+        feature1: '<i class="fa-solid fa-truck-fast"></i> توصيل سريع وآمن للباب',
+        feature2: '<i class="fa-solid fa-shield-halved"></i> ضمان الجودة والتعويض',
+        feature3: '<i class="fa-solid fa-seedling"></i> خامات نقية طازجة 100%',
+        feature4: '<i class="fa-solid fa-hand-holding-dollar"></i> أفضل الأسعار التنافسية',
+        footerRights: 'جميع الحقوق محفوظة &copy; عطارة المدينة المنورة 2026',
+        cartTitle: 'سلة التسوق <i class="fa-solid fa-cart-shopping"></i>',
+        subtotal: 'المجموع الفرعي:',
+        shipping: 'شحن (حدائق الأهرام/6 أكتوبر):',
+        finalTotal: 'الإجمالي النهائي:',
+        checkoutBtn: 'إتمام الطلب <i class="fa-solid fa-arrow-left"></i>',
+        modalTitle: 'بيانات الطلب والتوصيل',
+        labelName: 'الاسم بالكامل *',
+        labelPhone: 'رقم الهاتف / الواتساب *',
+        labelAddress: 'العنوان بالتفصيل *',
+        labelPayment: 'طريقة الدفع *',
+        payCod: 'الدفع عند الاستلام (كاش)',
+        payInstapay: 'إنستا باي (InstaPay)',
+        instaTitle: 'رقم حساب InstaPay للتحويل:',
+        copyBtn: 'نسخ الرقم',
+        instaNote: '* برجاء إرفاق صورة إيصال التحويل في الشات بعد الانتقال للواتساب.',
+        whatsappBtn: 'إرسال الطلب عبر الواتساب <i class="fa-brands fa-whatsapp"></i>',
+        selectWeight: 'اختر الوزن المطلوب:',
+        customWeightBtn: 'مخصص ✍️',
+        priceLabel: 'السعر:',
+        addToCartBtn: '<i class="fa-solid fa-plus"></i> أضف للسلة',
+        ratingText: '(تقييم ممتاز)',
+        emptyCart: 'سلة التسوق فارغة حالياً.',
+        noResults: 'لا توجد منتجات مطابقة لجميع نتائج البحث.',
+        copiedMsg: 'تم نسخ رقم InstaPay بنجاح!',
+        addFirstMsg: 'برجاء إضافة منتجات للسلة أولاً!',
+        enterValidWeight: 'برجاء كتابة وزن صحيح!'
+      },
+      en: {
+        topBarDelivery: '<i class="fa-solid fa-location-dot"></i> Fast Delivery to: Hadayek El Ahram - 6th of October',
+        topBarPhone: '<i class="fa-solid fa-phone"></i> Direct Order: 01030043129',
+        storeTitle: 'Al-Madinah Spices',
+        storeSub: 'Finest Spices & Natural Herbs',
+        banner1Title: 'Al-Madinah Spices',
+        banner1Desc: 'Finest natural spices ground fresh daily 🌿',
+        banner2Title: 'Premium Nuts & Yamish',
+        banner2Desc: 'Fresh taste and exceptional flavor for your table 🌰',
+        banner3Title: 'Pure Virgin Pressed Oils',
+        banner3Desc: '100% natural purity for your health and beauty ✨',
+        searchPlaceholder: 'Search for spices, herbs, oils, sugar, pasta...',
+        catAll: 'All',
+        catSpices: 'Spices',
+        catHerbs: 'Natural Herbs',
+        catNuts: 'Nuts',
+        catOils: 'Natural Oils',
+        catGroceries: 'Pasta & Grocery',
+        allProducts: 'All Products',
+        footerStoreName: 'Al-Madinah Spices',
+        footerDesc: 'Your premier store for spices, natural herbs, and high-quality food supplies in Hadayek El Ahram & 6th of October.',
+        footerLocation: '<i class="fa-solid fa-location-dot"></i> Hadayek El Ahram / 6th of October',
+        footerPhone: '<i class="fa-solid fa-phone"></i> Contact & Order: 01030043129',
+        footerWhyUs: 'Why Choose Us?',
+        feature1: '<i class="fa-solid fa-truck-fast"></i> Fast & safe doorstep delivery',
+        feature2: '<i class="fa-solid fa-shield-halved"></i> Quality & compensation guarantee',
+        feature3: '<i class="fa-solid fa-seedling"></i> 100% pure fresh ingredients',
+        feature4: '<i class="fa-solid fa-hand-holding-dollar"></i> Best competitive prices',
+        footerRights: 'All Rights Reserved &copy; Al-Madinah Spices 2026',
+        cartTitle: 'Shopping Cart <i class="fa-solid fa-cart-shopping"></i>',
+        subtotal: 'Subtotal:',
+        shipping: 'Shipping (Hadayek El Ahram / 6th of October):',
+        finalTotal: 'Final Total:',
+        checkoutBtn: 'Checkout <i class="fa-solid fa-arrow-right"></i>',
+        modalTitle: 'Order & Delivery Details',
+        labelName: 'Full Name *',
+        labelPhone: 'Phone / WhatsApp *',
+        labelAddress: 'Detailed Address *',
+        labelPayment: 'Payment Method *',
+        payCod: 'Cash on Delivery (COD)',
+        payInstapay: 'InstaPay',
+        instaTitle: 'InstaPay Account Number:',
+        copyBtn: 'Copy Number',
+        instaNote: '* Please attach the transfer receipt image in chat after switching to WhatsApp.',
+        whatsappBtn: 'Send Order via WhatsApp <i class="fa-brands fa-whatsapp"></i>',
+        selectWeight: 'Choose Required Weight:',
+        customWeightBtn: 'Custom ✍️',
+        priceLabel: 'Price:',
+        addToCartBtn: '<i class="fa-solid fa-plus"></i> Add to Cart',
+        ratingText: '(Excellent Rating)',
+        emptyCart: 'Shopping cart is currently empty.',
+        noResults: 'No products match your search results.',
+        copiedMsg: 'InstaPay number copied successfully!',
+        addFirstMsg: 'Please add products to the cart first!',
+        enterValidWeight: 'Please enter a valid weight!'
+      }
+    };
+
+    let currentLang = 'ar';
+
+    // Products Database with Multi-language support
     const products = [
-      // بهارات وعطارة
-      { id: 1, name: "كمون بلدي مطحون طازج", category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80" },
-      { id: 2, name: "فلفل أسود فاخر مطحون", category: "spices", basePrice: 320, rating: 4.9, image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" },
-      { id: 3, name: "كركم هندي نقّي", category: "spices", basePrice: 160, rating: 4.7, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" },
-      { id: 4, name: "كزبرة جافة مطحونة", category: "spices", basePrice: 120, rating: 4.6, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80" },
-
-      // أعشاب طبيعية
-      { id: 5, name: "يانسون نجمي طبيعي", category: "herbs", basePrice: 280, rating: 4.8, image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=400&q=80" },
-      { id: 6, name: "بابونج زهرة كاملة", category: "herbs", basePrice: 200, rating: 4.9, image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
-      { id: 7, name: "نعناع مجفف أسواني", category: "herbs", basePrice: 150, rating: 4.7, image: "https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=400&q=80" },
-
-      // مكسرات وياميش
-      { id: 8, name: "فستق حلبي حمصة فاخرة", category: "nuts", basePrice: 750, rating: 5, image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" },
-      { id: 9, name: "كاجو محمص سوبر", category: "nuts", basePrice: 680, rating: 4.9, image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" },
-      { id: 10, name: "عين جمل أمريكي", category: "nuts", basePrice: 420, rating: 4.8, image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=400&q=80" },
-
-      // زيوت طبيعية
-      { id: 11, name: "زيت حبة البركة معصور", category: "oils", basePrice: 400, rating: 5, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=400&q=80" },
-      { id: 12, name: "زيت زيتون بكر ممتاز سيوي", category: "oils", basePrice: 350, rating: 4.9, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" },
-
-      // مكرونة وبقالة (مع الصور الدقيقة)
-      { id: 13, name: "بن برازيلي محمّص طازج", category: "groceries", basePrice: 380, rating: 5, image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80" },
-      { id: 14, name: "ملح بحري نقي عالي الجودة", category: "groceries", basePrice: 40, rating: 4.7, image: "https://www.expoegypt.gov.eg/uploads/2025/12/693fd061a6c1d.jpg" },
-      { id: 15, name: "سكر أبيض ناصع فاخر", category: "groceries", basePrice: 45, rating: 4.6, image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80" },
-      { id: 16, name: "مكرونة أنواع مشكلة (1 كجم)", category: "groceries", basePrice: 35, rating: 4.5, image: "https://albukhari.com/11860/" }
+      { 
+        id: 1, 
+        name: { ar: "كمون بلدي مطحون طازج", en: "Fresh Ground Local Cumin" }, 
+        category: "spices", 
+        basePrice: 240, 
+        rating: 4.8, 
+        image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 2, 
+        name: { ar: "فلفل أسود فاخر مطحون", en: "Premium Ground Black Pepper" }, 
+        category: "spices", 
+        basePrice: 320, 
+        rating: 4.9, 
+        image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 3, 
+        name: { ar: "كركم هندي نقّي", en: "Pure Indian Turmeric" }, 
+        category: "spices", 
+        basePrice: 160, 
+        rating: 4.7, 
+        image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 4, 
+        name: { ar: "كزبرة جافة مطحونة", en: "Ground Dry Coriander" }, 
+        category: "spices", 
+        basePrice: 120, 
+        rating: 4.6, 
+        image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 5, 
+        name: { ar: "يانسون نجمي طبيعي", en: "Natural Star Anise" }, 
+        category: "herbs", 
+        basePrice: 280, 
+        rating: 4.8, 
+        image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 6, 
+        name: { ar: "بابونج زهرة كاملة", en: "Whole Flower Chamomile" }, 
+        category: "herbs", 
+        basePrice: 200, 
+        rating: 4.9, 
+        image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 7, 
+        name: { ar: "نعناع مجفف أسواني", en: "Aswan Dried Mint" }, 
+        category: "herbs", 
+        basePrice: 150, 
+        rating: 4.7, 
+        image: "https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 8, 
+        name: { ar: "فستق حلبي حمصة فاخرة", en: "Luxury Roasted Pistachios" }, 
+        category: "nuts", 
+        basePrice: 750, 
+        rating: 5, 
+        image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 9, 
+        name: { ar: "كاجو محمص سوبر", en: "Super Roasted Cashews" }, 
+        category: "nuts", 
+        basePrice: 680, 
+        rating: 4.9, 
+        image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 10, 
+        name: { ar: "عين جمل أمريكي", en: "American Walnuts" }, 
+        category: "nuts", 
+        basePrice: 420, 
+        rating: 4.8, 
+        image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 11, 
+        name: { ar: "زيت حبة البركة معصور", en: "Pressed Black Seed Oil" }, 
+        category: "oils", 
+        basePrice: 400, 
+        rating: 5, 
+        image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 12, 
+        name: { ar: "زيت زيتون بكر ممتاز سيوي", en: "Siwan Extra Virgin Olive Oil" }, 
+        category: "oils", 
+        basePrice: 350, 
+        rating: 4.9, 
+        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 13, 
+        name: { ar: "بن برازيلي محمّص طازج", en: "Fresh Roasted Brazilian Coffee" }, 
+        category: "groceries", 
+        basePrice: 380, 
+        rating: 5, 
+        image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 14, 
+        name: { ar: "ملح بحري نقي عالي الجودة", en: "High Quality Pure Sea Salt" }, 
+        category: "groceries", 
+        basePrice: 40, 
+        rating: 4.7, 
+        image: "https://www.expoegypt.gov.eg/uploads/2025/12/693fd061a6c1d.jpg" 
+      },
+      { 
+        id: 15, 
+        name: { ar: "سكر أبيض ناصع فاخر", en: "Luxury Pure White Sugar" }, 
+        category: "groceries", 
+        basePrice: 45, 
+        rating: 4.6, 
+        image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80" 
+      },
+      { 
+        id: 16, 
+        name: { ar: "مكرونة أنواع مشكلة (1 كجم)", en: "Mixed Pasta Varieties (1 kg)" }, 
+        category: "groceries", 
+        basePrice: 35, 
+        rating: 4.5, 
+        image: "https://albukhari.com/11860/" 
+      }
     ];
 
     // Standard Preset Weights
     const weightRules = {
-      '50g': { label: '50 جرام', ratio: 0.05 },
-      '100g': { label: '100 جرام', ratio: 0.10 },
-      '250g': { label: '250 جرام', ratio: 0.25 },
-      '500g': { label: '500 جرام', ratio: 0.50 },
-      '1kg': { label: '1 كيلو (1000g)', ratio: 1.00 }
+      '50g': { label: { ar: '50 جرام', en: '50g' }, ratio: 0.05 },
+      '100g': { label: { ar: '100 جرام', en: '100g' }, ratio: 0.10 },
+      '250g': { label: { ar: '250 جرام', en: '250g' }, ratio: 0.25 },
+      '500g': { label: { ar: '500 جرام', en: '500g' }, ratio: 0.50 },
+      '1kg': { label: { ar: '1 كيلو (1000g)', en: '1 kg (1000g)' }, ratio: 1.00 }
     };
 
     // State Variables
@@ -963,6 +1240,7 @@
     const searchInput = document.getElementById('searchInput');
     const categoryBtns = document.querySelectorAll('.category-btn');
     const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const langToggleBtn = document.getElementById('langToggleBtn');
     const cartBtn = document.getElementById('cartBtn');
     const closeCartBtn = document.getElementById('closeCartBtn');
     const cartDrawer = document.getElementById('cartDrawer');
@@ -984,13 +1262,50 @@
     // Initialize Page
     function init() {
       products.forEach(p => { 
-        selectedWeights[p.id] = { type: 'preset', key: '250g', val: 250, unit: 'g', ratio: 0.25, label: '250 جرام' }; 
+        selectedWeights[p.id] = { type: 'preset', key: '250g', val: 250, unit: 'g', ratio: 0.25, label: weightRules['250g'].label }; 
       });
 
+      setupLanguage();
       renderProducts(products);
       setupTheme();
       initBannerSlider();
       setupScrollEvents();
+    }
+
+    // Language Toggle Setup
+    function setupLanguage() {
+      const savedLang = localStorage.getItem('lang') || 'ar';
+      setLanguage(savedLang);
+
+      langToggleBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        setLanguage(currentLang);
+        localStorage.setItem('lang', currentLang);
+        filterProducts();
+        updateCartUI();
+      });
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      document.body.setAttribute('lang', lang);
+      document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+      langToggleBtn.innerText = lang === 'ar' ? 'EN' : 'AR';
+
+      // Translate static elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      // Translate search placeholder
+      if (searchInput) {
+        searchInput.placeholder = translations[lang].searchPlaceholder;
+      }
     }
 
     // Banner Slider Logic
@@ -1001,7 +1316,8 @@
 
       setInterval(() => {
         currentSlide = (currentSlide + 1) % totalSlides;
-        slider.style.transform = `translateX(${currentSlide * 100}%)`;
+        const transformVal = currentLang === 'ar' ? (currentSlide * 100) : -(currentSlide * 100);
+        slider.style.transform = `translateX(${transformVal}%)`;
       }, 4000);
     }
 
@@ -1048,7 +1364,7 @@
     // Render Products
     function renderProducts(items) {
       if (items.length === 0) {
-        productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 20px;">لا توجد منتجات مطابقة لجميع نتائج البحث.</p>`;
+        productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 20px;">${translations[currentLang].noResults}</p>`;
         return;
       }
       productsGrid.innerHTML = items.map(p => createProductCardHTML(p)).join('');
@@ -1058,48 +1374,49 @@
     function createProductCardHTML(product) {
       const current = selectedWeights[product.id] || { type: 'preset', key: '250g', ratio: 0.25 };
       const calculatedPrice = (product.basePrice * current.ratio).toFixed(1);
+      const productName = product.name[currentLang] || product.name['ar'];
 
       return `
         <div class="product-card" data-id="${product.id}">
           <span class="product-badge">${getCategoryName(product.category)}</span>
-          <img src="${product.image}" alt="${product.name}" class="product-img">
+          <img src="${product.image}" alt="${product.name['ar']}" class="product-img">
           <div class="product-info">
-            <h3 class="product-title">${product.name}</h3>
+            <h3 class="product-title">${productName}</h3>
             <div class="product-rating">
-              <i class="fa-solid fa-star"></i> ${product.rating} (تقييم ممتاز)
+              <i class="fa-solid fa-star"></i> ${product.rating} ${translations[currentLang].ratingText}
             </div>
             
             <div class="weight-selector">
-              <label>اختر الوزن المطلوب:</label>
+              <label>${translations[currentLang].selectWeight}</label>
               <div class="weight-options">
                 ${Object.keys(weightRules).map(w => `
                   <button class="weight-btn ${(current.type === 'preset' && current.key === w) ? 'selected' : ''}" 
                           onclick="selectPresetWeight(${product.id}, '${w}', this)">
-                    ${w}
+                    ${weightRules[w].label[currentLang]}
                   </button>
                 `).join('')}
                 <button class="weight-btn ${current.type === 'custom' ? 'selected' : ''}" 
                         onclick="toggleCustomWeight(${product.id}, this)">
-                  مخصص ✍️
+                  ${translations[currentLang].customWeightBtn}
                 </button>
               </div>
 
               <div class="custom-weight-box ${current.type === 'custom' ? 'active' : ''}" id="custom-box-${product.id}">
                 <input type="number" id="custom-val-${product.id}" value="${current.type === 'custom' ? current.val : 10}" min="1" oninput="updateCustomWeight(${product.id})">
                 <select id="custom-unit-${product.id}" onchange="updateCustomWeight(${product.id})">
-                  <option value="g" ${current.unit === 'g' ? 'selected' : ''}>جرام (g)</option>
-                  <option value="kg" ${current.unit === 'kg' ? 'selected' : ''}>كيلو (kg)</option>
+                  <option value="g" ${current.unit === 'g' ? 'selected' : ''}>${currentLang === 'ar' ? 'جرام (g)' : 'Grams (g)'}</option>
+                  <option value="kg" ${current.unit === 'kg' ? 'selected' : ''}>${currentLang === 'ar' ? 'كيلو (kg)' : 'Kilo (kg)'}</option>
                 </select>
               </div>
             </div>
 
             <div class="product-price-action">
               <div>
-                <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">السعر:</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">${translations[currentLang].priceLabel}</span>
                 <span class="product-price" id="price-${product.id}">${calculatedPrice} ج.م</span>
               </div>
               <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
-                <i class="fa-solid fa-plus"></i> أضف للسلة
+                ${translations[currentLang].addToCartBtn}
               </button>
             </div>
           </div>
@@ -1108,8 +1425,14 @@
     }
 
     function getCategoryName(cat) {
-      const map = { spices: 'بهارات', herbs: 'أعشاب', nuts: 'مكسرات', oils: 'زيوت', groceries: 'بقالة' };
-      return map[cat] || 'عام';
+      const map = {
+        spices: { ar: 'بهارات', en: 'Spices' },
+        herbs: { ar: 'أعشاب', en: 'Herbs' },
+        nuts: { ar: 'مكسرات', en: 'Nuts' },
+        oils: { ar: 'زيوت', en: 'Oils' },
+        groceries: { ar: 'بقالة', en: 'Grocery' }
+      };
+      return map[cat] ? map[cat][currentLang] : 'General';
     }
 
     // Change Preset Weight
@@ -1126,7 +1449,7 @@
         type: 'preset',
         key: weightKey,
         ratio: ratio,
-        label: weightRules[weightKey].label
+        label: weightRules[weightKey].label[currentLang]
       };
 
       recalculatePriceDisplay(productId);
@@ -1158,10 +1481,10 @@
 
       if (unit === 'g') {
         ratio = val / 1000;
-        label = `${val} جرام`;
+        label = currentLang === 'ar' ? `${val} جرام` : `${val}g`;
       } else {
         ratio = val;
-        label = `${val} كيلو`;
+        label = currentLang === 'ar' ? `${val} كيلو` : `${val}kg`;
       }
 
       selectedWeights[productId] = {
@@ -1187,14 +1510,15 @@
     // Add Item To Cart
     window.addToCart = function(productId) {
       const product = products.find(p => p.id === productId);
-      const current = selectedWeights[productId] || { type: 'preset', key: '250g', ratio: 0.25, label: '250 جرام' };
+      const current = selectedWeights[productId] || { type: 'preset', key: '250g', ratio: 0.25, label: weightRules['250g'].label[currentLang] };
       
       if (current.ratio <= 0) {
-        alert('برجاء كتابة وزن صحيح!');
+        alert(translations[currentLang].enterValidWeight);
         return;
       }
 
       const itemPrice = parseFloat((product.basePrice * current.ratio).toFixed(1));
+      const productName = product.name[currentLang];
 
       const existingIndex = cart.findIndex(item => item.id === productId && item.weightLabel === current.label);
 
@@ -1203,7 +1527,7 @@
       } else {
         cart.push({
           id: product.id,
-          name: product.name,
+          name: productName,
           weightLabel: current.label,
           price: itemPrice,
           qty: 1
@@ -1220,7 +1544,7 @@
       cartBadge.innerText = totalCount;
 
       if (cart.length === 0) {
-        cartItemsContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">سلة التسوق فارغة حالياً.</p>`;
+        cartItemsContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">${translations[currentLang].emptyCart}</p>`;
         subtotalPrice.innerText = `0 ج.م`;
         totalPrice.innerText = `0 ج.م`;
         return;
@@ -1230,7 +1554,7 @@
         <div class="cart-item">
           <div class="cart-item-info">
             <h4>${item.name}</h4>
-            <p>الوزن: ${item.weightLabel} - ${item.price} ج.م</p>
+            <p>${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel} - ${item.price} ج.م</p>
           </div>
           <div class="cart-item-controls">
             <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
@@ -1288,7 +1612,8 @@
       const activeCat = document.querySelector('.category-btn.active').dataset.cat;
 
       const filtered = products.filter(p => {
-        const matchesSearch = p.name.toLowerCase().includes(query);
+        const pName = p.name[currentLang].toLowerCase();
+        const matchesSearch = pName.includes(query);
         const matchesCat = activeCat === 'all' || p.category === activeCat;
         return matchesSearch && matchesCat;
       });
@@ -1299,7 +1624,7 @@
     // Checkout Modal Logic
     openCheckoutBtn.addEventListener('click', () => {
       if (cart.length === 0) {
-        alert('برجاء إضافة منتجات للسلة أولاً!');
+        alert(translations[currentLang].addFirstMsg);
         return;
       }
       closeCart();
@@ -1316,7 +1641,7 @@
 
     copyInstaBtn.addEventListener('click', () => {
       navigator.clipboard.writeText('01030043129');
-      alert('تم نسخ رقم InstaPay بنجاح!');
+      alert(translations[currentLang].copiedMsg);
     });
 
     // Form Submission & WhatsApp Order Formatting
@@ -1326,31 +1651,21 @@
       const name = document.getElementById('custName').value;
       const phone = document.getElementById('custPhone').value;
       const address = document.getElementById('custAddress').value;
-      const payment = paymentMethodSelect.value === 'instapay' ? 'إنستا باي (InstaPay)' : 'الدفع عند الاستلام (كاش)';
+      const payment = paymentMethodSelect.value === 'instapay' ? 'إنستا باي (InstaPay)' : (currentLang === 'ar' ? 'الدفع عند الاستلام (كاش)' : 'Cash on Delivery');
 
       const subTotalVal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       const totalVal = subTotalVal + shippingFee;
 
       let orderListText = cart.map((item, idx) => 
-        `${idx + 1}. *${item.name}*\n   - الوزن المطلوبة: ${item.weightLabel}\n   - الكمية: ${item.qty}\n   - السعر: ${item.price * item.qty} ج.م`
+        `${idx + 1}. *${item.name}*\n   - ${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel}\n   - ${currentLang === 'ar' ? 'الكمية' : 'Qty'}: ${item.qty}\n   - ${currentLang === 'ar' ? 'السعر' : 'Price'}: ${item.price * item.qty} ج.م`
       ).join('\n\n');
 
-      let whatsappMsg = `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n`;
-      whatsappMsg += `*بيانات العميل:*\n`;
-      whatsappMsg += `• *الاسم:* ${name}\n`;
-      whatsappMsg += `• *الهاتف:* ${phone}\n`;
-      whatsappMsg += `• *منطقة التوصيل:* حدائق الأهرام - 6 أكتوبر\n`;
-      whatsappMsg += `• *العنوان التفصيلي:* ${address}\n\n`;
-      whatsappMsg += `-----------------------------------\n`;
-      whatsappMsg += `*الطلبات:*\n\n${orderListText}\n\n`;
-      whatsappMsg += `-----------------------------------\n`;
-      whatsappMsg += `• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ج.م\n`;
-      whatsappMsg += `• *مصاريف الشحن:* ${shippingFee} ج.م\n`;
-      whatsappMsg += `• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ج.م*\n\n`;
-      whatsappMsg += `• *طريقة الدفع المختارة:* ${payment}\n`;
+      let whatsappMsg = currentLang === 'ar' ? 
+        `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n*بيانات العميل:*\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *منطقة التوصيل:* حدائق الأهرام - 6 أكتوبر\n• *العنوان التفصيلي:* ${address}\n\n-------------------\n*الطلبات:*\n\n${orderListText}\n\n-------------------\n• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ج.م\n• *مصاريف الشحن:* ${shippingFee} ج.م\n• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ج.م*\n\n• *طريقة الدفع:* ${payment}\n` :
+        `*New Order from Al-Madinah Spices Store* 🌿\n\n*Customer Info:*\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Delivery Area:* Hadayek El Ahram - 6th of October\n• *Address:* ${address}\n\n-------------------\n*Items:*\n\n${orderListText}\n\n-------------------\n• *Subtotal:* ${subTotalVal.toFixed(1)} EGP\n• *Shipping:* ${shippingFee} EGP\n• *Final Total:* *${totalVal.toFixed(1)} EGP*\n\n• *Payment:* ${payment}\n`;
 
       if (paymentMethodSelect.value === 'instapay') {
-        whatsappMsg += `\n⚠️ *ملاحظة:* تم اختيار الدفع عبر InstaPay، سأقوم بإرفاق صورة لقطة الشاشة للتحويل الآن.`;
+        whatsappMsg += currentLang === 'ar' ? `\n⚠️ *ملاحظة:* تم اختيار الدفع عبر InstaPay، سأقوم بإرفاق صورة إيصال التحويل الآن.` : `\n⚠️ *Note:* Paid via InstaPay, I will attach the receipt image now.`;
       }
 
       const encodedMsg = encodeURIComponent(whatsappMsg);
