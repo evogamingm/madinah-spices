@@ -91,41 +91,6 @@
     .top-bar i { color: var(--primary-gold); margin-left: 5px; }
     [lang="en"] .top-bar i { margin-left: 0; margin-right: 5px; }
 
-    /* Announcement Ticker (Added Feature) */
-    .announcement-ticker {
-      background-color: var(--primary-gold);
-      color: #1a1a1a;
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 6px 0;
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
-    }
-
-    .ticker-content {
-      display: inline-block;
-      animation: tickerAnimation 25s linear infinite;
-    }
-
-    .ticker-content span {
-      margin: 0 30px;
-    }
-
-    .ticker-content i {
-      color: var(--herbal-green);
-      margin-left: 5px;
-    }
-
-    @keyframes tickerAnimation {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(50%); }
-    }
-    [lang="en"] @keyframes tickerAnimation {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
     /* Header */
     header {
       background-color: var(--header-bg);
@@ -897,16 +862,6 @@
     <span data-i18n="topBarPhone"><i class="fa-solid fa-phone"></i> الطلب المباشر: 01030043129</span>
   </div>
 
-  <!-- Announcement Ticker (New Idea Added) -->
-  <div class="announcement-ticker">
-    <div class="ticker-content" id="tickerContent">
-      <span data-i18n="ticker1"><i class="fa-solid fa-truck-fast"></i> توصيل سريع ومنزلي في حدائق الأهرام و6 أكتوبر</span>
-      <span data-i18n="ticker2"><i class="fa-solid fa-seedling"></i> توابل وبهارات أصلية ومطحونة طازجة يومياً</span>
-      <span data-i18n="ticker3"><i class="fa-solid fa-shield-halved"></i> ضمان الجودة النقية 100% أو استرداد الأموال</span>
-      <span data-i18n="ticker4"><i class="fa-solid fa-hand-holding-dollar"></i> إمكانية الدفع كاش أو عبر إنستا باي (InstaPay)</span>
-    </div>
-  </div>
-
   <!-- Main Header -->
   <header>
     <div class="header-container">
@@ -1117,10 +1072,6 @@
       ar: {
         topBarDelivery: '<i class="fa-solid fa-location-dot"></i> التوصيل سريع إلى: حدائق الأهرام - 6 أكتوبر',
         topBarPhone: '<i class="fa-solid fa-phone"></i> الطلب المباشر: 01030043129',
-        ticker1: '<i class="fa-solid fa-truck-fast"></i> توصيل سريع ومنزلي في حدائق الأهرام و6 أكتوبر',
-        ticker2: '<i class="fa-solid fa-seedling"></i> توابل وبهارات أصلية ومطحونة طازجة يومياً',
-        ticker3: '<i class="fa-solid fa-shield-halved"></i> ضمان الجودة النقية 100% أو استرداد الأموال',
-        ticker4: '<i class="fa-solid fa-hand-holding-dollar"></i> إمكانية الدفع كاش أو عبر إنستا باي (InstaPay)',
         storeTitle: 'عطارة المدينة المنورة',
         storeSub: 'أجود أنواع البهارات والأعشاب الطبيعية',
         banner1Title: 'عطارة المدينة المنورة',
@@ -1181,6 +1132,9 @@
         addFirstMsg: 'برجاء إضافة منتجات للسلة أولاً!',
         enterValidWeight: 'برجاء كتابة وزن صحيح!',
         currency: 'ج.م',
+        weightText: 'الوزن',
+        qtyText: 'الكمية',
+        priceText: 'السعر',
         phName: 'مثال: أحمد محمد',
         phPhone: '010xxxxxxxx',
         phAddress: 'اسم المنطقة (حدائق الأهرام/أكتوبر)، شارع، رقم العمارة، الشقة'
@@ -1188,10 +1142,6 @@
       en: {
         topBarDelivery: '<i class="fa-solid fa-location-dot"></i> Fast Delivery to: Hadayek El Ahram - 6th of October',
         topBarPhone: '<i class="fa-solid fa-phone"></i> Direct Order: 01030043129',
-        ticker1: '<i class="fa-solid fa-truck-fast"></i> Fast doorstep delivery in Hadayek El Ahram & 6th of October',
-        ticker2: '<i class="fa-solid fa-seedling"></i> Authentic spices and herbs ground fresh daily',
-        ticker3: '<i class="fa-solid fa-shield-halved"></i> 100% pure quality guarantee or money back',
-        ticker4: '<i class="fa-solid fa-hand-holding-dollar"></i> Pay with Cash or via InstaPay',
         storeTitle: 'عطارة المدينة المنورة',
         storeSub: 'Finest Spices & Natural Herbs',
         banner1Title: 'عطارة المدينة المنورة',
@@ -1252,6 +1202,9 @@
         addFirstMsg: 'Please add products to the cart first!',
         enterValidWeight: 'Please enter a valid weight!',
         currency: 'EGP',
+        weightText: 'Weight',
+        qtyText: 'Qty',
+        priceText: 'Price',
         phName: 'Ex: Ahmed Mohamed',
         phPhone: '010xxxxxxxx',
         phAddress: 'Area name (Hadayek El Ahram/October), street, building no., apartment'
@@ -1433,7 +1386,7 @@
     // Initialize Page
     function init() {
       products.forEach(p => { 
-        selectedWeights[p.id] = { type: 'preset', key: '250g', val: 250, unit: 'g', ratio: 0.25, label: weightRules['250g'].label }; 
+        selectedWeights[p.id] = { type: 'preset', key: '250g', val: 250, unit: 'g', ratio: 0.25 }; 
       });
 
       setupLanguage();
@@ -1650,8 +1603,7 @@
       selectedWeights[productId] = {
         type: 'preset',
         key: weightKey,
-        ratio: ratio,
-        label: weightRules[weightKey].label[currentLang]
+        ratio: ratio
       };
 
       recalculatePriceDisplay(productId);
@@ -1679,22 +1631,17 @@
       const unit = unitSelect.value;
 
       let ratio = 0;
-      let label = '';
-
       if (unit === 'g') {
         ratio = val / 1000;
-        label = currentLang === 'ar' ? `${val} جرام` : `${val}g`;
       } else {
         ratio = val;
-        label = currentLang === 'ar' ? `${val} كيلو` : `${val}kg`;
       }
 
       selectedWeights[productId] = {
         type: 'custom',
         val: val,
         unit: unit,
-        ratio: ratio,
-        label: label
+        ratio: ratio
       };
 
       recalculatePriceDisplay(productId);
@@ -1713,25 +1660,36 @@
     // Add Item To Cart
     window.addToCart = function(productId) {
       const product = products.find(p => p.id === productId);
-      const current = selectedWeights[productId] || { type: 'preset', key: '250g', ratio: 0.25, label: weightRules['250g'].label[currentLang] };
+      const current = selectedWeights[productId] || { type: 'preset', key: '250g', ratio: 0.25 };
       
       if (current.ratio <= 0) {
         alert(translations[currentLang].enterValidWeight);
         return;
       }
 
-      const itemPrice = parseFloat((product.basePrice * current.ratio).toFixed(1));
-      const productName = product.name[currentLang];
+      // Generate localized weight label dynamically based on current language
+      let weightLabelText = '';
+      if (current.type === 'preset') {
+        weightLabelText = weightRules[current.key].label[currentLang];
+      } else {
+        if (current.unit === 'g') {
+          weightLabelText = currentLang === 'ar' ? `${current.val} جرام` : `${current.val}g`;
+        } else {
+          weightLabelText = currentLang === 'ar' ? `${current.val} كيلو` : `${current.val}kg`;
+        }
+      }
 
-      const existingIndex = cart.findIndex(item => item.id === productId && item.weightLabel === current.label);
+      const itemPrice = parseFloat((product.basePrice * current.ratio).toFixed(1));
+
+      const existingIndex = cart.findIndex(item => item.id === productId && item.weightKey === (current.key || 'custom') && item.weightValue === (current.val || current.key));
 
       if (existingIndex > -1) {
         cart[existingIndex].qty += 1;
       } else {
         cart.push({
           id: product.id,
-          name: productName,
-          weightLabel: current.label,
+          weightKey: current.key || 'custom',
+          weightValue: current.val || current.key,
           price: itemPrice,
           qty: 1
         });
@@ -1754,20 +1712,37 @@
         return;
       }
 
-      cartItemsContainer.innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
-          <div class="cart-item-info">
-            <h4>${item.name}</h4>
-            <p>${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel} - ${item.price} ${currency}</p>
+      cartItemsContainer.innerHTML = cart.map((item, index) => {
+        const product = products.find(p => p.id === item.id);
+        const productName = product ? product.name[currentLang] : '';
+        
+        // Re-evaluate weight label dynamically based on current language
+        let weightLabelText = '';
+        if (item.weightKey !== 'custom' && weightRules[item.weightKey]) {
+          weightLabelText = weightRules[item.weightKey].label[currentLang];
+        } else {
+          if (item.weightValue.toString().includes('g') || item.weightValue.toString().includes('كيلو') || item.weightValue.toString().includes('جرام')) {
+            weightLabelText = item.weightValue;
+          } else {
+            weightLabelText = currentLang === 'ar' ? `${item.weightValue} جرام` : `${item.weightValue}g`;
+          }
+        }
+
+        return `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <h4>${productName}</h4>
+              <p>${translations[currentLang].weightText}: ${weightLabelText} - ${item.price} ${currency}</p>
+            </div>
+            <div class="cart-item-controls">
+              <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+              <span>${item.qty}</span>
+              <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+              <button class="qty-btn" style="color: red; border-color: red;" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i></button>
+            </div>
           </div>
-          <div class="cart-item-controls">
-            <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
-            <span>${item.qty}</span>
-            <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
-            <button class="qty-btn" style="color: red; border-color: red;" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
 
       const sub = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       subtotalPrice.innerText = `${sub.toFixed(1)} ${currency}`;
@@ -1861,9 +1836,12 @@
       const subTotalVal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       const totalVal = subTotalVal + shippingFee;
 
-      let orderListText = cart.map((item, idx) => 
-        `${idx + 1}. *${item.name}*\n   - ${currentLang === 'ar' ? 'الوزن' : 'Weight'}: ${item.weightLabel}\n   - ${currentLang === 'ar' ? 'الكمية' : 'Qty'}: ${item.qty}\n   - ${currentLang === 'ar' ? 'السعر' : 'Price'}: ${item.price * item.qty} ${currency}`
-      ).join('\n\n');
+      let orderListText = cart.map((item, idx) => {
+        const product = products.find(p => p.id === item.id);
+        const productName = product ? product.name[currentLang] : '';
+        let weightLabelText = item.weightKey !== 'custom' && weightRules[item.weightKey] ? weightRules[item.weightKey].label[currentLang] : item.weightValue;
+        return `${idx + 1}. *${productName}*\n   - ${translations[currentLang].weightText}: ${weightLabelText}\n   - ${translations[currentLang].qtyText}: ${item.qty}\n   - ${translations[currentLang].priceLabel} ${item.price * item.qty} ${currency}`;
+      }).join('\n\n');
 
       let whatsappMsg = currentLang === 'ar' ? 
         `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n*بيانات العميل:*\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *منطقة التوصيل:* حدائق الأهرام - 6 أكتوبر\n• *العنوان التفصيلي:* ${address}\n\n-------------------\n*الطلبات:*\n\n${orderListText}\n\n-------------------\n• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ${currency}\n• *مصاريف الشحن:* ${shippingFee} ${currency}\n• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ${currency}*\n\n• *طريقة الدفع:* ${payment}\n` :
