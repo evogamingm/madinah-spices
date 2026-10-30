@@ -63,11 +63,11 @@
       overflow-x: hidden;
     }
 
-    /* Scroll Animation Classes */
+    /* Scroll Animation Classes (Slow & Smooth) */
     .animate-on-scroll {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      transform: translateY(40px);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .animate-on-scroll.is-visible {
@@ -90,6 +90,41 @@
     }
     .top-bar i { color: var(--primary-gold); margin-left: 5px; }
     [lang="en"] .top-bar i { margin-left: 0; margin-right: 5px; }
+
+    /* Announcement Ticker (Added Feature) */
+    .announcement-ticker {
+      background-color: var(--primary-gold);
+      color: #1a1a1a;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .ticker-content {
+      display: inline-block;
+      animation: tickerAnimation 25s linear infinite;
+    }
+
+    .ticker-content span {
+      margin: 0 30px;
+    }
+
+    .ticker-content i {
+      color: var(--herbal-green);
+      margin-left: 5px;
+    }
+
+    @keyframes tickerAnimation {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(50%); }
+    }
+    [lang="en"] @keyframes tickerAnimation {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
 
     /* Header */
     header {
@@ -204,7 +239,7 @@
       margin-bottom: 25px;
       box-shadow: var(--shadow);
       max-height: 280px;
-      transition: all 0.5s ease-in-out;
+      transition: all 0.6s ease-in-out;
       opacity: 1;
     }
 
@@ -217,7 +252,7 @@
 
     .banner-slider {
       display: flex;
-      transition: transform 0.6s ease-in-out;
+      transition: transform 0.8s ease-in-out;
       width: 100%;
     }
     [lang="en"] .banner-slider {
@@ -862,6 +897,16 @@
     <span data-i18n="topBarPhone"><i class="fa-solid fa-phone"></i> الطلب المباشر: 01030043129</span>
   </div>
 
+  <!-- Announcement Ticker (New Idea Added) -->
+  <div class="announcement-ticker">
+    <div class="ticker-content" id="tickerContent">
+      <span data-i18n="ticker1"><i class="fa-solid fa-truck-fast"></i> توصيل سريع ومنزلي في حدائق الأهرام و6 أكتوبر</span>
+      <span data-i18n="ticker2"><i class="fa-solid fa-seedling"></i> توابل وبهارات أصلية ومطحونة طازجة يومياً</span>
+      <span data-i18n="ticker3"><i class="fa-solid fa-shield-halved"></i> ضمان الجودة النقية 100% أو استرداد الأموال</span>
+      <span data-i18n="ticker4"><i class="fa-solid fa-hand-holding-dollar"></i> إمكانية الدفع كاش أو عبر إنستا باي (InstaPay)</span>
+    </div>
+  </div>
+
   <!-- Main Header -->
   <header>
     <div class="header-container">
@@ -1008,15 +1053,15 @@
     <div class="cart-footer">
       <div class="summary-line">
         <span data-i18n="subtotal">المجموع الفرعي:</span>
-        <span id="subtotalPrice">0 EGP</span>
+        <span id="subtotalPrice">0.0 ج.م</span>
       </div>
       <div class="summary-line">
         <span data-i18n="shipping">شحن (حدائق الأهرام/6 أكتوبر):</span>
-        <span id="shippingPrice">30 EGP</span>
+        <span id="shippingPrice">30 ج.م</span>
       </div>
       <div class="summary-line total">
         <span data-i18n="finalTotal">الإجمالي النهائي:</span>
-        <span id="totalPrice">0 EGP</span>
+        <span id="totalPrice">0.0 ج.م</span>
       </div>
       <button class="checkout-btn" id="openCheckoutBtn" data-i18n="checkoutBtn">إتمام الطلب <i class="fa-solid fa-arrow-left"></i></button>
     </div>
@@ -1072,6 +1117,10 @@
       ar: {
         topBarDelivery: '<i class="fa-solid fa-location-dot"></i> التوصيل سريع إلى: حدائق الأهرام - 6 أكتوبر',
         topBarPhone: '<i class="fa-solid fa-phone"></i> الطلب المباشر: 01030043129',
+        ticker1: '<i class="fa-solid fa-truck-fast"></i> توصيل سريع ومنزلي في حدائق الأهرام و6 أكتوبر',
+        ticker2: '<i class="fa-solid fa-seedling"></i> توابل وبهارات أصلية ومطحونة طازجة يومياً',
+        ticker3: '<i class="fa-solid fa-shield-halved"></i> ضمان الجودة النقية 100% أو استرداد الأموال',
+        ticker4: '<i class="fa-solid fa-hand-holding-dollar"></i> إمكانية الدفع كاش أو عبر إنستا باي (InstaPay)',
         storeTitle: 'عطارة المدينة المنورة',
         storeSub: 'أجود أنواع البهارات والأعشاب الطبيعية',
         banner1Title: 'عطارة المدينة المنورة',
@@ -1139,6 +1188,10 @@
       en: {
         topBarDelivery: '<i class="fa-solid fa-location-dot"></i> Fast Delivery to: Hadayek El Ahram - 6th of October',
         topBarPhone: '<i class="fa-solid fa-phone"></i> Direct Order: 01030043129',
+        ticker1: '<i class="fa-solid fa-truck-fast"></i> Fast doorstep delivery in Hadayek El Ahram & 6th of October',
+        ticker2: '<i class="fa-solid fa-seedling"></i> Authentic spices and herbs ground fresh daily',
+        ticker3: '<i class="fa-solid fa-shield-halved"></i> 100% pure quality guarantee or money back',
+        ticker4: '<i class="fa-solid fa-hand-holding-dollar"></i> Pay with Cash or via InstaPay',
         storeTitle: 'عطارة المدينة المنورة',
         storeSub: 'Finest Spices & Natural Herbs',
         banner1Title: 'عطارة المدينة المنورة',
@@ -1391,12 +1444,12 @@
       setupScrollAnimations();
     }
 
-    // Scroll Animation Observer Setup
+    // Scroll Animation Observer Setup (Smooth & Slow)
     function setupScrollAnimations() {
       const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1
+        threshold: 0.05
       };
 
       const observer = new IntersectionObserver((entries, observerInstance) => {
@@ -1466,7 +1519,7 @@
         currentSlide = (currentSlide + 1) % totalSlides;
         const transformVal = currentLang === 'ar' ? (currentSlide * 100) : -(currentSlide * 100);
         slider.style.transform = `translateX(${transformVal}%)`;
-      }, 4000);
+      }, 5000);
     }
 
     // Auto-Hide Banner and Scroll-To-Top Button Logic
@@ -1696,8 +1749,8 @@
 
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">${translations[currentLang].emptyCart}</p>`;
-        subtotalPrice.innerText = `0 ${currency}`;
-        totalPrice.innerText = `0 ${currency}`;
+        subtotalPrice.innerText = `0.0 ${currency}`;
+        totalPrice.innerText = `0.0 ${currency}`;
         return;
       }
 
