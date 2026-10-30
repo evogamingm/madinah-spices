@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* تعريف خط Momken المخصص لعنوان المتجر (يعمل دائماً) */
+    /* تعريف خط Momken المخصص لعنوان المتجر */
     @font-face {
       font-family: 'MomkenFont';
       src: url('Momken-Regular.otf') format('opentype');
@@ -60,6 +60,19 @@
       display: flex;
       flex-direction: column;
       font-weight: 500;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Animation Classes */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .animate-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Top Bar */
@@ -116,7 +129,6 @@
       font-size: 1.3rem;
     }
 
-    /* تطبيق خط Momken على العنوان في الحالتين */
     .logo-text h1 {
       font-family: 'MomkenFont', 'Tajawal', sans-serif !important;
       font-size: 1.6rem;
@@ -478,6 +490,62 @@
       gap: 6px;
     }
 
+    /* Customer Reviews Section */
+    .reviews-section {
+      margin-top: 50px;
+      margin-bottom: 20px;
+    }
+
+    .reviews-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: var(--herbal-green);
+      text-align: center;
+    }
+    [data-theme="dark"] .reviews-title {
+      color: var(--primary-gold);
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .review-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .reviewer-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .review-stars {
+      color: var(--primary-gold);
+      font-size: 0.9rem;
+    }
+
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
     /* Cart Drawer */
     .cart-drawer-overlay {
       position: fixed;
@@ -821,7 +889,7 @@
   <div class="main-container">
 
     <!-- Auto-Hiding Promotional Banner Slider -->
-    <div class="hero-banner-wrapper" id="heroBanner">
+    <div class="hero-banner-wrapper animate-on-scroll" id="heroBanner">
       <div class="banner-slider" id="bannerSlider">
         <div class="banner-slide">
           <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1200&q=80" alt="بهارات طازجة">
@@ -848,7 +916,7 @@
     </div>
     
     <!-- Controls (Search & Filter) -->
-    <div class="controls-section">
+    <div class="controls-section animate-on-scroll">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="ابحث عن بهارات، أعشاب، زيوت، سكر، مكرونة...">
@@ -864,13 +932,41 @@
     </div>
 
     <!-- Main Products Section -->
-    <h3 style="margin-bottom: 15px; font-weight: 800;" id="sectionTitle" data-i18n="allProducts">كل المنتجات</h3>
-    <div class="products-grid" id="productsGrid"></div>
+    <h3 style="margin-bottom: 15px; font-weight: 800;" class="animate-on-scroll" id="sectionTitle" data-i18n="allProducts">كل المنتجات</h3>
+    <div class="products-grid animate-on-scroll" id="productsGrid"></div>
+
+    <!-- Customer Reviews Section -->
+    <div class="reviews-section animate-on-scroll">
+      <h2 class="reviews-title" data-i18n="reviewsTitle">آراء عملائنا الكرام</h2>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name" data-i18n="rev1Name">أحمد محمود (حدائق الأهرام)</span>
+            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          </div>
+          <p class="review-text" data-i18n="rev1Text">"ما شاء الله البهارات ريحتها طازجة ونقيتها ممتازة جداً، والتوصيل كان في أسرع وقت. شكراً لكم!"</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name" data-i18n="rev2Name">سارة علي (6 أكتوبر)</span>
+            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          </div>
+          <p class="review-text" data-i18n="rev2Text">"الزيوت الطبيعية والمكسرات ممتازة وكمان إمكانية اختيار الأوزان المخصصة سهلت عليا جداً الطلب."</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name" data-i18n="rev3Name">محمد إبراهيم (حدائق الأهرام)</span>
+            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          </div>
+          <p class="review-text" data-i18n="rev3Text">"خدمة عملاء ممتازة وسرعة في التوصيل، والمنتجات مغلفة بطريقة نظيفة جداً. أنصح بالتجربة."</p>
+        </div>
+      </div>
+    </div>
 
   </div>
 
   <!-- Footer -->
-  <footer>
+  <footer class="animate-on-scroll">
     <div class="footer-container">
       <div class="footer-col">
         <h3 data-i18n="footerStoreName">عطارة المدينة المنورة</h3>
@@ -912,15 +1008,15 @@
     <div class="cart-footer">
       <div class="summary-line">
         <span data-i18n="subtotal">المجموع الفرعي:</span>
-        <span id="subtotalPrice">0 ج.م</span>
+        <span id="subtotalPrice">0 EGP</span>
       </div>
       <div class="summary-line">
         <span data-i18n="shipping">شحن (حدائق الأهرام/6 أكتوبر):</span>
-        <span id="shippingPrice">30 ج.م</span>
+        <span id="shippingPrice">30 EGP</span>
       </div>
       <div class="summary-line total">
         <span data-i18n="finalTotal">الإجمالي النهائي:</span>
-        <span id="totalPrice">0 ج.م</span>
+        <span id="totalPrice">0 EGP</span>
       </div>
       <button class="checkout-btn" id="openCheckoutBtn" data-i18n="checkoutBtn">إتمام الطلب <i class="fa-solid fa-arrow-left"></i></button>
     </div>
@@ -992,6 +1088,13 @@
         catOils: 'زيوت طبيعية',
         catGroceries: 'مكرونة وبقالة',
         allProducts: 'كل المنتجات',
+        reviewsTitle: 'آراء عملائنا الكرام',
+        rev1Name: 'أحمد محمود (حدائق الأهرام)',
+        rev1Text: '"ما شاء الله البهارات ريحتها طازجة ونقيتها ممتازة جداً، والتوصيل كان في أسرع وقت. شكراً لكم!"',
+        rev2Name: 'سارة علي (6 أكتوبر)',
+        rev2Text: '"الزيوت الطبيعية والمكسرات ممتازة وكمان إمكانية اختيار الأوزان المخصصة سهلت عليا جداً الطلب."',
+        rev3Name: 'محمد إبراهيم (حدائق الأهرام)',
+        rev3Text: '"خدمة عملاء ممتازة وسرعة في التوصيل، والمنتجات مغلفة بطريقة نظيفة جداً. أنصح بالتجربة."',
         footerStoreName: 'عطارة المدينة المنورة',
         footerDesc: 'متجركم الأول للتوابل، الأعشاب الطبيعية، والمستلزمات الغذائية العالية الجودة في حدائق الأهرام و6 أكتوبر.',
         footerLocation: '<i class="fa-solid fa-location-dot"></i> حدائق الأهرام / 6 أكتوبر',
@@ -1052,6 +1155,13 @@
         catOils: 'Natural Oils',
         catGroceries: 'Pasta & Grocery',
         allProducts: 'All Products',
+        reviewsTitle: 'Customer Reviews',
+        rev1Name: 'Ahmed Mahmoud (Hadayek El Ahram)',
+        rev1Text: '"Mashallah, the spices smell fresh and are of excellent purity, and the delivery was very fast. Thank you!"',
+        rev2Name: 'Sarah Ali (6th of October)',
+        rev2Text: '"Natural oils and nuts are excellent, and the custom weight selection made ordering so easy for me."',
+        rev3Name: 'Mohamed Ibrahim (Hadayek El Ahram)',
+        rev3Text: '"Great customer service and fast delivery, products are packed very cleanly. Highly recommended."',
         footerStoreName: 'عطارة المدينة المنورة',
         footerDesc: 'Your premier store for spices, natural herbs, and high-quality food supplies in Hadayek El Ahram & 6th of October.',
         footerLocation: '<i class="fa-solid fa-location-dot"></i> Hadayek El Ahram / 6th of October',
@@ -1278,6 +1388,29 @@
       setupTheme();
       initBannerSlider();
       setupScrollEvents();
+      setupScrollAnimations();
+    }
+
+    // Scroll Animation Observer Setup
+    function setupScrollAnimations() {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observerInstance) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
     }
 
     // Language Toggle Setup
@@ -1680,8 +1813,8 @@
       ).join('\n\n');
 
       let whatsappMsg = currentLang === 'ar' ? 
-        `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n*بيانات العميل:*\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *منطقة التوصيل:* حدائق الأهرام - 6 أكتوبر\n• *العنوان التفصيلي:* ${address}\n\n-------------------\n*الطلبات:*\n\n${orderListText}\n\n-------------------\n• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ج.م\n• *مصاريف الشحن:* ${shippingFee} ج.م\n• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ج.م*\n\n• *طريقة الدفع:* ${payment}\n` :
-        `*New Order from Al-Madinah Spices Store* 🌿\n\n*Customer Info:*\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Delivery Area:* Hadayek El Ahram - 6th of October\n• *Address:* ${address}\n\n-------------------\n*Items:*\n\n${orderListText}\n\n-------------------\n• *Subtotal:* ${subTotalVal.toFixed(1)} EGP\n• *Shipping:* ${shippingFee} EGP\n• *Final Total:* *${totalVal.toFixed(1)} EGP*\n\n• *Payment:* ${payment}\n`;
+        `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n*بيانات العميل:*\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *منطقة التوصيل:* حدائق الأهرام - 6 أكتوبر\n• *العنوان التفصيلي:* ${address}\n\n-------------------\n*الطلبات:*\n\n${orderListText}\n\n-------------------\n• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ${currency}\n• *مصاريف الشحن:* ${shippingFee} ${currency}\n• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ${currency}*\n\n• *طريقة الدفع:* ${payment}\n` :
+        `*New Order from Al-Madinah Spices Store* 🌿\n\n*Customer Info:*\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Delivery Area:* Hadayek El Ahram - 6th of October\n• *Address:* ${address}\n\n-------------------\n*Items:*\n\n${orderListText}\n\n-------------------\n• *Subtotal:* ${subTotalVal.toFixed(1)} ${currency}\n• *Shipping:* ${shippingFee} ${currency}\n• *Final Total:* *${totalVal.toFixed(1)} ${currency}*\n\n• *Payment:* ${payment}\n`;
 
       if (paymentMethodSelect.value === 'instapay') {
         whatsappMsg += currentLang === 'ar' ? `\n⚠️ *ملاحظة:* تم اختيار الدفع عبر InstaPay، سأقوم بإرفاق صورة إيصال التحويل الآن.` : `\n⚠️ *Note:* Paid via InstaPay, I will attach the receipt image now.`;
