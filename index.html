@@ -1024,7 +1024,7 @@
       <button class="close-cart-btn" id="closeAiBtn" style="color: white;"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="ai-chat-messages" id="aiChatMsgs">
-      <div class="chat-msg bot" data-i18n="aiWelcome">أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن سعر أي منتج، وصفة طبخ، أو علاج عشبي وسأفيدك فوراً!</div>
+      <div class="chat-msg bot" data-i18n="aiWelcome">أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج (مثل المكرونة)، رقم التواصل، أو حالات البرد والرشح والصداع!</div>
     </div>
     <div class="ai-chat-input-area">
       <input type="text" id="aiInput" placeholder="اسأل الخبير الذكي..." data-i18n-placeholder="aiPh">
@@ -1203,7 +1203,7 @@
         qtyText: 'الكمية',
         priceText: 'السعر',
         aiHeaderTitle: '<i class="fa-solid fa-wand-magic-sparkles"></i> خبير العطارة الذكي',
-        aiWelcome: 'أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن سعر أي منتج، وصفة طبخ، أو علاج عشبي وسأفيدك فوراً!',
+        aiWelcome: 'أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج (مثل المكرونة)، رقم التواصل، أو حالات البرد والرشح والصداع!',
         aiPh: 'اسأل الخبير الذكي...',
         phName: 'مثال: أحمد محمد',
         phPhone: '010xxxxxxxx',
@@ -1276,7 +1276,7 @@
         qtyText: 'Qty',
         priceText: 'Price',
         aiHeaderTitle: '<i class="fa-solid fa-wand-magic-sparkles"></i> Smart Herbal AI',
-        aiWelcome: 'Welcome! I am Al-Madinah Spices AI Expert 🌿. Ask me about any product price, recipe, or herbal remedy!',
+        aiWelcome: 'Welcome! I am Al-Madinah Spices AI Expert 🌿. Ask me about any product (like pasta), contact number, or cold/headache remedies!',
         aiPh: 'Ask the smart expert...',
         phName: 'Ex: Ahmed Mohamed',
         phPhone: '010xxxxxxxx',
@@ -1367,7 +1367,7 @@
       setupAIAssistant();
     }
 
-    // AI Assistant Intelligence Logic (Updated & Smarter)
+    // AI Assistant Intelligence Logic (Updated to handle products availability, phone, cold, runny nose, headache)
     function setupAIAssistant() {
       aiBtn.addEventListener('click', () => aiDrawer.classList.toggle('open'));
       closeAiBtn.addEventListener('click', () => aiDrawer.classList.remove('open'));
@@ -1399,61 +1399,67 @@
 
     function generateSmartAiReply(query) {
       const q = query.toLowerCase();
-      const currency = translations[currentLang].currency;
 
-      // 1. Check if user is asking for price of a specific product
-      let foundProduct = products.find(p => q.includes(p.name.ar.toLowerCase()) || q.includes(p.name.en.toLowerCase()) || (q.includes('كمون') && p.id === 1) || (q.includes('فلفل') && p.id === 2) || (q.includes('كركم') && p.id === 3) || (q.includes('بن') && p.id === 13) || (q.includes('زيت') && p.id === 11) || (q.includes('مكسرات') && p.id === 8));
-      
-      if (foundProduct && (q.includes('سعر') || q.includes('بكم') || q.includes('price') || q.includes('how much') || q.includes('كام'))) {
-        const price1kg = foundProduct.basePrice;
-        const price250g = (foundProduct.basePrice * 0.25).toFixed(1);
+      // 1. Check if user is asking for contact number / phone
+      if (q.includes('رقم') || q.includes('تواصل') || q.includes('اتصال') || q.includes('phone') || q.includes('number') || q.includes('whatsapp') || q.includes('واتساب')) {
         return currentLang === 'ar' ? 
-          `سعر "${foundProduct.name.ar}" هو ${price1kg} ${currency} للكيلو، و ${price250g} ${currency} لربع الكيلو (250 جرام). هل تريد إضافته للسلة؟ 🌿` :
-          `The price of "${foundProduct.name.en}" is ${price1kg} ${currency} per kg, and ${price250g} ${currency} for 250g. Would you like to add it? 🌿`;
+          'رقم التواصل والطلب المباشر (عبر الواتساب) هو: 01030043129 📞. نحن في خدمتكم دائماً!' : 
+          'Our direct contact and WhatsApp number is: 01030043129 📞. We are always at your service!';
       }
 
-      // 2. Health & Medical / Herbal queries (رشح، برد، قولون، أرق...)
-      if (q.includes('رشح') || q.includes('برد') || q.includes('أنفلونزا') || q.includes('كحة') || q.includes('زكام') || q.includes('cold') || q.includes('flu')) {
+      // 2. Check if user asks about a product (like pasta / مكرونة or any other product)
+      let foundProduct = products.find(p => q.includes(p.name.ar.toLowerCase()) || q.includes(p.name.en.toLowerCase()) || (q.includes('مكرونة') && p.id === 16) || (q.includes('سكر') && p.id === 15) || (q.includes('ملح') && p.id === 14) || (q.includes('كمون') && p.id === 1) || (q.includes('فلفل') && p.id === 2) || (q.includes('كركم') && p.id === 3) || (q.includes('بن') && p.id === 13));
+
+      if (foundProduct) {
+        const pName = foundProduct.name[currentLang];
         return currentLang === 'ar' ? 
-          'لعلاج الرشح والبرد ونزلات البرد: ننصحك بشراب اليانسون الدافئ مع قطرات الليمون، والبابونج لرفع المناعة وتطهير الحلق 🌿.' :
-          'For cold and flu symptoms: We recommend warm Star Anise tea with lemon drops, and Chamomile to boost immunity 🌿.';
-      }
-      if (q.includes('قولون') || q.includes('معدة') || q.includes('بطن') || q.includes('stomach') || q.includes('colon') || q.includes('انتفاخ')) {
-        return currentLang === 'ar' ? 
-          'لعلاج انتفاخات القولون والمعدة: الكمون البلدي المطحون والبابونج الدافئ ممتازان جداً لتهدئة جدار المعدة وطرد الغازات 🌿.' :
-          'For colon and stomach bloating: Fresh ground Cumin and warm Chamomile are excellent for soothing digestion 🌿.';
-      }
-      if (q.includes('أرق') || q.includes('نوم') || q.includes('إرهاق') || q.includes('sleep') || q.includes('stress') || q.includes('تعب')) {
-        return currentLang === 'ar' ? 
-          'للاسترخاء والتخلص من الأرق والإرهاق: زهرة البابونج الكاملة واليانسون الدافئ قبل النوم تمنحك استرخاءً كاملاً ونوماً هادئاً ✨.' :
-          'For relaxation and deep sleep: Whole Flower Chamomile and warm tea before bed help calm the nerves ✨.';
+          `نعم، منتج "${pName}" متوفر حالياً في متجرنا بجودة عالية وطازجة! يمكنك طلبه من قسم البقالة أو الأعشاب بالأعلى 🛒🌿.` : 
+          `Yes, "${pName}" is currently available in our store with high fresh quality! You can order it from the sections above 🛒🌿.`;
       }
 
-      // 3. Cooking / Recipes queries (كبسة، مشاوي، أكل...)
-      if (q.includes('كبسة') || q.includes('لحمة') || q.includes('فراخ') || q.includes('تتبيلة') || q.includes('مطبخ') || q.includes('طبخ') || q.includes('cooking') || q.includes('مشاوي')) {
+      // General check for generic product queries (like pasta)
+      if (q.includes('مكرونة') || q.includes('pasta')) {
         return currentLang === 'ar' ? 
-          'أفضل توليفة بهارات للطبخ والمشاوي لدينا: الفلفل الأسود الفاخر، الكركم الهندي النقي، والكمون البلدي المطحون طازجاً 🍲.' :
-          'Best spice mix for cooking and grilling: Premium Black Pepper, Pure Indian Turmeric, and fresh ground Cumin 🍲.';
+          'نعم، مكرونة الأنواع المشكلة متوفرة لدينا في قسم البقالة وبأفضل جودة 🍝!' : 
+          'Yes, mixed pasta varieties are available in our grocery section 🍝!';
       }
 
-      // 4. Hair / Skin (شعر، بشرة...)
-      if (q.includes('شعر') || q.includes('بشرة') || q.includes('تجميل') || q.includes('skin') || q.includes('hair') || q.includes('زيت')) {
+      // 3. Health & Medical queries (البرد، الرشح، الصداع...)
+      if (q.includes('رشح') || q.includes('برد') || q.includes('زكام') || q.includes('أنفلونزا') || q.includes('cold') || q.includes('flu')) {
         return currentLang === 'ar' ? 
-          'لعناية الشعر والبشرة: نرشح لك زيت حبة البركة المعصور عصراً بكراً، وزيت الزيتون السيوي النقي 100% لتغذية مثالية ✨.' :
-          'For hair and skin care: We recommend our pressed Black Seed Oil and pure Siwan Olive Oil for deep nourishment ✨.';
+          'لعلاج البرد والرشح ونزلات البرد: ننصحك بشراب اليانسون النجمي الدافئ مع قطرات الليمون، وأعشاب البابونج لتطهير الحلق ورفع المناعة 🌿.' :
+          'For cold and runny nose symptoms: We recommend warm Star Anise tea with lemon, and Chamomile to boost immunity 🌿.';
       }
 
-      // 5. Delivery
+      if (q.includes('صداع') || q.includes('دوخة') || q.includes('headache')) {
+        return currentLang === 'ar' ? 
+          'لعلاج الصداع: ننصح بشرب النعناع الأسواني المجفف الدافئ أو البابونج لتهدئة الأعصاب وإرخاء الشد العضلي بالراس ✨.' :
+          'For headaches: We recommend warm Aswan Dried Mint or Chamomile tea to soothe the nerves and relax ✨.';
+      }
+
+      if (q.includes('قولون') || q.includes('معدة') || q.includes('انتفاخ') || q.includes('stomach') || q.includes('colon')) {
+        return currentLang === 'ar' ? 
+          'لعلاج انتفاخات القولون والمعدة: الكمون البلدي المطحون والبابونج الدافئ ممتازان جداً لتهدئة المعدة وطرد الغازات 🌿.' :
+          'For colon and stomach discomfort: Fresh ground Cumin and warm Chamomile are excellent for digestion 🌿.';
+      }
+
+      if (q.includes('أرق') || q.includes('نوم') || q.includes('إرهاق') || q.includes('sleep') || q.includes('stress')) {
+        return currentLang === 'ar' ? 
+          'للاسترخاء والنوم العميق: زهرة البابونج الكاملة واليانسون الدافئ قبل النوم تساعد على النوم الهادئ وتهدئة الأعصاب 🌙.' :
+          'For relaxation and deep sleep: Whole Flower Chamomile and warm tea before bed help calm the nerves 🌙.';
+      }
+
+      // 4. Delivery
       if (q.includes('توصيل') || q.includes('مكان') || q.includes('delivery') || q.includes('فين')) {
         return currentLang === 'ar' ? 
-          'نحن نتواجد ونوصل طلباتكم بسرعة فائقة ومنزلية في مناطق: حدائق الأهرام و6 أكتوبر 🚛!' :
-          'We deliver fast and directly to your doorstep in Hadayek El Ahram and 6th of October 🚛!';
+          'نحن نوصل طلباتكم بسرعة فائقة إلى منازلكم في مناطق: حدائق الأهرام و6 أكتوبر 🚛!' :
+          'Chúng tôi deliver fast to your doorstep in Hadayek El Ahram and 6th of October 🚛!';
       }
 
       // Default smart fallback response
       return currentLang === 'ar' ? 
-        `أهلاً بك! لقد فهمت استفسارك، ولكن لتحديد طلبك بدقة، يمكنك تصفح قسم المنتجات بالأعلى أو إخباري باسم العشب أو البهار (مثل: الكمون، الفلفل، البابونج) لأعطيك تفاصيله وسعره الفوري 🌿.` :
-        `Welcome! You can browse our products above or tell me the specific herb or spice name (e.g., Cumin, Pepper, Chamomile) to get its exact details and price 🌿.`;
+        `أهلاً بك! يمكنك تصفح منتجاتنا بالأعلى (مثل البهارات، المكرونة، الزيوت)، أو سؤالى عن أي عشب للبرد والرشح والصداع، أو طلب رقم التواصل 🌿.` :
+        `Welcome! You can browse our products above, or ask me about remedies for colds, headaches, runny nose, or request our contact number 🌿.`;
     }
 
     // Scroll Animation Observer Setup
