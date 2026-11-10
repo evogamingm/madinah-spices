@@ -182,10 +182,7 @@
       align-items: center;
       justify-content: center;
     }
-    [lang="en"] .cart-badge {
-      right: auto;
-      left: -5px;
-    }
+    [lang="en"] .cart-badge { right: auto; left: -5px; }
 
     /* Main Container */
     .main-container {
@@ -196,7 +193,7 @@
       width: 100%;
     }
 
-    /* Sliding Banner Section (Auto Hide On Scroll) */
+    /* Sliding Banner Section */
     .hero-banner-wrapper {
       position: relative;
       overflow: hidden;
@@ -220,9 +217,7 @@
       transition: transform 0.8s ease-in-out;
       width: 100%;
     }
-    [lang="en"] .banner-slider {
-      direction: ltr;
-    }
+    [lang="en"] .banner-slider { direction: ltr; }
 
     .banner-slide {
       min-width: 100%;
@@ -245,9 +240,7 @@
       color: white;
       text-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
-    [lang="en"] .banner-caption {
-      text-align: left;
-    }
+    [lang="en"] .banner-caption { text-align: left; }
 
     .banner-caption h2 {
       font-size: 1.6rem;
@@ -256,14 +249,10 @@
       margin-bottom: 5px;
     }
 
-    .banner-caption p {
-      font-size: 0.95rem;
-    }
+    .banner-caption p { font-size: 0.95rem; }
 
     /* Search & Categories */
-    .controls-section {
-      margin-bottom: 25px;
-    }
+    .controls-section { margin-bottom: 25px; }
 
     .search-box {
       position: relative;
@@ -281,9 +270,7 @@
       outline: none;
       box-shadow: var(--shadow);
     }
-    [lang="en"] .search-box input {
-      padding: 14px 15px 14px 45px;
-    }
+    [lang="en"] .search-box input { padding: 14px 15px 14px 45px; }
 
     .search-box i {
       position: absolute;
@@ -292,10 +279,7 @@
       transform: translateY(-50%);
       color: var(--text-muted);
     }
-    [lang="en"] .search-box i {
-      right: auto;
-      left: 18px;
-    }
+    [lang="en"] .search-box i { right: auto; left: 18px; }
 
     .categories-nav {
       display: flex;
@@ -354,10 +338,7 @@
       font-weight: bold;
       z-index: 1;
     }
-    [lang="en"] .product-badge {
-      right: auto;
-      left: 10px;
-    }
+    [lang="en"] .product-badge { right: auto; left: 10px; }
 
     .product-img {
       width: 100%;
@@ -384,10 +365,8 @@
       margin-bottom: 10px;
     }
 
-    /* Weight Selection & Custom Input */
-    .weight-selector {
-      margin: 10px 0;
-    }
+    /* Weight Selection */
+    .weight-selector { margin: 10px 0; }
 
     .weight-selector label {
       font-size: 0.8rem;
@@ -434,9 +413,7 @@
       border: 1px dashed var(--primary-gold);
     }
 
-    .custom-weight-box.active {
-      display: flex;
-    }
+    .custom-weight-box.active { display: flex; }
 
     .custom-weight-box input {
       width: 60px;
@@ -473,9 +450,7 @@
       font-weight: 800;
       color: var(--herbal-green);
     }
-    [data-theme="dark"] .product-price {
-      color: var(--primary-gold);
-    }
+    [data-theme="dark"] .product-price { color: var(--primary-gold); }
 
     .add-to-cart-btn {
       background-color: var(--herbal-green);
@@ -488,180 +463,6 @@
       display: flex;
       align-items: center;
       gap: 6px;
-    }
-
-    /* AI CHAT WIDGET STYLES */
-    .ai-chat-btn {
-      position: fixed;
-      bottom: 80px;
-      right: 25px;
-      width: 55px;
-      height: 55px;
-      background: linear-gradient(135deg, var(--herbal-green), var(--primary-gold));
-      color: white;
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      z-index: 1600;
-      transition: transform 0.3s ease;
-    }
-
-    [lang="en"] .ai-chat-btn {
-      right: auto;
-      left: 25px;
-    }
-
-    .ai-chat-btn:hover {
-      transform: scale(1.08);
-    }
-
-    .ai-chat-window {
-      position: fixed;
-      bottom: 145px;
-      right: 25px;
-      width: 340px;
-      height: 460px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      z-index: 1601;
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-      animation: popUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    [lang="en"] .ai-chat-window {
-      right: auto;
-      left: 25px;
-    }
-
-    @keyframes popUp {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .ai-chat-header {
-      background: var(--herbal-green);
-      color: white;
-      padding: 12px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .ai-chat-header-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: bold;
-      font-size: 0.95rem;
-    }
-
-    .ai-chat-close {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.1rem;
-      cursor: pointer;
-    }
-
-    .ai-chat-messages {
-      flex: 1;
-      padding: 12px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 0.88rem;
-    }
-
-    .ai-msg {
-      max-width: 85%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      line-height: 1.4;
-    }
-
-    .ai-msg.bot {
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      align-self: flex-start;
-      border-top-right-radius: 2px;
-    }
-    [lang="en"] .ai-msg.bot {
-      border-top-right-radius: 12px;
-      border-top-left-radius: 2px;
-    }
-
-    .ai-msg.user {
-      background: var(--herbal-green);
-      color: white;
-      align-self: flex-end;
-      border-top-left-radius: 2px;
-    }
-    [lang="en"] .ai-msg.user {
-      border-top-left-radius: 12px;
-      border-top-right-radius: 2px;
-    }
-
-    .ai-suggestions {
-      display: flex;
-      gap: 5px;
-      padding: 0 10px 8px 10px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .ai-suggestions::-webkit-scrollbar { display: none; }
-
-    .ai-suggest-btn {
-      font-size: 0.72rem;
-      background: var(--bg-color);
-      border: 1px solid var(--primary-gold);
-      color: var(--text-main);
-      padding: 4px 8px;
-      border-radius: 12px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .ai-chat-input-area {
-      display: flex;
-      padding: 10px;
-      border-top: 1px solid var(--border-color);
-      background: var(--card-bg);
-      gap: 6px;
-    }
-
-    .ai-chat-input-area input {
-      flex: 1;
-      padding: 8px 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      outline: none;
-      background: var(--bg-color);
-      color: var(--text-main);
-      font-size: 0.85rem;
-    }
-
-    .ai-chat-send-btn {
-      background: var(--primary-gold);
-      color: white;
-      border: none;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     /* Customer Reviews Section */
@@ -677,9 +478,7 @@
       color: var(--herbal-green);
       text-align: center;
     }
-    [data-theme="dark"] .reviews-title {
-      color: var(--primary-gold);
-    }
+    [data-theme="dark"] .reviews-title { color: var(--primary-gold); }
 
     .reviews-grid {
       display: grid;
@@ -704,20 +503,126 @@
       align-items: center;
     }
 
-    .reviewer-name {
-      font-weight: 700;
-      font-size: 1rem;
+    .reviewer-name { font-weight: 700; font-size: 1rem; }
+    .review-stars { color: var(--primary-gold); font-size: 0.9rem; }
+    .review-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* AI Assistant Floating Widget */
+    .ai-assistant-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(135deg, var(--herbal-green), var(--primary-gold));
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 1600;
+      transition: transform 0.3s ease;
+    }
+    [lang="en"] .ai-assistant-btn { right: auto; left: 25px; }
+    .ai-assistant-btn:hover { transform: scale(1.08); }
+
+    .ai-chat-drawer {
+      position: fixed;
+      bottom: 90px;
+      right: 25px;
+      width: 340px;
+      height: 440px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 1601;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    [lang="en"] .ai-chat-drawer { right: auto; left: 25px; }
+    .ai-chat-drawer.open { display: flex; }
+
+    .ai-chat-header {
+      background: var(--herbal-green);
+      color: white;
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ai-chat-header h4 { font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .review-stars {
-      color: var(--primary-gold);
-      font-size: 0.9rem;
+    .chat-msg {
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      line-height: 1.4;
     }
 
-    .review-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
+    .chat-msg.bot {
+      background: var(--bg-color);
+      color: var(--text-main);
+      align-self: flex-start;
+      border-bottom-right-radius: 2px;
+      border: 1px solid var(--border-color);
+    }
+    [lang="en"] .chat-msg.bot { border-bottom-right-radius: 12px; border-bottom-left-radius: 2px; }
+
+    .chat-msg.user {
+      background: var(--primary-gold);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-left-radius: 2px;
+      font-weight: 600;
+    }
+    [lang="en"] .chat-msg.user { border-bottom-left-radius: 12px; border-bottom-right-radius: 2px; }
+
+    .ai-chat-input-area {
+      padding: 10px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 6px;
+      background: var(--card-bg);
+    }
+
+    .ai-chat-input-area input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      outline: none;
+      background: var(--bg-color);
+      color: var(--text-main);
+    }
+
+    .ai-chat-input-area button {
+      background: var(--herbal-green);
+      color: white;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Cart Drawer */
@@ -752,10 +657,7 @@
       box-shadow: -2px 0 10px rgba(0,0,0,0.1);
       transition: right 0.3s ease;
     }
-    [lang="en"] .cart-drawer.open {
-      right: 0;
-      left: auto;
-    }
+    [lang="en"] .cart-drawer.open { right: 0; left: auto; }
 
     .cart-drawer.open { left: 0; }
     .cart-drawer-overlay.open { display: block; }
@@ -871,16 +773,8 @@
       overflow-y: auto;
     }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-size: 0.9rem; font-weight: 600; }
 
     .form-group input, .form-group textarea, .form-group select {
       width: 100%;
@@ -911,10 +805,7 @@
       cursor: pointer;
       margin-right: 5px;
     }
-    [lang="en"] .copy-btn {
-      margin-right: 0;
-      margin-left: 5px;
-    }
+    [lang="en"] .copy-btn { margin-right: 0; margin-left: 5px; }
 
     /* Scroll To Top Button */
     .scroll-to-top {
@@ -938,15 +829,9 @@
       transition: all 0.3s ease;
       z-index: 1500;
     }
-    [lang="en"] .scroll-to-top {
-      left: auto;
-      right: 25px;
-    }
+    [lang="en"] .scroll-to-top { left: auto; right: 25px; }
 
-    .scroll-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
+    .scroll-to-top.visible { opacity: 1; visibility: visible; }
 
     /* Footer */
     footer {
@@ -971,9 +856,7 @@
       margin-bottom: 15px;
       font-weight: 800;
     }
-    [data-theme="dark"] .footer-col h3 {
-      color: var(--primary-gold);
-    }
+    [data-theme="dark"] .footer-col h3 { color: var(--primary-gold); }
 
     .footer-col p {
       font-size: 0.9rem;
@@ -982,14 +865,8 @@
       margin-bottom: 10px;
     }
 
-    .footer-col i {
-      color: var(--primary-gold);
-      margin-left: 8px;
-    }
-    [lang="en"] .footer-col i {
-      margin-left: 0;
-      margin-right: 8px;
-    }
+    .footer-col i { color: var(--primary-gold); margin-left: 8px; }
+    [lang="en"] .footer-col i { margin-left: 0; margin-right: 8px; }
 
     .footer-features {
       display: flex;
@@ -1014,10 +891,7 @@
     }
 
     @media (max-width: 600px) {
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .product-img { height: 120px; }
       .product-title { font-size: 0.95rem; }
       .product-info { padding: 10px; }
@@ -1025,7 +899,8 @@
       .banner-slide { height: 180px; }
       .banner-caption h2 { font-size: 1.2rem; }
       .banner-caption p { font-size: 0.8rem; }
-      .ai-chat-window { width: 90%; right: 5%; left: 5%; bottom: 140px; }
+      .ai-chat-drawer { width: 90%; right: 5%; bottom: 85px; }
+      [lang="en"] .ai-chat-drawer { left: 5%; right: auto; }
     }
   </style>
 </head>
@@ -1140,33 +1015,22 @@
 
   </div>
 
-  <!-- AI Chat Assistant Floating Trigger -->
-  <button class="ai-chat-btn" id="aiChatBtn" title="مساعد عطارة المدينة المنورة الذكي">
+  <!-- AI Assistant Floating Button & Drawer -->
+  <button class="ai-assistant-btn" id="aiBtn" title="مساعد العطارة الذكي">
     <i class="fa-solid fa-robot"></i>
   </button>
 
-  <!-- AI Chat Window -->
-  <div class="ai-chat-window" id="aiChatWindow">
+  <div class="ai-chat-drawer" id="aiDrawer">
     <div class="ai-chat-header">
-      <div class="ai-chat-header-title">
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
-        <span data-i18n="aiBotTitle">خبير العطارة الذكي</span>
-      </div>
-      <button class="ai-chat-close" id="aiChatClose"><i class="fa-solid fa-xmark"></i></button>
+      <h4 data-i18n="aiHeaderTitle"><i class="fa-solid fa-wand-magic-sparkles"></i> خبير العطارة الذكي</h4>
+      <button class="close-cart-btn" id="closeAiBtn" style="color: white;"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="ai-chat-messages" id="aiChatMessages">
-      <div class="ai-msg bot" data-i18n="aiWelcome">
-        أهلاً بك! 🌿 أنا مساعد عطارة المدينة المنورة الذكي. كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن خلطات التوابل، الأعشاب المهدئة، أو الزيوت الطبيعية!
-      </div>
-    </div>
-    <div class="ai-suggestions">
-      <button class="ai-suggest-btn" onclick="sendSuggestedMsg(this)" data-i18n="sug1">أعشاب مهدئة للقولون ☕</button>
-      <button class="ai-suggest-btn" onclick="sendSuggestedMsg(this)" data-i18n="sug2">بهارات للكبسة 🍛</button>
-      <button class="ai-suggest-btn" onclick="sendSuggestedMsg(this)" data-i18n="sug3">زيوت للشعر 🌿</button>
+    <div class="ai-chat-messages" id="aiChatMsgs">
+      <div class="chat-msg bot" data-i18n="aiWelcome">أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. كيف يمكنني مساعدتك اليوم؟ (استفسار عن وصفة، أعشاب للصحة، أو بهارات للطبخ)</div>
     </div>
     <div class="ai-chat-input-area">
-      <input type="text" id="aiInput" placeholder="اسأل الخبير الذكي هنا..." data-i18n-placeholder="aiPlaceholder">
-      <button class="ai-chat-send-btn" id="aiSendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+      <input type="text" id="aiInput" placeholder="اسأل الخبير الذكي..." data-i18n-placeholder="aiPh">
+      <button id="aiSendBtn"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </div>
 
@@ -1340,15 +1204,12 @@
         weightText: 'الوزن',
         qtyText: 'الكمية',
         priceText: 'السعر',
+        aiHeaderTitle: '<i class="fa-solid fa-wand-magic-sparkles"></i> خبير العطارة الذكي',
+        aiWelcome: 'أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. كيف يمكنني مساعدتك اليوم؟ (استفسار عن وصفة، أعشاب للصحة، أو بهارات للطبخ)',
+        aiPh: 'اسأل الخبير الذكي...',
         phName: 'مثال: أحمد محمد',
         phPhone: '010xxxxxxxx',
-        phAddress: 'اسم المنطقة (حدائق الأهرام/أكتوبر)، شارع، رقم العمارة، الشقة',
-        aiBotTitle: 'خبير العطارة الذكي',
-        aiWelcome: 'أهلاً بك! 🌿 أنا مساعد عطارة المدينة المنورة الذكي. كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن خلطات التوابل، الأعشاب المهدئة، أو الزيوت الطبيعية!',
-        aiPlaceholder: 'اسأل الخبير الذكي هنا...',
-        sug1: 'أعشاب مهدئة للقولون ☕',
-        sug2: 'بهارات للكبسة 🍛',
-        sug3: 'زيوت للشعر 🌿'
+        phAddress: 'اسم المنطقة (حدائق الأهرام/أكتوبر)، شارع، رقم العمارة، الشقة'
       },
       en: {
         topBarDelivery: '<i class="fa-solid fa-location-dot"></i> Fast Delivery to: Hadayek El Ahram - 6th of October',
@@ -1416,150 +1277,35 @@
         weightText: 'Weight',
         qtyText: 'Qty',
         priceText: 'Price',
+        aiHeaderTitle: '<i class="fa-solid fa-wand-magic-sparkles"></i> Smart Herbal AI',
+        aiWelcome: 'Welcome! I am Al-Madinah Spices AI Expert 🌿. How can I assist you today? (Ask about recipes, herbs for health, or cooking spices)',
+        aiPh: 'Ask the smart expert...',
         phName: 'Ex: Ahmed Mohamed',
         phPhone: '010xxxxxxxx',
-        phAddress: 'Area name (Hadayek El Ahram/October), street, building no., apartment',
-        aiBotTitle: 'Smart Herbal Assistant',
-        aiWelcome: 'Welcome! 🌿 I am your AI Herbal Assistant. How can I help you today? Ask me about spice mixes, soothing herbs, or natural oils!',
-        aiPlaceholder: 'Ask smart assistant here...',
-        sug1: 'Herbs for digestion ☕',
-        sug2: 'Kabsa Spices 🍛',
-        sug3: 'Hair Oils 🌿'
+        phAddress: 'Area name (Hadayek El Ahram/October), street, building no., apartment'
       }
     };
 
     let currentLang = 'ar';
 
-    // Products Database with Multi-language support
+    // Products Database
     const products = [
-      { 
-        id: 1, 
-        name: { ar: "كمون بلدي مطحون طازج", en: "Fresh Ground Local Cumin" }, 
-        category: "spices", 
-        basePrice: 240, 
-        rating: 4.8, 
-        image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 2, 
-        name: { ar: "فلفل أسود فاخر مطحون", en: "Premium Ground Black Pepper" }, 
-        category: "spices", 
-        basePrice: 320, 
-        rating: 4.9, 
-        image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 3, 
-        name: { ar: "كركم هندي نقّي", en: "Pure Indian Turmeric" }, 
-        category: "spices", 
-        basePrice: 160, 
-        rating: 4.7, 
-        image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 4, 
-        name: { ar: "كزبرة جافة مطحونة", en: "Ground Dry Coriander" }, 
-        category: "spices", 
-        basePrice: 120, 
-        rating: 4.6, 
-        image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 5, 
-        name: { ar: "يانسون نجمي طبيعي", en: "Natural Star Anise" }, 
-        category: "herbs", 
-        basePrice: 280, 
-        rating: 4.8, 
-        image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 6, 
-        name: { ar: "بابونج زهرة كاملة", en: "Whole Flower Chamomile" }, 
-        category: "herbs", 
-        basePrice: 200, 
-        rating: 4.9, 
-        image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 7, 
-        name: { ar: "نعناع مجفف أسواني", en: "Aswan Dried Mint" }, 
-        category: "herbs", 
-        basePrice: 150, 
-        rating: 4.7, 
-        image: "https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 8, 
-        name: { ar: "فستق حلبي حمصة فاخرة", en: "Luxury Roasted Pistachios" }, 
-        category: "nuts", 
-        basePrice: 750, 
-        rating: 5, 
-        image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 9, 
-        name: { ar: "كاجو محمص سوبر", en: "Super Roasted Cashews" }, 
-        category: "nuts", 
-        basePrice: 680, 
-        rating: 4.9, 
-        image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 10, 
-        name: { ar: "عين جمل أمريكي", en: "American Walnuts" }, 
-        category: "nuts", 
-        basePrice: 420, 
-        rating: 4.8, 
-        image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 11, 
-        name: { ar: "زيت حبة البركة معصور", en: "Pressed Black Seed Oil" }, 
-        category: "oils", 
-        basePrice: 400, 
-        rating: 5, 
-        image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 12, 
-        name: { ar: "زيت زيتون بكر ممتاز سيوي", en: "Siwan Extra Virgin Olive Oil" }, 
-        category: "oils", 
-        basePrice: 350, 
-        rating: 4.9, 
-        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 13, 
-        name: { ar: "بن برازيلي محمّص طازج", en: "Fresh Roasted Brazilian Coffee" }, 
-        category: "groceries", 
-        basePrice: 380, 
-        rating: 5, 
-        image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 14, 
-        name: { ar: "ملح بحري نقي عالي الجودة", en: "High Quality Pure Sea Salt" }, 
-        category: "groceries", 
-        basePrice: 40, 
-        rating: 4.7, 
-        image: "https://www.expoegypt.gov.eg/uploads/2025/12/693fd061a6c1d.jpg" 
-      },
-      { 
-        id: 15, 
-        name: { ar: "سكر أبيض ناصع فاخر", en: "Luxury Pure White Sugar" }, 
-        category: "groceries", 
-        basePrice: 45, 
-        rating: 4.6, 
-        image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80" 
-      },
-      { 
-        id: 16, 
-        name: { ar: "مكرونة أنواع مشكلة (1 كجم)", en: "Mixed Pasta Varieties (1 kg)" }, 
-        category: "groceries", 
-        basePrice: 35, 
-        rating: 4.5, 
-        image: "https://albukhari.com/11860/" 
-      }
+      { id: 1, name: { ar: "كمون بلدي مطحون طازج", en: "Fresh Ground Local Cumin" }, category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80" },
+      { id: 2, name: { ar: "فلفل أسود فاخر مطحون", en: "Premium Ground Black Pepper" }, category: "spices", basePrice: 320, rating: 4.9, image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" },
+      { id: 3, name: { ar: "كركم هندي نقّي", en: "Pure Indian Turmeric" }, category: "spices", basePrice: 160, rating: 4.7, image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" },
+      { id: 4, name: { ar: "كزبرة جافة مطحونة", en: "Ground Dry Coriander" }, category: "spices", basePrice: 120, rating: 4.6, image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80" },
+      { id: 5, name: { ar: "يانسون نجمي طبيعي", en: "Natural Star Anise" }, category: "herbs", basePrice: 280, rating: 4.8, image: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=400&q=80" },
+      { id: 6, name: { ar: "بابونج زهرة كاملة", en: "Whole Flower Chamomile" }, category: "herbs", basePrice: 200, rating: 4.9, image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
+      { id: 7, name: { ar: "نعناع مجفف أسواني", en: "Aswan Dried Mint" }, category: "herbs", basePrice: 150, rating: 4.7, image: "https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1?auto=format&fit=crop&w=400&q=80" },
+      { id: 8, name: { ar: "فستق حلبي حمصة فاخرة", en: "Luxury Roasted Pistachios" }, category: "nuts", basePrice: 750, rating: 5, image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=400&q=80" },
+      { id: 9, name: { ar: "كاجو محمص سوبر", en: "Super Roasted Cashews" }, category: "nuts", basePrice: 680, rating: 4.9, image: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" },
+      { id: 10, name: { ar: "عين جمل أمريكي", en: "American Walnuts" }, category: "nuts", basePrice: 420, rating: 4.8, image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=400&q=80" },
+      { id: 11, name: { ar: "زيت حبة البركة معصور", en: "Pressed Black Seed Oil" }, category: "oils", basePrice: 400, rating: 5, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=400&q=80" },
+      { id: 12, name: { ar: "زيت زيتون بكر ممتاز سيوي", en: "Siwan Extra Virgin Olive Oil" }, category: "oils", basePrice: 350, rating: 4.9, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" },
+      { id: 13, name: { ar: "بن برازيلي محمّص طازج", en: "Fresh Roasted Brazilian Coffee" }, category: "groceries", basePrice: 380, rating: 5, image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80" },
+      { id: 14, name: { ar: "ملح بحري نقي عالي الجودة", en: "High Quality Pure Sea Salt" }, category: "groceries", basePrice: 40, rating: 4.7, image: "https://www.expoegypt.gov.eg/uploads/2025/12/693fd061a6c1d.jpg" },
+      { id: 15, name: { ar: "سكر أبيض ناصع فاخر", en: "Luxury Pure White Sugar" }, category: "groceries", basePrice: 45, rating: 4.6, image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80" },
+      { id: 16, name: { ar: "مكرونة أنواع مشكلة (1 كجم)", en: "Mixed Pasta Varieties (1 kg)" }, category: "groceries", basePrice: 35, rating: 4.5, image: "https://albukhari.com/11860/" }
     ];
 
     // Standard Preset Weights
@@ -1599,12 +1345,14 @@
     const copyInstaBtn = document.getElementById('copyInstaBtn');
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     const heroBanner = document.getElementById('heroBanner');
-    const aiChatBtn = document.getElementById('aiChatBtn');
-    const aiChatWindow = document.getElementById('aiChatWindow');
-    const aiChatClose = document.getElementById('aiChatClose');
-    const aiSendBtn = document.getElementById('aiSendBtn');
+
+    // AI Chat Elements
+    const aiBtn = document.getElementById('aiBtn');
+    const aiDrawer = document.getElementById('aiDrawer');
+    const closeAiBtn = document.getElementById('closeAiBtn');
     const aiInput = document.getElementById('aiInput');
-    const aiChatMessages = document.getElementById('aiChatMessages');
+    const aiSendBtn = document.getElementById('aiSendBtn');
+    const aiChatMsgs = document.getElementById('aiChatMsgs');
 
     // Initialize Page
     function init() {
@@ -1618,17 +1366,78 @@
       initBannerSlider();
       setupScrollEvents();
       setupScrollAnimations();
-      setupAIChat();
+      setupAIAssistant();
+    }
+
+    // AI Assistant Intelligence Logic
+    function setupAIAssistant() {
+      aiBtn.addEventListener('click', () => aiDrawer.classList.toggle('open'));
+      closeAiBtn.addEventListener('click', () => aiDrawer.classList.remove('open'));
+
+      const processAiQuery = () => {
+        const text = aiInput.value.trim();
+        if (!text) return;
+
+        // Render User Msg
+        appendAiMessage(text, 'user');
+        aiInput.value = '';
+
+        // Generate Intelligent Response
+        setTimeout(() => {
+          const response = generateSmartAiReply(text);
+          appendAiMessage(response, 'bot');
+        }, 600);
+      };
+
+      aiSendBtn.addEventListener('click', processAiQuery);
+      aiInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processAiQuery(); });
+    }
+
+    function appendAiMessage(msg, sender) {
+      const div = document.createElement('div');
+      div.className = `chat-msg ${sender}`;
+      div.innerText = msg;
+      aiChatMsgs.appendChild(div);
+      aiChatMsgs.scrollTop = aiChatMsgs.scrollHeight;
+    }
+
+    function generateSmartAiReply(query) {
+      const q = query.toLowerCase();
+
+      if (q.includes('قولون') || q.includes('معدة') || q.includes('بطن') || q.includes('stomach') || q.includes('colon')) {
+        return currentLang === 'ar' ? 
+          'لعلاج انتفاخات القولون والمعدة ننصحك بـ: اليانسون النجمي والبابونج المطبوخ دافئاً 🌿. كما يمكنك تجربة الكمون البلدي المطحون مع الوجبات.' :
+          'For stomach and colon bloating, we recommend: Star Anise & Chamomile tea 🌿. You can also use fresh ground Cumin with your meals.';
+      }
+      if (q.includes('أرق') || q.includes('نوم') || q.includes('إرهاق') || q.includes('sleep') || q.includes('stress')) {
+        return currentLang === 'ar' ? 
+          'للاسترخاء والنوم العميق: زهرة البابونج الكرتونية الدافئة قبل النوم ممتازة جداً وتهدئ الأعصاب ✨.' :
+          'For relaxation and deep sleep: A warm cup of Whole Flower Chamomile before bed calms the nerves perfectly ✨.';
+      }
+      if (q.includes('كبسة') || q.includes('لحمة') || q.includes('فراخ') || q.includes('تتبيلة') || q.includes('مطبخ') || q.includes('cooking')) {
+        return currentLang === 'ar' ? 
+          'أفضل توليفة للطبخ والمشاوي: الفلفل الأسود الفاخر + الكركم الهندي + الكزبرة الجافة والكمون 🍲. تجعل طعم الأكل خرافي!' :
+          'Best cooking mix: Premium Black Pepper + Indian Turmeric + Ground Coriander & Cumin 🍲.';
+      }
+      if (q.includes('شعر') || q.includes('بشرة') || q.includes('تجميل') || q.includes('skin') || q.includes('hair')) {
+        return currentLang === 'ar' ? 
+          'لصحة الشعر والبشرة: زيت حبة البركة المعصور وزيت الزيتون البكر الممتاز، خامات نقية 100% تعطي لمعان ونضارة ✨.' :
+          'For hair and skin health: Pressed Black Seed Oil & Extra Virgin Olive Oil provide 100% natural shine and nourishment ✨.';
+      }
+      if (q.includes('توصيل') || q.includes('موقع') || q.includes('delivery')) {
+        return currentLang === 'ar' ? 
+          'نوصل فوراً لمنطقتي حدائق الأهرام و6 أكتوبر بحالة طازجة وسريعة 🚛!' :
+          'We deliver fast to Hadayek El Ahram & 6th of October 🚛!';
+      }
+
+      return currentLang === 'ar' ? 
+        'أهلاً بك! يمكنك تصفح قسم البهارات والأعشاب بالأعلى، أو إخباري بما تشتكي منه لأرشح لك أفضل عشب طبيعي من عطارتنا 🌿.' :
+        'Hello! Feel free to browse our spices and herbs above, or let me know what you need so I can recommend the best herbs for you 🌿.';
     }
 
     // Scroll Animation Observer Setup
     function setupScrollAnimations() {
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.05
-      };
-
+      const observerOptions = { root: null, rootMargin: '0px', threshold: 0.05 };
       const observer = new IntersectionObserver((entries, observerInstance) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -1638,9 +1447,7 @@
         });
       }, observerOptions);
 
-      document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
-      });
+      document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
     }
 
     // Language Toggle Setup
@@ -1665,25 +1472,17 @@
       document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
       langToggleBtn.innerText = lang === 'ar' ? 'EN' : 'AR';
 
-      // Translate static elements
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-          el.innerHTML = translations[lang][key];
-        }
+        if (translations[lang][key]) el.innerHTML = translations[lang][key];
       });
 
-      // Translate placeholders
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[lang][key]) {
-          el.placeholder = translations[lang][key];
-        }
+        if (translations[lang][key]) el.placeholder = translations[lang][key];
       });
 
-      if (searchInput) {
-        searchInput.placeholder = translations[lang].searchPlaceholder;
-      }
+      if (searchInput) searchInput.placeholder = translations[lang].searchPlaceholder;
     }
 
     // Banner Slider Logic
@@ -1695,47 +1494,40 @@
       setInterval(() => {
         currentSlide = (currentSlide + 1) % totalSlides;
         const transformVal = currentLang === 'ar' ? (currentSlide * 100) : -(currentSlide * 100);
-        slider.style.transform = `translateX(${transformVal}\%)`; }, 5000); }  // Auto-Hide Banner and Scroll-To-Top Button Logic function setupScrollEvents() { window.addEventListener('scroll', () => { if (window.scrollY > 80) { heroBanner.classList.add('hide-on-scroll'); } else { heroBanner.classList.remove('hide-on-scroll'); }  if (window.scrollY > 300) { scrollTopBtn.classList.add('visible'); } else { scrollTopBtn.classList.remove('visible'); } });  scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); }  // Theme Setup function setupTheme() { const savedTheme = localStorage.getItem('theme') \vert{}\vert{} 'light'; document.body.setAttribute('data-theme', savedTheme); updateThemeIcon(savedTheme);  themeToggleBtn.addEventListener('click', () => { const currentTheme = document.body.getAttribute('data-theme'); const newTheme = currentTheme === 'light' ? 'dark' : 'light'; document.body.setAttribute('data-theme', newTheme); localStorage.setItem('theme', newTheme); updateThemeIcon(newTheme); }); }  function updateThemeIcon(theme) { themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>'; }  // AI CHATBOT ENGINE & CONTROLS function setupAIChat() { aiChatBtn.addEventListener('click', () => { aiChatWindow.style.display = aiChatWindow.style.display === 'flex' ? 'none' : 'flex'; });  aiChatClose.addEventListener('click', () => { aiChatWindow.style.display = 'none'; });  aiSendBtn.addEventListener('click', handleUserAISend); aiInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleUserAISend(); }); }  window.sendSuggestedMsg = function(btnElem) { const text = btnElem.innerText; aiInput.value = text; handleUserAISend(); };  function handleUserAISend() { const text = aiInput.value.trim(); if (!text) return;  appendChatMessage(text, 'user'); aiInput.value = '';  setTimeout(() => { const reply = generateAIResponse(text); appendChatMessage(reply, 'bot'); }, 500); }  function appendChatMessage(msg, sender) { const msgDiv = document.createElement('div'); msgDiv.className = `ai-msg ${sender}`;
-      msgDiv.innerHTML = msg;
-      aiChatMessages.appendChild(msgDiv);
-      aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+        slider.style.transform = `translateX(${transformVal}%)`;
+      }, 5000);
     }
 
-    function generateAIResponse(query) {
-      const q = query.toLowerCase();
+    // Auto-Hide Banner and Scroll-To-Top Button Logic
+    function setupScrollEvents() {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 80) heroBanner.classList.add('hide-on-scroll');
+        else heroBanner.classList.remove('hide-on-scroll');
 
-      if (currentLang === 'ar') {
-        if (q.includes('قولون') || q.includes('مهدئ') || q.includes('معدة') || q.includes('بطن')) {
-          return "أنصحك بـ **البابونج** و**النعناع المجفف** و**اليانسون النجمي**! تعمل هذه الأعشاب على تهدئة القولون وتقليل الانتفاخ وتصفية الذهن 🌿.";
-        }
-        if (q.includes('كبسة') || q.includes('أرز') || q.includes('لحم') || q.includes('كبسه')) {
-          return "لأفضل طعم كبسة أصلية، استخدم خلطتنا من **الكمون البلدي**، **الكركم الهندي**، و**الكزبرة الجافة** مع قليل من **الفلفل الأسود** 🍛!";
-        }
-        if (q.includes('شعر') || q.includes('بشرة') || q.includes('زيت')) {
-          return "لتغذية الشعر وتقويته، أنصحك بـ **زيت حبة البركة** المعصور، ولترطيب البشرة النقي استخدم **زيت الزيتون البكر الممتاز السيوي** ✨.";
-        }
-        if (q.includes('توصيل') || q.includes('شحن') || q.includes('مكان')) {
-          return "نوصل سريعاً وبشكل منزلي لكل مناطق **حدائق الأهرام** و**6 أكتوبر** ومصاريف الشحن 30 ج.م فقط 🚚.";
-        }
-        if (q.includes('دفع') || q.includes('فلوس') || q.includes('إنستا')) {
-          return "يمكنك الدفع **كاش عند الاستلام** أو عبر **InstaPay** بكل سهولة عند إتمام الطلب 💳!";
-        }
-        return "سؤال ممتاز! نوفر لك أفضل أنواع التوابل والأعشاب المطحونة طازجة يومياً. يمكنك تصفح الأقسام أو البحث في الأعلى للوصول لمنتجك المفضّل! 🌿";
-      } else {
-        if (q.includes('colon') || q.includes('stomach') || q.includes('relax') || q.includes('digest')) {
-          return "I recommend **Chamomile**, **Dried Mint**, and **Star Anise**! They soothe the digestive system and reduce bloating 🌿.";
-        }
-        if (q.includes('kabsa') || q.includes('rice') || q.includes('meat') || q.includes('spice')) {
-          return "For authentic Kabsa flavor, combine our **Ground Cumin**, **Pure Turmeric**, and **Dry Coriander** with a pinch of **Black Pepper** 🍛!";
-        }
-        if (q.includes('hair') || q.includes('skin') || q.includes('oil')) {
-          return "For hair nourishment, try our pressed **Black Seed Oil**, and for natural skin hydration use **Siwan Extra Virgin Olive Oil** ✨.";
-        }
-        if (q.includes('delivery') || q.includes('shipping')) {
-          return "We offer fast doorstep delivery to **Hadayek El Ahram** & **6th of October** for only 30 EGP 🚚.";
-        }
-        return "Great question! We offer the finest fresh spices and natural herbs. Browse our categories or search above to find your items! 🌿";
-      }
+        if (window.scrollY > 300) scrollTopBtn.classList.add('visible');
+        else scrollTopBtn.classList.remove('visible');
+      });
+
+      scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    // Theme Setup
+    function setupTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      updateThemeIcon(savedTheme);
+
+      themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+      });
+    }
+
+    function updateThemeIcon(theme) {
+      themeToggleBtn.innerHTML = theme === 'light' ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
     }
 
     // Render Products
@@ -1761,7 +1553,7 @@
           <div class="product-info">
             <h3 class="product-title">${productName}</h3>
             <div class="product-rating">
-              <i class="fa-solid fa-star"></i> ${product.rating}${translations[currentLang].ratingText}
+              <i class="fa-solid fa-star"></i> ${product.rating} ${translations[currentLang].ratingText}
             </div>
             
             <div class="weight-selector">
@@ -1779,4 +1571,273 @@
                 </button>
               </div>
 
-              <div class="custom-weight-box ${current.type === 'custom' ? 'active'
+              <div class="custom-weight-box ${current.type === 'custom' ? 'active' : ''}" id="custom-box-${product.id}">
+                <input type="number" id="custom-val-${product.id}" value="${current.type === 'custom' ? current.val : 10}" min="1" oninput="updateCustomWeight(${product.id})">
+                <select id="custom-unit-${product.id}" onchange="updateCustomWeight(${product.id})">
+                  <option value="g" ${current.unit === 'g' ? 'selected' : ''}>${currentLang === 'ar' ? 'جرام (g)' : 'Grams (g)'}</option>
+                  <option value="kg" ${current.unit === 'kg' ? 'selected' : ''}>${currentLang === 'ar' ? 'كيلو (kg)' : 'Kilo (kg)'}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="product-price-action">
+              <div>
+                <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">${translations[currentLang].priceLabel}</span>
+                <span class="product-price" id="price-${product.id}">${calculatedPrice} ${currency}</span>
+              </div>
+              <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                ${translations[currentLang].addToCartBtn}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getCategoryName(cat) {
+      const map = {
+        spices: { ar: 'بهارات', en: 'Spices' },
+        herbs: { ar: 'أعشاب', en: 'Herbs' },
+        nuts: { ar: 'مكسرات', en: 'Nuts' },
+        oils: { ar: 'زيوت', en: 'Oils' },
+        groceries: { ar: 'بقالة', en: 'Grocery' }
+      };
+      return map[cat] ? map[cat][currentLang] : 'General';
+    }
+
+    // Change Preset Weight
+    window.selectPresetWeight = function(productId, weightKey, btnElem) {
+      const card = btnElem.closest('.product-card');
+      card.querySelectorAll('.weight-btn').forEach(b => b.classList.remove('selected'));
+      btnElem.classList.add('selected');
+
+      const customBox = card.querySelector(`.custom-weight-box`);
+      if (customBox) customBox.classList.remove('active');
+
+      const ratio = weightRules[weightKey].ratio;
+      selectedWeights[productId] = { type: 'preset', key: weightKey, ratio: ratio };
+      recalculatePriceDisplay(productId);
+    };
+
+    // Toggle Custom Weight Box
+    window.toggleCustomWeight = function(productId, btnElem) {
+      const card = btnElem.closest('.product-card');
+      card.querySelectorAll('.weight-btn').forEach(b => b.classList.remove('selected'));
+      btnElem.classList.add('selected');
+
+      const customBox = card.querySelector(`.custom-weight-box`);
+      if (customBox) customBox.classList.add('active');
+
+      updateCustomWeight(productId);
+    };
+
+    // Update Custom Weight Calculation
+    window.updateCustomWeight = function(productId) {
+      const valInput = document.getElementById(`custom-val-${productId}`);
+      const unitSelect = document.getElementById(`custom-unit-${productId}`);
+      if (!valInput || !unitSelect) return;
+
+      const val = parseFloat(valInput.value) || 0;
+      const unit = unitSelect.value;
+      let ratio = unit === 'g' ? val / 1000 : val;
+
+      selectedWeights[productId] = { type: 'custom', val: val, unit: unit, ratio: ratio };
+      recalculatePriceDisplay(productId);
+    };
+
+    function recalculatePriceDisplay(productId) {
+      const product = products.find(p => p.id === productId);
+      const current = selectedWeights[productId];
+      const newPrice = (product.basePrice * current.ratio).toFixed(1);
+      const currency = translations[currentLang].currency;
+      
+      const priceElem = document.getElementById(`price-${productId}`);
+      if (priceElem) priceElem.innerText = `${newPrice} ${currency}`;
+    }
+
+    // Add Item To Cart
+    window.addToCart = function(productId) {
+      const product = products.find(p => p.id === productId);
+      const current = selectedWeights[productId] || { type: 'preset', key: '250g', ratio: 0.25 };
+      
+      if (current.ratio <= 0) {
+        alert(translations[currentLang].enterValidWeight);
+        return;
+      }
+
+      const itemPrice = parseFloat((product.basePrice * current.ratio).toFixed(1));
+      const existingIndex = cart.findIndex(item => item.id === productId && item.weightKey === (current.key || 'custom') && item.weightValue === (current.val || current.key));
+
+      if (existingIndex > -1) {
+        cart[existingIndex].qty += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          weightKey: current.key || 'custom',
+          weightValue: current.val || current.key,
+          price: itemPrice,
+          qty: 1
+        });
+      }
+
+      updateCartUI();
+      openCart();
+    };
+
+    // Update Cart UI
+    function updateCartUI() {
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      cartBadge.innerText = totalCount;
+      const currency = translations[currentLang].currency;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `<p style="text-align: center; color: var(--text-muted); margin-top: 40px;">${translations[currentLang].emptyCart}</p>`;
+        subtotalPrice.innerText = `0.0 ${currency}`;
+        totalPrice.innerText = `0.0 ${currency}`;
+        return;
+      }
+
+      cartItemsContainer.innerHTML = cart.map((item, index) => {
+        const product = products.find(p => p.id === item.id);
+        const productName = product ? product.name[currentLang] : '';
+        
+        let weightLabelText = '';
+        if (item.weightKey !== 'custom' && weightRules[item.weightKey]) {
+          weightLabelText = weightRules[item.weightKey].label[currentLang];
+        } else {
+          weightLabelText = currentLang === 'ar' ? `${item.weightValue} جرام` : `${item.weightValue}g`;
+        }
+
+        return `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <h4>${productName}</h4>
+              <p>${translations[currentLang].weightText}: ${weightLabelText} - ${item.price} ${currency}</p>
+            </div>
+            <div class="cart-item-controls">
+              <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+              <span>${item.qty}</span>
+              <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+              <button class="qty-btn" style="color: red; border-color: red;" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const sub = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      subtotalPrice.innerText = `${sub.toFixed(1)} ${currency}`;
+      totalPrice.innerText = `${(sub + shippingFee).toFixed(1)} ${currency}`;
+    }
+
+    window.updateQty = function(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) cart.splice(index, 1);
+      updateCartUI();
+    };
+
+    window.removeItem = function(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    };
+
+    // Cart Drawer Controls
+    function openCart() {
+      cartDrawer.classList.add('open');
+      cartOverlay.classList.add('open');
+    }
+
+    function closeCart() {
+      cartDrawer.classList.remove('open');
+      cartOverlay.classList.remove('open');
+    }
+
+    cartBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    // Filter & Search Logic
+    searchInput.addEventListener('input', filterProducts);
+
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterProducts();
+      });
+    });
+
+    function filterProducts() {
+      const query = searchInput.value.toLowerCase().trim();
+      const activeCat = document.querySelector('.category-btn.active').dataset.cat;
+
+      const filtered = products.filter(p => {
+        const pName = p.name[currentLang].toLowerCase();
+        const matchesSearch = pName.includes(query);
+        const matchesCat = activeCat === 'all' || p.category === activeCat;
+        return matchesSearch && matchesCat;
+      });
+
+      renderProducts(filtered);
+    }
+
+    // Checkout Modal Logic
+    openCheckoutBtn.addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert(translations[currentLang].addFirstMsg);
+        return;
+      }
+      closeCart();
+      checkoutModal.style.display = 'flex';
+    });
+
+    closeModalBtn.addEventListener('click', () => checkoutModal.style.display = 'none');
+
+    paymentMethodSelect.addEventListener('change', (e) => {
+      instapayBox.style.display = e.target.value === 'instapay' ? 'block' : 'none';
+    });
+
+    copyInstaBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('01030043129');
+      alert(translations[currentLang].copiedMsg);
+    });
+
+    // Form Submission & WhatsApp Order Formatting
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+      const address = document.getElementById('custAddress').value;
+      const payment = paymentMethodSelect.value === 'instapay' ? 'إنستا باي (InstaPay)' : (currentLang === 'ar' ? 'الدفع عند الاستلام (كاش)' : 'Cash on Delivery');
+      const currency = translations[currentLang].currency;
+
+      const subTotalVal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const totalVal = subTotalVal + shippingFee;
+
+      let orderListText = cart.map((item, idx) => {
+        const product = products.find(p => p.id === item.id);
+        const productName = product ? product.name[currentLang] : '';
+        let weightLabelText = item.weightKey !== 'custom' && weightRules[item.weightKey] ? weightRules[item.weightKey].label[currentLang] : item.weightValue;
+        return `${idx + 1}. *${productName}*\n   - ${translations[currentLang].weightText}: ${weightLabelText}\n   - ${translations[currentLang].qtyText}: ${item.qty}\n   - ${translations[currentLang].priceLabel} ${item.price * item.qty} ${currency}`;
+      }).join('\n\n');
+
+      let whatsappMsg = currentLang === 'ar' ? 
+        `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n*بيانات العميل:*\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *منطقة التوصيل:* حدائق الأهرام - 6 أكتوبر\n• *العنوان التفصيلي:* ${address}\n\n-------------------\n*الطلبات:*\n\n${orderListText}\n\n-------------------\n• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ${currency}\n• *مصاريف الشحن:* ${shippingFee} ${currency}\n• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ${currency}*\n\n• *طريقة الدفع:* ${payment}\n` :
+        `*New Order from Al-Madinah Spices Store* 🌿\n\n*Customer Info:*\n• *Name:* ${name}\n• *Phone:* ${phone}\n• *Delivery Area:* Hadayek El Ahram - 6th of October\n• *Address:* ${address}\n\n-------------------\n*Items:*\n\n${orderListText}\n\n-------------------\n• *Subtotal:* ${subTotalVal.toFixed(1)} ${currency}\n• *Shipping:* ${shippingFee} ${currency}\n• *Final Total:* *${totalVal.toFixed(1)} ${currency}*\n\n• *Payment:* ${payment}\n`;
+
+      if (paymentMethodSelect.value === 'instapay') {
+        whatsappMsg += currentLang === 'ar' ? `\n⚠️ *ملاحظة:* تم اختيار الدفع عبر InstaPay، سأقوم بإرفاق صورة إيصال التحويل الآن.` : `\n⚠️ *Note:* Paid via InstaPay, I will attach the receipt image now.`;
+      }
+
+      const encodedMsg = encodeURIComponent(whatsappMsg);
+      const targetWhatsAppURL = `https://wa.me/201030043129?text=${encodedMsg}`;
+
+      window.open(targetWhatsAppURL, '_blank');
+      checkoutModal.style.display = 'none';
+    });
+
+    // Run Initialization
+    init();
+  </script>
+</body>
+</html>
