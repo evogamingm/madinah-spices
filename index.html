@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* تعريف خط Momken المخصص لعنوان المتجر */
     @font-face {
       font-family: 'MomkenFont';
       src: url('Momken-Regular.otf') format('opentype');
@@ -158,10 +157,7 @@
       position: relative;
     }
 
-    .admin-btn {
-      color: var(--warm-amber);
-      border-color: var(--warm-amber);
-    }
+    .admin-btn { color: var(--warm-amber); border-color: var(--warm-amber); }
 
     .cart-badge {
       position: absolute;
@@ -287,7 +283,7 @@
     .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
     .product-rating { color: var(--primary-gold); font-size: 0.85rem; margin-bottom: 10px; }
 
-    /* Weight/Unit Selection */
+    /* Weight Selection */
     .weight-selector { margin: 10px 0; }
     .weight-selector label { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 5px; }
     .weight-options { display: flex; gap: 4px; flex-wrap: wrap; }
@@ -513,33 +509,18 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="ابحث عن بهارات، مكرونة، أجبان، كريمات...">
       </div>
-      <div class="categories-nav" id="categoriesNav">
-        <!-- يتم تعبئتها ديناميكياً من لوحة التحكم -->
-      </div>
+      <div class="categories-nav" id="categoriesNav"></div>
     </div>
 
     <!-- Main Products Section -->
     <h3 style="margin-bottom: 15px; font-weight: 800;" class="animate-on-scroll" id="sectionTitle">كل المنتجات</h3>
     <div class="products-grid animate-on-scroll" id="productsGrid"></div>
 
-    <!-- Customer Reviews -->
+    <!-- Customer Reviews Section (Dynamic from Admin) -->
     <div class="reviews-section animate-on-scroll">
       <h2 class="reviews-title">آراء عملائنا الكرام</h2>
-      <div class="reviews-grid">
-        <div class="review-card">
-          <div class="review-header">
-            <span class="reviewer-name">أحمد محمود (حدائق الأهرام)</span>
-            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          </div>
-          <p class="review-text">"ما شاء الله المنتجات ريحتها طازجة ونقيتها ممتازة جداً، والتوصيل كان في أسرع وقت. شكراً لكم!"</p>
-        </div>
-        <div class="review-card">
-          <div class="review-header">
-            <span class="reviewer-name">سارة علي (6 أكتوبر)</span>
-            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          </div>
-          <p class="review-text">"المنتجات ممتازة جداً وإمكانية اختيار الأوزان المحددة سهلت عليا الطلب."</p>
-        </div>
+      <div class="reviews-grid" id="customerReviewsGrid">
+        <!-- يتم تعبئتها ديناميكياً من لوحة التحكم -->
       </div>
     </div>
 
@@ -553,7 +534,7 @@
       <button class="close-cart-btn" id="closeAiBtn" style="color: white;"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="ai-chat-messages" id="aiChatMsgs">
-      <div class="chat-msg bot">أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج، رقم التواصل، أو حالات البرد والرشح والصداع!</div>
+      <div class="chat-msg bot">أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج (مثل: شيبسي، كمون)، رقم التواصل، أو حالات البرد والصداع!</div>
     </div>
     <div class="ai-chat-input-area">
       <input type="text" id="aiInput" placeholder="اسأل الخبير الذكي...">
@@ -628,9 +609,7 @@
         </div>
         <div class="form-group">
           <label>منطقة التوصيل *</label>
-          <select id="checkoutAreaSelect" required>
-            <!-- يتم تعبئتها ديناميكياً من المناطق المسجلة -->
-          </select>
+          <select id="checkoutAreaSelect" required></select>
         </div>
         <div class="form-group">
           <label>العنوان بالتفصيل *</label>
@@ -676,17 +655,18 @@
 
   <!-- Main Admin Dashboard Modal -->
   <div class="modal-overlay" id="adminDashboardModal">
-    <div class="modal-content" style="max-width: 900px;">
+    <div class="modal-content" style="max-width: 950px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
         <h3>⚙️ لوحة تحكم المالك الشاملة</h3>
         <button class="close-cart-btn" id="closeAdminDashboard"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <!-- Admin Tabs Navigation -->
-      <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-        <button class="category-btn active" onclick="switchAdminTab('products')">📦 إدارة المنتجات</button>
-        <button class="category-btn" onclick="switchAdminTab('categories')">🏷️ إدارة الأقسام</button>
-        <button class="category-btn" onclick="switchAdminTab('areas')">🚚 أماكن التوصيل والشحن</button>
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; flex-wrap: wrap;">
+        <button class="category-btn active" onclick="switchAdminTab('products')">📦 المنتجات</button>
+        <button class="category-btn" onclick="switchAdminTab('categories')">🏷️ الأقسام</button>
+        <button class="category-btn" onclick="switchAdminTab('areas')">🚚 أماكن الشحن</button>
+        <button class="category-btn" onclick="switchAdminTab('reviews')">⭐ آراء العملاء والتقييمات</button>
       </div>
 
       <!-- Tab 1: Products -->
@@ -695,13 +675,13 @@
           <button type="button" class="checkout-btn" id="openAddProductBtn" style="background-color: var(--herbal-green); width: auto; padding: 8px 15px;">+ إضافة منتج جديد</button>
         </div>
         <div style="max-height: 50vh; overflow-y: auto;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;" id="adminProductsTable">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
             <thead>
               <tr style="background: var(--bg-color); border-bottom: 2px solid var(--border-color); text-align: right;">
                 <th style="padding: 10px;">الصورة</th>
                 <th style="padding: 10px;">اسم المنتج</th>
                 <th style="padding: 10px;">القسم</th>
-                <th style="padding: 10px;">السعر الأساسي</th>
+                <th style="padding: 10px;">السعر (لكل كيلو)</th>
                 <th style="padding: 10px; text-align: center;">إجراءات</th>
               </tr>
             </thead>
@@ -713,15 +693,15 @@
       <!-- Tab 2: Categories -->
       <div id="adminTabCategories" class="admin-tab-content" style="display: none;">
         <div style="margin-bottom: 15px; display: flex; gap: 10px;">
-          <input type="text" id="newCatKeyName" placeholder="معرف القسم بالانجليزي (مثل: cheese)" style="flex: 1;">
-          <input type="text" id="newCatArName" placeholder="اسم القسم بالعربي (مثل: أجبان)" style="flex: 1;">
+          <input type="text" id="newCatKeyName" placeholder="معرف القسم (مثل: snacks)" style="flex: 1;">
+          <input type="text" id="newCatArName" placeholder="اسم القسم بالعربي (مثل: مسليات)" style="flex: 1;">
           <button type="button" class="checkout-btn" onclick="addNewCategory()" style="background-color: var(--herbal-green); width: auto; margin-top:0; padding: 8px 15px;">إضافة قسم</button>
         </div>
         <div style="max-height: 50vh; overflow-y: auto;">
           <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
             <thead>
               <tr style="background: var(--bg-color); border-bottom: 2px solid var(--border-color); text-align: right;">
-                <th style="padding: 10px;">المعرف (Key)</th>
+                <th style="padding: 10px;">المعرف</th>
                 <th style="padding: 10px;">الاسم بالعربي</th>
                 <th style="padding: 10px; text-align: center;">حذف</th>
               </tr>
@@ -734,7 +714,7 @@
       <!-- Tab 3: Delivery Areas -->
       <div id="adminTabAreas" class="admin-tab-content" style="display: none;">
         <div style="margin-bottom: 15px; display: flex; gap: 10px;">
-          <input type="text" id="newAreaName" placeholder="اسم المنطقة (مثل: الشيخ زايد)" style="flex: 2;">
+          <input type="text" id="newAreaName" placeholder="اسم المنطقة" style="flex: 2;">
           <input type="number" id="newAreaFee" placeholder="سعر الشحن (ج.م)" style="flex: 1;">
           <button type="button" class="checkout-btn" onclick="addNewDeliveryArea()" style="background-color: var(--herbal-green); width: auto; margin-top:0; padding: 8px 15px;">إضافة منطقة</button>
         </div>
@@ -748,6 +728,36 @@
               </tr>
             </thead>
             <tbody id="adminAreasList"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Reviews Management -->
+      <div id="adminTabReviews" class="admin-tab-content" style="display: none;">
+        <div style="margin-bottom: 15px; background: var(--bg-color); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color);">
+          <h4 style="margin-bottom: 10px; font-size: 0.95rem;">إضافة رأي أو تقييم جديد للعملاء:</h4>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+            <input type="text" id="newRevName" placeholder="اسم العميل ومكان إقامته (مثل: أحمد - حدائق الأهرام)" style="flex: 2;">
+            <select id="newRevStars" style="flex: 1;">
+              <option value="5">⭐⭐⭐⭐⭐ (5 نجوم)</option>
+              <option value="4">⭐⭐⭐⭐ (4 نجوم)</option>
+              <option value="3">⭐⭐⭐ (3 نجوم)</option>
+            </select>
+          </div>
+          <textarea id="newRevText" placeholder="نص التعليق أو الرأي..." rows="2" style="width: 100%; margin-bottom: 10px; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--card-bg); color: var(--text-main);"></textarea>
+          <button type="button" class="checkout-btn" onclick="addNewReview()" style="background-color: var(--herbal-green); width: auto; margin-top:0; padding: 8px 15px;">إضافة التقييم للموقع</button>
+        </div>
+        <div style="max-height: 40vh; overflow-y: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+            <thead>
+              <tr style="background: var(--bg-color); border-bottom: 2px solid var(--border-color); text-align: right;">
+                <th style="padding: 10px;">العميل</th>
+                <th style="padding: 10px;">التقييم</th>
+                <th style="padding: 10px;">التعليق</th>
+                <th style="padding: 10px; text-align: center;">حذف</th>
+              </tr>
+            </thead>
+            <tbody id="adminReviewsList"></tbody>
           </table>
         </div>
       </div>
@@ -766,35 +776,26 @@
         <input type="hidden" id="editProductId">
         <div class="form-group">
           <label>اسم المنتج (بالعربية) *</label>
-          <input type="text" id="prodNameAr" required placeholder="مثال: جبنة رومي قديمة">
+          <input type="text" id="prodNameAr" required placeholder="مثال: شيبسي بلدي / كمون">
         </div>
         <div class="form-group">
           <label>اسم المنتج (بالإنجليزية) *</label>
-          <input type="text" id="prodNameEn" required placeholder="مثال: Old Romi Cheese">
+          <input type="text" id="prodNameEn" required placeholder="مثال: Chips / Cumin">
         </div>
         <div class="form-group">
           <label>القسم *</label>
-          <select id="prodCategory" required>
-            <!-- يتم تعبئتها ديناميكياً -->
-          </select>
+          <select id="prodCategory" required></select>
         </div>
         <div class="form-group">
-          <label>السعر الأساسي (لكل كيلو أو للقطعة) *</label>
-          <input type="number" id="prodPrice" required min="1" placeholder="مثال: 120">
+          <label>السعر الأساسي (لكل كيلو / وحدة) *</label>
+          <input type="number" id="prodPrice" required min="1" placeholder="مثال: 150">
         </div>
         <div class="form-group">
           <label>رابط الصورة (اختياري - يترك فارغاً لو بدون صورة)</label>
           <input type="url" id="prodImage" placeholder="https://...">
         </div>
         <div class="form-group">
-          <label>نوع نظام البيع والوزن *</label>
-          <select id="prodWeightType" onchange="toggleWeightOptionsSetup()">
-            <option value="weights">بالوزن (يبدأ من 100 جرام وتصاعدياً)</option>
-            <option value="piece">بالقطعة / العلبة الثابتة (بدون جرامات)</option>
-          </select>
-        </div>
-        <div class="form-group" id="customWeightsCheckGroup">
-          <label style="margin-bottom: 8px;">الأوزان المتاحة لهذا المنتج (اختر ما يناسبه):</label>
+          <label>الأوزان المتاحة لهذا المنتج (اختر ما يناسبه):</label>
           <div style="display: flex; gap: 15px; flex-wrap: wrap;">
             <label><input type="checkbox" name="pWeight" value="100g" checked> 100 جرام</label>
             <label><input type="checkbox" name="pWeight" value="250g" checked> 250 جرام</label>
@@ -808,7 +809,7 @@
   </div>
 
   <script>
-    // --- البيانات الافتراضية (تُخزن وتُحدث في localStorage) ---
+    // --- البيانات الافتراضية ---
     const defaultCategories = [
       { key: 'all', ar: 'الكل' },
       { key: 'spices', ar: 'بهارات وعطارة' },
@@ -816,7 +817,6 @@
       { key: 'nuts', ar: 'مكسرات وياميش' },
       { key: 'oils', ar: 'زيوت طبيعية' },
       { key: 'groceries', ar: 'مكرونة وبقالة' },
-      { key: 'cheese', ar: 'أجبان وكريمات' },
       { key: 'snacks', ar: 'شيبسيهات ومسليات' }
     ];
 
@@ -826,22 +826,24 @@
       { name: 'الشيخ زايد', fee: 45 }
     ];
 
-    const defaultProducts = [
-      { id: 1, name: { ar: "كمون بلدي مطحون طازج", en: "Fresh Ground Cumin" }, category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80", weightType: "weights", allowedWeights: ["100g", "250g", "500g", "1kg"] },
-      { id: 2, name: { ar: "مكرونة قلم", en: "Penne Pasta" }, category: "groceries", basePrice: 28, rating: 4.7, image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=400&q=80", weightType: "weights", allowedWeights: ["250g", "500g", "1kg"] }, // تم إزالة 100 جرام للمكرونة بناءً على رغبتك
-      { id: 3, name: { ar: "علبة كريم ترطيب طبيعي", en: "Natural Cream" }, category: "cheese", basePrice: 45, rating: 4.9, image: "", weightType: "piece", allowedWeights: [] }, // بدون صورة وبدون جرامات
-      { id: 4, name: { ar: "شيبسي عائلي بالطماطم", en: "Family Chips" }, category: "snacks", basePrice: 15, rating: 4.6, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=400&q=80", weightType: "piece", allowedWeights: [] }
+    const defaultReviews = [
+      { name: 'أحمد محمود (حدائق الأهرام)', stars: 5, text: '"ما شاء الله المنتجات ريحتها طازجة ونقيتها ممتازة جداً، والتوصيل كان في أسرع وقت. شكراً لكم!"' },
+      { name: 'سارة علي (6 أكتوبر)', stars: 5, text: '"المنتجات ممتازة جداً وإمكانية اختيار الأوزان سهلت عليا الطلب."' }
     ];
 
-    // استرجاع البيانات من التخزين المحلي أو الاعتماد على الافتراضية
+    const defaultProducts = [
+      { id: 1, name: { ar: "كمون بلدي مطحون طازج", en: "Fresh Ground Cumin" }, category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80", allowedWeights: ["100g", "250g", "500g", "1kg"] },
+      { id: 2, name: { ar: "شيبسي طبيعي مقرمش", en: "Natural Crispy Chips" }, category: "snacks", basePrice: 60, rating: 4.7, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=400&q=80", allowedWeights: ["100g", "250g", "500g", "1kg"] }
+    ];
+
     let categories = JSON.parse(localStorage.getItem('store_categories')) || defaultCategories;
     let deliveryAreas = JSON.parse(localStorage.getItem('store_areas')) || defaultDeliveryAreas;
+    let customerReviews = JSON.parse(localStorage.getItem('store_reviews')) || defaultReviews;
     let products = JSON.parse(localStorage.getItem('store_products')) || defaultProducts;
 
     let currentArea = deliveryAreas[0] ? deliveryAreas[0].name : 'حدائق الأهرام';
     let shippingFee = deliveryAreas[0] ? deliveryAreas[0].fee : 30;
 
-    // تعريف الأوزان المسموحة وقيم نسبها الحسابية من السعر الأساسي (للكيلو)
     const weightRules = {
       '100g': { label: { ar: '100 جرام', en: '100g' }, ratio: 0.10 },
       '250g': { label: { ar: '250 جرام', en: '250g' }, ratio: 0.25 },
@@ -854,7 +856,7 @@
     let currentLang = 'ar';
     let activeCategory = 'all';
 
-    // عناصر الصفحة الرئيسية
+    // عناصر الصفحة
     const productsGrid = document.getElementById('productsGrid');
     const searchInput = document.getElementById('searchInput');
     const categoriesNav = document.getElementById('categoriesNav');
@@ -880,6 +882,7 @@
     const instapayBox = document.getElementById('instapayBox');
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     const heroBanner = document.getElementById('heroBanner');
+    const customerReviewsGrid = document.getElementById('customerReviewsGrid');
 
     // عناصر لوحة التحكم
     const adminPanelBtn = document.getElementById('adminPanelBtn');
@@ -892,24 +895,22 @@
     const adminProductsList = document.getElementById('adminProductsList');
     const adminCategoriesList = document.getElementById('adminCategoriesList');
     const adminAreasList = document.getElementById('adminAreasList');
+    const adminReviewsList = document.getElementById('adminReviewsList');
     const openAddProductBtn = document.getElementById('openAddProductBtn');
     const productFormModal = document.getElementById('productFormModal');
     const closeProductFormModal = document.getElementById('closeProductFormModal');
     const productEditForm = document.getElementById('productEditForm');
     const productFormTitle = document.getElementById('productFormTitle');
 
-    // تشغيل النظام
     function init() {
       products.forEach(p => {
-        if (p.weightType === 'weights' && p.allowedWeights && p.allowedWeights.length > 0) {
-          selectedWeights[p.id] = { type: 'preset', key: p.allowedWeights[0], ratio: weightRules[p.allowedWeights[0]].ratio };
-        } else {
-          selectedWeights[p.id] = { type: 'piece', key: 'piece', ratio: 1.00 };
-        }
+        const defaultW = (p.allowedWeights && p.allowedWeights.includes('1kg')) ? '1kg' : (p.allowedWeights ? p.allowedWeights[0] : '1kg');
+        selectedWeights[p.id] = { type: 'preset', key: defaultW, ratio: weightRules[defaultW].ratio };
       });
 
       renderCategoriesNav();
       renderProducts(products);
+      renderCustomerReviews();
       setupTheme();
       initBannerSlider();
       setupScrollEvents();
@@ -919,7 +920,7 @@
       updateDeliveryAreasDropdown();
     }
 
-    // عرض شريط الأقسام ديناميكياً
+    // عرض الأقسام والتقييمات
     function renderCategoriesNav() {
       categoriesNav.innerHTML = categories.map(cat => `
         <button class="category-btn ${activeCategory === cat.key ? 'active' : ''}" onclick="filterByCategory('${cat.key}')">${cat.ar}</button>
@@ -932,13 +933,24 @@
       filterProducts();
     };
 
-    // فلترة وبحث المنتجات
+    function renderCustomerReviews() {
+      customerReviewsGrid.innerHTML = customerReviews.map(rev => `
+        <div class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name">${rev.name}</span>
+            <div class="review-stars">${'<i class="fa-solid fa-star"></i>'.repeat(rev.stars)}</div>
+          </div>
+          <p class="review-text">${rev.text}</p>
+        </div>
+      `).join('');
+    }
+
     searchInput.addEventListener('input', filterProducts);
 
     function filterProducts() {
       const query = searchInput.value.toLowerCase().trim();
       const filtered = products.filter(p => {
-        const pName = p.name[currentLang] ? p.name[currentLang].toLowerCase() : p.name.ar.toLowerCase();
+        const pName = p.name['ar'].toLowerCase();
         const matchesSearch = pName.includes(query);
         const matchesCat = activeCategory === 'all' || p.category === activeCategory;
         return matchesSearch && matchesCat;
@@ -956,39 +968,31 @@
 
     function createProductCardHTML(product) {
       if (!selectedWeights[product.id]) {
-        if (product.weightType === 'weights' && product.allowedWeights && product.allowedWeights.length > 0) {
-          selectedWeights[product.id] = { type: 'preset', key: product.allowedWeights[0], ratio: weightRules[product.allowedWeights[0]].ratio };
-        } else {
-          selectedWeights[product.id] = { type: 'piece', key: 'piece', ratio: 1.00 };
-        }
+        const defaultW = (product.allowedWeights && product.allowedWeights.includes('1kg')) ? '1kg' : (product.allowedWeights ? product.allowedWeights[0] : '1kg');
+        selectedWeights[product.id] = { type: 'preset', key: defaultW, ratio: weightRules[defaultW].ratio };
       }
       const current = selectedWeights[product.id];
       const calculatedPrice = (product.basePrice * current.ratio).toFixed(1);
-      const productName = product.name[currentLang] || product.name['ar'];
+      const productName = product.name['ar'];
       const catObj = categories.find(c => c.key === product.category);
       const catName = catObj ? catObj.ar : 'عام';
-
-      // صورة افتراضية لو لم يتم إدخال رابط صورة
       const imgSrc = (product.image && product.image.trim() !== "") ? product.image : "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80";
 
-      let weightSelectorHTML = '';
-      if (product.weightType === 'weights' && product.allowedWeights && product.allowedWeights.length > 0) {
-        weightSelectorHTML = `
-          <div class="weight-selector">
-            <label>اختر الوزن المطلوب:</label>
-            <div class="weight-options">
-              ${product.allowedWeights.map(wKey => `
-                <button class="weight-btn ${(current.type === 'preset' && current.key === wKey) ? 'selected' : ''}" 
-                        onclick="selectPresetWeight(${product.id}, '${wKey}', this)">
-                  ${weightRules[wKey] ? weightRules[wKey].label[currentLang] : wKey}
-                </button>
-              `).join('')}
-            </div>
+      const allowedW = product.allowedWeights || ["100g", "250g", "500g", "1kg"];
+
+      let weightSelectorHTML = `
+        <div class="weight-selector">
+          <label>اختر الوزن المطلوب:</label>
+          <div class="weight-options">
+            ${allowedW.map(wKey => `
+              <button class="weight-btn ${(current.type === 'preset' && current.key === wKey) ? 'selected' : ''}" 
+                      onclick="selectPresetWeight(${product.id}, '${wKey}', this)">
+                ${weightRules[wKey] ? weightRules[wKey].label['ar'] : wKey}
+              </button>
+            `).join('')}
           </div>
-        `;
-      } else {
-        weightSelectorHTML = `<div style="font-size: 0.8rem; color: var(--herbal-green); font-weight: bold; margin: 10px 0;"><i class="fa-solid fa-box"></i> مباع بالقطعة / العبوة</div>`;
-      }
+        </div>
+      `;
 
       return `
         <div class="product-card">
@@ -997,9 +1001,7 @@
           <div class="product-info">
             <h3 class="product-title">${productName}</h3>
             <div class="product-rating"><i class="fa-solid fa-star"></i> ${product.rating || 5.0} (تقييم ممتاز)</div>
-            
             ${weightSelectorHTML}
-
             <div class="product-price-action">
               <div>
                 <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">السعر:</span>
@@ -1028,13 +1030,12 @@
       if (priceElem) priceElem.innerText = `${newPrice} ج.م`;
     };
 
-    // سلة التسوق
+    // السلة
     window.addToCart = function(productId) {
       const product = products.find(p => p.id === productId);
       const current = selectedWeights[productId];
-      
       const itemPrice = parseFloat((product.basePrice * current.ratio).toFixed(1));
-      const itemKeyLabel = current.type === 'preset' ? weightRules[current.key].label['ar'] : 'قطعة / عبوة';
+      const itemKeyLabel = weightRules[current.key] ? weightRules[current.key].label['ar'] : current.key;
 
       const existingIndex = cart.findIndex(item => item.id === productId && item.weightKey === current.key);
 
@@ -1072,7 +1073,7 @@
           <div class="cart-item">
             <div class="cart-item-info">
               <h4>${productName}</h4>
-              <p>النوع/الوزن: ${item.weightLabel} - ${item.price} ج.م</p>
+              <p>الوزن: ${item.weightLabel} - ${item.price} ج.م</p>
             </div>
             <div class="cart-item-controls">
               <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
@@ -1107,7 +1108,6 @@
     closeCartBtn.addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
-    // تحديث قائمة مناطق التوصيل في نموذج الدفع
     function updateDeliveryAreasDropdown() {
       if (checkoutAreaSelect) {
         checkoutAreaSelect.innerHTML = deliveryAreas.map(area => `
@@ -1138,7 +1138,7 @@
       instapayBox.style.display = e.target.value === 'instapay' ? 'block' : 'none';
     });
 
-    // إرسال الطلب للواتساب
+    // إرسال الطلب للواتساب مع طلب التقييم
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('custName').value;
@@ -1152,17 +1152,75 @@
       let orderListText = cart.map((item, idx) => {
         const product = products.find(p => p.id === item.id);
         const productName = product ? product.name['ar'] : '';
-        return `${idx + 1}. *${productName}*\n   - الاختيار: ${item.weightLabel}\n   - الكمية: ${item.qty}\n   - السعر: ${item.price * item.qty} ج.م`;
+        return `${idx + 1}. *${productName}*\n   - الوزن: ${item.weightLabel}\n   - الكمية: ${item.qty}\n   - السعر: ${item.price * item.qty} ج.م`;
       }).join('\n\n');
 
-      let whatsappMsg = `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n*بيانات العميل:*\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *منطقة التوصيل:* ${currentArea}\n• *العنوان التفصيلي:* ${address}\n\n-------------------\n*الطلبات:*\n\n${orderListText}\n\n-------------------\n• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ج.م\n• *مصاريف الشحن (${currentArea}):* ${shippingFee} ج.م\n• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ج.م*\n\n• *طريقة الدفع:* ${payment}\n`;
+      let whatsappMsg = `*طلب جديد من متجر عطارة المدينة المنورة* 🌿\n\n*بيانات العميل:*\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *منطقة التوصيل:* ${currentArea}\n• *العنوان التفصيلي:* ${address}\n\n-------------------\n*الطلبات:*\n\n${orderListText}\n\n-------------------\n• *المجموع الفرعي:* ${subTotalVal.toFixed(1)} ج.م\n• *مصاريف الشحن (${currentArea}):* ${shippingFee} ج.م\n• *الإجمالي النهائي:* *${totalVal.toFixed(1)} ج.م*\n\n• *طريقة الدفع:* ${payment}\n\n⭐ *ملاحظة للعميل:* نرجو بعد استلام الطلب كتابة تقييمك لكل منتج وتقييمك العام لاستعمال البرنامج لتطوير خدمتنا دائماً!`;
 
       const encodedMsg = encodeURIComponent(whatsappMsg);
       window.open(`https://wa.me/201030043129?text=${encodedMsg}`, '_blank');
       checkoutModal.style.display = 'none';
+
+      alert('شكراً لطلبك! تم تحويلك للواتساب. نرجو إرسال تقييمك لكل منتج وتجربتك مع البرنامج.');
     });
 
-    // --- لوحة تحكم المالك الشاملة ---
+    // --- الذكاء الاصطناعي الفاحص للمنتجات ---
+    function setupAIAssistant() {
+      const aiBtn = document.getElementById('aiBtn');
+      const aiDrawer = document.getElementById('aiDrawer');
+      const closeAiBtn = document.getElementById('closeAiBtn');
+      const aiInput = document.getElementById('aiInput');
+      const aiSendBtn = document.getElementById('aiSendBtn');
+      const aiChatMsgs = document.getElementById('aiChatMsgs');
+
+      aiBtn.addEventListener('click', () => aiDrawer.classList.toggle('open'));
+      closeAiBtn.addEventListener('click', () => aiDrawer.classList.remove('open'));
+
+      const processAiQuery = () => {
+        const text = aiInput.value.trim();
+        if (!text) return;
+        appendMsg(text, 'user');
+        aiInput.value = '';
+        setTimeout(() => appendMsg(generateAiReply(text), 'bot'), 600);
+      };
+
+      aiSendBtn.addEventListener('click', processAiQuery);
+      aiInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processAiQuery(); });
+
+      function appendMsg(msg, sender) {
+        const div = document.createElement('div');
+        div.className = `chat-msg ${sender}`;
+        div.innerText = msg;
+        aiChatMsgs.appendChild(div);
+        aiChatMsgs.scrollTop = aiChatMsgs.scrollHeight;
+      }
+    }
+
+    function generateAiReply(query) {
+      const q = query.toLowerCase();
+
+      // فحص المطابقة مع المنتجات الموجودة في المتجر (مثل: شيبسي، كمون، إلخ)
+      const foundProduct = products.find(p => q.includes(p.name['ar'].toLowerCase()) || p.name['ar'].toLowerCase().includes(q));
+
+      if (foundProduct) {
+        return `نعم، منتج "${foundProduct.name['ar']}" موجود ومتوفر لدينا في المتجر وبأجود جودة 🌿!`;
+      }
+
+      if (q.includes('رقم') || q.includes('تواصل') || q.includes('واتساب')) {
+        return 'رقم التواصل والطلب المباشر عبر الواتساب هو: 01030043129 📞';
+      }
+      if (q.includes('رشح') || q.includes('برد') || q.includes('زكام')) {
+        return 'لعلاج البرد والرشح: ننصح بشراب اليانسون النجمي الدافئ مع الليمون، والبابونج لرفع المناعة 🌿.';
+      }
+      if (q.includes('صداع')) {
+        return 'لعلاج الصداع: ننصح بشرب النعناع الأسواني المجفف الدافئ لتهدئة الأعصاب ✨.';
+      }
+
+      // الرد الثاني الافتراضي في حال لم يتم العثور على المنتج أو الاستعلام
+      return 'عذراً، هذا الطلب أو المنتج غير متوفر حالياً في قائمتنا، ولكن يمكنك التواصل معنا مباشرة عبر الواتساب لتوفيره لك فوراً 🌿!';
+    }
+
+    // --- لوحة تحكم المالك ---
     function setupAdminPanel() {
       adminPanelBtn.addEventListener('click', () => adminLoginModal.style.display = 'flex');
       closeAdminLoginModal.addEventListener('click', () => adminLoginModal.style.display = 'none');
@@ -1184,7 +1242,6 @@
         document.getElementById('editProductId').value = '';
         document.getElementById('productEditForm').reset();
         fillCategoryDropdownInForm();
-        toggleWeightOptionsSetup();
         productFormTitle.innerText = 'إضافة منتج جديد';
         productFormModal.style.display = 'flex';
       });
@@ -1199,13 +1256,11 @@
         const category = document.getElementById('prodCategory').value;
         const basePrice = parseFloat(document.getElementById('prodPrice').value);
         const image = document.getElementById('prodImage').value;
-        const weightType = document.getElementById('prodWeightType').value;
 
         let allowedWeights = [];
-        if (weightType === 'weights') {
-          const checkedWeights = document.querySelectorAll('input[name="pWeight"]:checked');
-          checkedWeights.forEach(ch => allowedWeights.push(ch.value));
-        }
+        const checkedWeights = document.querySelectorAll('input[name="pWeight"]:checked');
+        checkedWeights.forEach(ch => allowedWeights.push(ch.value));
+        if (allowedWeights.length === 0) allowedWeights = ["1kg", "500g", "250g", "100g"];
 
         if (id) {
           const p = products.find(item => item.id == id);
@@ -1215,7 +1270,6 @@
             p.category = category;
             p.basePrice = basePrice;
             p.image = image;
-            p.weightType = weightType;
             p.allowedWeights = allowedWeights;
           }
         } else {
@@ -1227,10 +1281,9 @@
             basePrice: basePrice,
             rating: 5.0,
             image: image,
-            weightType: weightType,
             allowedWeights: allowedWeights
           });
-          selectedWeights[newId] = weightType === 'weights' && allowedWeights.length > 0 ? { type: 'preset', key: allowedWeights[0], ratio: weightRules[allowedWeights[0]].ratio } : { type: 'piece', key: 'piece', ratio: 1.00 };
+          selectedWeights[newId] = { type: 'preset', key: allowedWeights.includes('1kg') ? '1kg' : allowedWeights[0], ratio: weightRules[allowedWeights.includes('1kg') ? '1kg' : allowedWeights[0]].ratio };
         }
 
         saveAllToStorage();
@@ -1257,6 +1310,10 @@
         document.getElementById('adminTabAreas').style.display = 'block';
         event.target.classList.add('active');
         renderAdminAreasTable();
+      } else if (tabName === 'reviews') {
+        document.getElementById('adminTabReviews').style.display = 'block';
+        event.target.classList.add('active');
+        renderAdminReviewsTable();
       }
     };
 
@@ -1272,13 +1329,6 @@
       `).join('');
     }
 
-    window.toggleWeightOptionsSetup = function() {
-      const type = document.getElementById('prodWeightType').value;
-      const group = document.getElementById('customWeightsCheckGroup');
-      group.style.display = type === 'weights' ? 'block' : 'none';
-    };
-
-    // جدول المنتجات في لوحة التحكم
     function renderAdminProductsTable() {
       adminProductsList.innerHTML = products.map(p => {
         const catObj = categories.find(c => c.key === p.category);
@@ -1308,14 +1358,11 @@
       fillCategoryDropdownInForm(p.category);
       document.getElementById('prodPrice').value = p.basePrice;
       document.getElementById('prodImage').value = p.image || '';
-      document.getElementById('prodWeightType').value = p.weightType || 'weights';
-      toggleWeightOptionsSetup();
 
-      if (p.weightType === 'weights' && p.allowedWeights) {
-        document.querySelectorAll('input[name="pWeight"]').forEach(ch => {
-          ch.checked = p.allowedWeights.includes(ch.value);
-        });
-      }
+      const allowed = p.allowedWeights || ["100g", "250g", "500g", "1kg"];
+      document.querySelectorAll('input[name="pWeight"]').forEach(ch => {
+        ch.checked = allowed.includes(ch.value);
+      });
 
       productFormTitle.innerText = 'تعديل المنتج';
       productFormModal.style.display = 'flex';
@@ -1367,7 +1414,7 @@
       }
     };
 
-    // إدارة أماكن التوصيل
+    // إدارة أماكن الشحن
     function renderAdminAreasTable() {
       adminAreasList.innerHTML = deliveryAreas.map((area, idx) => `
         <tr style="border-bottom: 1px solid var(--border-color);">
@@ -1391,7 +1438,7 @@
       updateDeliveryAreasDropdown();
       document.getElementById('newAreaName').value = '';
       document.getElementById('newAreaFee').value = '';
-      alert('تم إضافة منطقة التوصيل بنجاح!');
+      alert('تم إضافة المنطقة بنجاح!');
     };
 
     window.deleteDeliveryArea = function(idx) {
@@ -1403,56 +1450,51 @@
       }
     };
 
+    // إدارة التقييمات وآراء العملاء من لوحة التحكم
+    function renderAdminReviewsTable() {
+      adminReviewsList.innerHTML = customerReviews.map((rev, idx) => `
+        <tr style="border-bottom: 1px solid var(--border-color);">
+          <td style="padding: 10px; font-weight: bold;">${rev.name}</td>
+          <td style="padding: 10px; color: var(--primary-gold);">${'⭐'.repeat(rev.stars)}</td>
+          <td style="padding: 10px; font-size: 0.85rem; color: var(--text-muted);">${rev.text}</td>
+          <td style="padding: 10px; text-align: center;">
+            <button onclick="deleteReview(${idx})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    window.addNewReview = function() {
+      const name = document.getElementById('newRevName').value.trim();
+      const stars = parseInt(document.getElementById('newRevStars').value);
+      const text = document.getElementById('newRevText').value.trim();
+
+      if (!name || !text) { alert('برجاء إدخال اسم العميل ونص التعليق!'); return; }
+
+      customerReviews.push({ name, stars, text });
+      saveAllToStorage();
+      renderAdminReviewsTable();
+      renderCustomerReviews();
+
+      document.getElementById('newRevName').value = '';
+      document.getElementById('newRevText').value = '';
+      alert('تم إضافة التقييم بنجاح للموقع!');
+    };
+
+    window.deleteReview = function(idx) {
+      if (confirm('هل أنت متأكد من حذف هذا التقييم؟')) {
+        customerReviews.splice(idx, 1);
+        saveAllToStorage();
+        renderAdminReviewsTable();
+        renderCustomerReviews();
+      }
+    };
+
     function saveAllToStorage() {
       localStorage.setItem('store_products', JSON.stringify(products));
       localStorage.setItem('store_categories', JSON.stringify(categories));
       localStorage.setItem('store_areas', JSON.stringify(deliveryAreas));
-    }
-
-    // الذكاء الاصطناعي وخبير العطارة
-    function setupAIAssistant() {
-      const aiBtn = document.getElementById('aiBtn');
-      const aiDrawer = document.getElementById('aiDrawer');
-      const closeAiBtn = document.getElementById('closeAiBtn');
-      const aiInput = document.getElementById('aiInput');
-      const aiSendBtn = document.getElementById('aiSendBtn');
-      const aiChatMsgs = document.getElementById('aiChatMsgs');
-
-      aiBtn.addEventListener('click', () => aiDrawer.classList.toggle('open'));
-      closeAiBtn.addEventListener('click', () => aiDrawer.classList.remove('open'));
-
-      const processAiQuery = () => {
-        const text = aiInput.value.trim();
-        if (!text) return;
-        appendMsg(text, 'user');
-        aiInput.value = '';
-        setTimeout(() => appendMsg(generateAiReply(text), 'bot'), 600);
-      };
-
-      aiSendBtn.addEventListener('click', processAiQuery);
-      aiInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processAiQuery(); });
-
-      function appendMsg(msg, sender) {
-        const div = document.createElement('div');
-        div.className = `chat-msg ${sender}`;
-        div.innerText = msg;
-        aiChatMsgs.appendChild(div);
-        aiChatMsgs.scrollTop = aiChatMsgs.scrollHeight;
-      }
-    }
-
-    function generateAiReply(query) {
-      const q = query.toLowerCase();
-      if (q.includes('رقم') || q.includes('تواصل') || q.includes('واتساب')) {
-        return 'رقم التواصل والطلب المباشر عبر الواتساب هو: 01030043129 📞';
-      }
-      if (q.includes('رشح') || q.includes('برد') || q.includes('زكام')) {
-        return 'لعلاج البرد والرشح: ننصح بشراب اليانسون النجمي الدافئ مع الليمون، والبابونج لرفع المناعة 🌿.';
-      }
-      if (q.includes('صداع')) {
-        return 'لعلاج الصداع: ننصح بشرب النعناع الأسواني المجفف الدافئ أو البابونج لتهدئة الأعصاب ✨.';
-      }
-      return 'أهلاً بك! يمكنك تصفح منتجاتنا، أو سؤالى عن أي عشب للبرد والرشح والصداع، أو طلب رقم التواصل 🌿.';
+      localStorage.setItem('store_reviews', JSON.stringify(customerReviews));
     }
 
     // إعدادات المظهر والتمرير
