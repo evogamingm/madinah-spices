@@ -149,7 +149,7 @@
       gap: 10px;
     }
 
-    .theme-toggle-btn, .lang-toggle-btn, .cart-icon-btn {
+    .theme-toggle-btn, .lang-toggle-btn, .cart-icon-btn, .admin-btn {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
       color: var(--text-main);
@@ -163,6 +163,11 @@
       font-size: 0.95rem;
       font-weight: bold;
       position: relative;
+    }
+
+    .admin-btn {
+      color: var(--warm-amber);
+      border-color: var(--warm-amber);
     }
 
     .cart-badge {
@@ -921,6 +926,7 @@
         </div>
       </div>
       <div class="header-actions">
+        <button class="admin-btn" id="adminPanelBtn" title="لوحة تحكم المالك"><i class="fa-solid fa-lock"></i></button>
         <button class="lang-toggle-btn" id="langToggleBtn" title="Change Language">EN</button>
         <button class="theme-toggle-btn" id="themeToggleBtn" title="تغيير المظهر">
           <i class="fa-solid fa-moon"></i>
@@ -1013,6 +1019,97 @@
 
   </div>
 
+  <!-- Admin Login Modal -->
+  <div class="modal-overlay" id="adminLoginModal">
+    <div class="modal-content" style="max-width: 350px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3>تسجيل دخول المالك 🔐</h3>
+        <button class="close-cart-btn" id="closeAdminLoginModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label>كلمة المرور الخاصة:</label>
+          <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور">
+        </div>
+        <button type="submit" class="checkout-btn" style="background-color: var(--herbal-green);">دخول لوحة التحكم</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard Modal -->
+  <div class="modal-overlay" id="adminDashboardModal">
+    <div class="modal-content" style="max-width: 800px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+        <h3>⚙️ لوحة تحكم المتجر (إدارة المنتجات والأوزان)</h3>
+        <button class="close-cart-btn" id="closeAdminDashboard"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <button type="button" class="checkout-btn" id="openAddProductBtn" style="background-color: var(--herbal-green); width: auto; padding: 8px 15px;">+ إضافة منتج جديد</button>
+      </div>
+
+      <div style="max-height: 60vh; overflow-y: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;" id="adminProductsTable">
+          <thead>
+            <tr style="background: var(--bg-color); border-bottom: 2px solid var(--border-color); text-align: right;">
+              <th style="padding: 10px;">الصورة</th>
+              <th style="padding: 10px;">اسم المنتج</th>
+              <th style="padding: 10px;">القسم</th>
+              <th style="padding: 10px;">السعر (للصنف/كج)</th>
+              <th style="padding: 10px;">وزن مخصص؟</th>
+              <th style="padding: 10px; text-align: center;">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductsList"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Product Sub-Modal -->
+  <div class="modal-overlay" id="productFormModal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 id="productFormTitle">إضافة منتج جديد</h3>
+        <button class="close-cart-btn" id="closeProductFormModal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="productEditForm">
+        <input type="hidden" id="editProductId">
+        <div class="form-group">
+          <label>اسم المنتج (بالعربية) *</label>
+          <input type="text" id="prodNameAr" required placeholder="مثال: مكرونة جديدة">
+        </div>
+        <div class="form-group">
+          <label>اسم المنتج (بالإنجليزية) *</label>
+          <input type="text" id="prodNameEn" required placeholder="مثال: New Pasta">
+        </div>
+        <div class="form-group">
+          <label>القسم *</label>
+          <select id="prodCategory">
+            <option value="spices">بهارات وعطارة</option>
+            <option value="herbs">أعشاب طبيعية</option>
+            <option value="nuts">مكسرات وياميش</option>
+            <option value="oils">زيوت طبيعية</option>
+            <option value="groceries">مكرونة وبقالة</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>السعر الأساسي (لكل كيلو أو وحدة) *</label>
+          <input type="number" id="prodPrice" required min="1" placeholder="مثال: 30">
+        </div>
+        <div class="form-group">
+          <label>رابط الصورة (URL) *</label>
+          <input type="url" id="prodImage" required placeholder="https://...">
+        </div>
+        <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+          <input type="checkbox" id="prodAllowCustom" style="width: 20px; height: 20px;" checked>
+          <label for="prodAllowCustom" style="margin-bottom: 0;">السماح باختيار أوزان مخصصة (غير مفعّل للمكرونات إذا أردت)</label>
+        </div>
+        <button type="submit" class="checkout-btn" style="background-color: var(--herbal-green);">حفظ المنتج</button>
+      </form>
+    </div>
+  </div>
+
   <!-- AI Assistant Floating Button & Drawer -->
   <button class="ai-assistant-btn" id="aiBtn" title="مساعد العطارة الذكي">
     <i class="fa-solid fa-robot"></i>
@@ -1024,7 +1121,7 @@
       <button class="close-cart-btn" id="closeAiBtn" style="color: white;"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="ai-chat-messages" id="aiChatMsgs">
-      <div class="chat-msg bot" data-i18n="aiWelcome">أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج (مثل المكرونة القلم أو الاسباجتي)، رقم التواصل، أو حالات البرد والرشح والصداع!</div>
+      <div class="chat-msg bot" data-i18n="aiWelcome">أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج (مكرونة قلم، اسباجتي، صغيرة)، رقم التواصل، أو حالات البرد والرشح والصداع!</div>
     </div>
     <div class="ai-chat-input-area">
       <input type="text" id="aiInput" placeholder="اسأل الخبير الذكي..." data-i18n-placeholder="aiPh">
@@ -1203,7 +1300,7 @@
         qtyText: 'الكمية',
         priceText: 'السعر',
         aiHeaderTitle: '<i class="fa-solid fa-wand-magic-sparkles"></i> خبير العطارة الذكي',
-        aiWelcome: 'أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج (مكرونة قلم، اسباجتي، صغبرة)، رقم التواصل، أو حالات البرد والرشح والصداع!',
+        aiWelcome: 'أهلاً بك! أنا خبير عطارة المدينة المنورة الذكي 🌿. اسألني عن أي منتج (مكرونة قلم، اسباجتي، صغيرة)، رقم التواصل، أو حالات البرد والرشح والصداع!',
         aiPh: 'اسأل الخبير الذكي...',
         phName: 'مثال: أحمد محمد',
         phPhone: '010xxxxxxxx',
@@ -1286,8 +1383,8 @@
 
     let currentLang = 'ar';
 
-    // Products Database
-    const products = [
+    // Default Products Database (Loaded from localStorage if available, or saved initially)
+    const defaultProducts = [
       { id: 1, name: { ar: "كمون بلدي مطحون طازج", en: "Fresh Ground Local Cumin" }, category: "spices", basePrice: 240, rating: 4.8, image: "https://karimolive.shop/_next/image?url=https%3A%2F%2Fkarimolive.shop%2Fuploads%2Fproducts%2Fimages%2F68f312dd97bfd.webp&w=3840&q=75" },
       { id: 2, name: { ar: "فلفل أسود فاخر مطحون", en: "Premium Ground Black Pepper" }, category: "spices", basePrice: 320, rating: 4.9, image: "https://plus.unsplash.com/premium_photo-1726072357017-0af7b90a463d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
       { id: 3, name: { ar: "كركم هندي نقّي", en: "Pure Indian Turmeric" }, category: "spices", basePrice: 160, rating: 4.7, image: "https://plus.unsplash.com/premium_photo-1726862790171-0d6208559224?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
@@ -1307,6 +1404,8 @@
       { id: 17, name: { ar: "مكرونة اسباجتي", en: "Spaghetti Pasta" }, category: "groceries", basePrice: 29, rating: 4.8, image: "https://images.unsplash.com/photo-1669295941291-080b4dbd3009?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" },
       { id: 18, name: { ar: "مكرونة صغيرة", en: "Small Pasta" }, category: "groceries", basePrice: 28, rating: 4.6, image: "https://images.unsplash.com/photo-1646953568310-8def6eb5a317?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D" }
     ];
+
+    let products = JSON.parse(localStorage.getItem('store_products')) || defaultProducts;
 
     // Standard Preset Weights
     const weightRules = {
@@ -1346,6 +1445,21 @@
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     const heroBanner = document.getElementById('heroBanner');
 
+    // Admin Elements
+    const adminPanelBtn = document.getElementById('adminPanelBtn');
+    const adminLoginModal = document.getElementById('adminLoginModal');
+    const closeAdminLoginModal = document.getElementById('closeAdminLoginModal');
+    const adminLoginForm = document.getElementById('adminLoginForm');
+    const adminPasswordInput = document.getElementById('adminPasswordInput');
+    const adminDashboardModal = document.getElementById('adminDashboardModal');
+    const closeAdminDashboard = document.getElementById('closeAdminDashboard');
+    const adminProductsList = document.getElementById('adminProductsList');
+    const openAddProductBtn = document.getElementById('openAddProductBtn');
+    const productFormModal = document.getElementById('productFormModal');
+    const closeProductFormModal = document.getElementById('closeProductFormModal');
+    const productEditForm = document.getElementById('productEditForm');
+    const productFormTitle = document.getElementById('productFormTitle');
+
     // AI Chat Elements
     const aiBtn = document.getElementById('aiBtn');
     const aiDrawer = document.getElementById('aiDrawer');
@@ -1367,6 +1481,139 @@
       setupScrollEvents();
       setupScrollAnimations();
       setupAIAssistant();
+      setupAdminPanel();
+    }
+
+    // Admin Panel Logic
+    function setupAdminPanel() {
+      adminPanelBtn.addEventListener('click', () => {
+        adminLoginModal.style.display = 'flex';
+      });
+      closeAdminLoginModal.addEventListener('click', () => {
+        adminLoginModal.style.display = 'none';
+      });
+
+      adminLoginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pass = adminPasswordInput.value;
+        // كلمة المرور الافتراضية للمالك هي 1234 (يمكنك تغييرها هنا)
+        if (pass === '1234') {
+          adminLoginModal.style.display = 'none';
+          adminPasswordInput.value = '';
+          openAdminDashboard();
+        } else {
+          alert('كلمة المرور غير صحيحة!');
+        }
+      });
+
+      closeAdminDashboard.addEventListener('click', () => {
+        adminDashboardModal.style.display = 'none';
+      });
+
+      openAddProductBtn.addEventListener('click', () => {
+        document.getElementById('editProductId').value = '';
+        document.getElementById('productEditForm').reset();
+        document.getElementById('prodAllowCustom').checked = true;
+        productFormTitle.innerText = 'إضافة منتج جديد';
+        productFormModal.style.display = 'flex';
+      });
+
+      closeProductFormModal.addEventListener('click', () => {
+        productFormModal.style.display = 'none';
+      });
+
+      productEditForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('editProductId').value;
+        const nameAr = document.getElementById('prodNameAr').value;
+        const nameEn = document.getElementById('prodNameEn').value;
+        const category = document.getElementById('prodCategory').value;
+        const basePrice = parseFloat(document.getElementById('prodPrice').value);
+        const image = document.getElementById('prodImage').value;
+        const allowCustom = document.getElementById('prodAllowCustom').checked;
+
+        if (id) {
+          // تعديل منتج موجود
+          const p = products.find(item => item.id == id);
+          if (p) {
+            p.name.ar = nameAr;
+            p.name.en = nameEn;
+            p.category = category;
+            p.basePrice = basePrice;
+            p.image = image;
+            p.allowCustom = allowCustom;
+          }
+        } else {
+          // إضافة منتج جديد
+          const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+          const newProduct = {
+            id: newId,
+            name: { ar: nameAr, en: nameEn },
+            category: category,
+            basePrice: basePrice,
+            rating: 5.0,
+            image: image,
+            allowCustom: allowCustom
+          };
+          products.push(newProduct);
+          selectedWeights[newId] = { type: 'preset', key: '250g', val: 250, unit: 'g', ratio: 0.25 };
+        }
+
+        saveProductsToStorage();
+        productFormModal.style.display = 'none';
+        renderAdminProductsTable();
+        renderProducts(products);
+        alert('تم حفظ التعديلات بنجاح!');
+      });
+    }
+
+    function openAdminDashboard() {
+      adminDashboardModal.style.display = 'flex';
+      renderAdminProductsTable();
+    }
+
+    function renderAdminProductsTable() {
+      adminProductsList.innerHTML = products.map(p => `
+        <tr style="border-bottom: 1px solid var(--border-color);">
+          <td style="padding: 10px;"><img src="${p.image}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px;"></td>
+          <td style="padding: 10px; font-weight: bold;">${p.name.ar}</td>
+          <td style="padding: 10px;">${getCategoryName(p.category)}</td>
+          <td style="padding: 10px; color: var(--herbal-green); font-weight: bold;">${p.basePrice} ج.م</td>
+          <td style="padding: 10px;">${p.allowCustom !== false ? '✅ نعم' : '❌ لا (ممنوع)'}</td>
+          <td style="padding: 10px; text-align: center;">
+            <button onclick="editProduct(${p.id})" style="background: var(--primary-gold); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-left: 5px;" title="تعديل"><i class="fa-solid fa-pen"></i></button>
+            <button onclick="deleteProduct(${p.id})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;" title="حذف"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    window.editProduct = function(id) {
+      const p = products.find(item => item.id == id);
+      if (!p) return;
+      document.getElementById('editProductId').value = p.id;
+      document.getElementById('prodNameAr').value = p.name.ar;
+      document.getElementById('prodNameEn').value = p.name.en;
+      document.getElementById('prodCategory').value = p.category;
+      document.getElementById('prodPrice').value = p.basePrice;
+      document.getElementById('prodImage').value = p.image;
+      document.getElementById('prodAllowCustom').checked = p.allowCustom !== false;
+
+      productFormTitle.innerText = 'تعديل المنتج';
+      productFormModal.style.display = 'flex';
+    };
+
+    window.deleteProduct = function(id) {
+      if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+        products = products.filter(item => item.id != id);
+        saveProductsToStorage();
+        renderAdminProductsTable();
+        renderProducts(products);
+      }
+    };
+
+    function saveProductsToStorage() {
+      localStorage.setItem('store_products', JSON.stringify(products));
     }
 
     // AI Assistant Intelligence Logic
@@ -1412,25 +1659,25 @@
       // 2. Check if user asks about specific pasta types
       if (q.includes('قلم') || q.includes('penne')) {
         return currentLang === 'ar' ? 
-          'نعم، مكرونة القلم متوفرة لدينا بسعر 28 جنيه للكيلو بجودة ممتازة! يمكنك إضافتها للسلة 🍝.' : 
-          'Yes, Penne pasta is available for 28 EGP per kg with high quality! 🍝.';
+          'نعم، مكرونة القلم متوفرة لدينا بسعر ممتاز! يمكنك إضافتها للسلة 🍝.' : 
+          'Yes, Penne pasta is available with high quality! 🍝.';
       }
       if (q.includes('اسباجتي') || q.includes('spaghetti')) {
         return currentLang === 'ar' ? 
-          'نعم، مكرونة الاسباجتي متوفرة لدينا بسعر 29 جنيه للكيلو وبأفضل طعم ومذاق 🍝.' : 
-          'Yes, Spaghetti pasta is available for 29 EGP per kg! 🍝.';
+          'نعم، مكرونة الاسباجتي متوفرة لدينا وبأفضل طعم ومذاق 🍝.' : 
+          'Yes, Spaghetti pasta is available! 🍝.';
       }
       if (q.includes('صغيرة') || q.includes('small pasta')) {
         return currentLang === 'ar' ? 
-          'نعم، المكرونة الصغيرة متوفرة لدينا بسعر 28 جنيه للكيلو وممتازة جداً للشوربة والطبخ 🍝.' : 
-          'Yes, Small pasta is available for 28 EGP per kg! 🍝.';
+          'نعم، المكرونة الصغيرة متوفرة لدينا وممتازة جداً للشوربة والطبخ 🍝.' : 
+          'Yes, Small pasta is available! 🍝.';
       }
 
       // General pasta check
       if (q.includes('مكرونة') || q.includes('pasta')) {
         return currentLang === 'ar' ? 
-          'دي أنواع المكرونة المتوفرة لدينا:\n• مكرونة قلم (28 ج/كج)\n• مكرونة اسباجتي (29 ج/كج)\n• مكرونة صغيرة (28 ج/كج)' : 
-          'Available pasta types: Penne (28 EGP/kg), Spaghetti (29 EGP/kg), Small Pasta (28 EGP/kg).';
+          'نعم، لدينا أنواع مكرونة مختلفة (قلم، اسباجتي، صغيرة) متوفرة بأعلى جودة في متجرنا 🍝!' : 
+          'Yes, different pasta types (penne, spaghetti, small) are available in our store 🍝!';
       }
 
       // 3. Health & Medical queries (البرد، الرشح، الصداع...)
@@ -1461,13 +1708,13 @@
       // 4. Delivery
       if (q.includes('توصيل') || q.includes('مكان') || q.includes('delivery') || q.includes('فين')) {
         return currentLang === 'ar' ? 
-          'نحن نوصل طلباتكم بسرعة فائقة إلى منازلكم في مناطق: حدائق الأهرام و6 أكتوبر 🚛!' :
+          'نحن نوصل طلباتكم بسرعة فائقة إلى منازلكم في مناطق: حدائق الأهرام و6 أكتوبر 🚛!' : 
           'We deliver fast to your doorstep in Hadayek El Ahram and 6th of October 🚛!';
       }
 
       // Default smart fallback response
       return currentLang === 'ar' ? 
-        `أهلاً بك! يمكنك تصفح منتجاتنا بالأعلى (مثل المكرونة القلم والاسباجتي)، أو سؤالى عن أي عشب للبرد والرشح والصداع، أو طلب رقم التواصل 🌿.` :
+        `أهلاً بك! يمكنك تصفح منتجاتنا بالأعلى، أو سؤالى عن أي عشب للبرد والرشح والصداع، أو طلب رقم التواصل 🌿.` :
         `Welcome! You can browse our products above, or ask me about remedies for colds, headaches, runny nose, or request our contact number 🌿.`;
     }
 
@@ -1577,10 +1824,14 @@
 
     // Create Single Product Card HTML
     function createProductCardHTML(product) {
-      const current = selectedWeights[product.id] || { type: 'preset', key: '250g', ratio: 0.25 };
+      if (!selectedWeights[product.id]) {
+        selectedWeights[product.id] = { type: 'preset', key: '250g', val: 250, unit: 'g', ratio: 0.25 };
+      }
+      const current = selectedWeights[product.id];
       const calculatedPrice = (product.basePrice * current.ratio).toFixed(1);
       const productName = product.name[currentLang] || product.name['ar'];
       const currency = translations[currentLang].currency;
+      const allowCustom = product.allowCustom !== false; // افتراضياً مسموح إلا لو تم إلغاؤه
 
       return `
         <div class="product-card" data-id="${product.id}">
@@ -1589,7 +1840,7 @@
           <div class="product-info">
             <h3 class="product-title">${productName}</h3>
             <div class="product-rating">
-              <i class="fa-solid fa-star"></i> ${product.rating} ${translations[currentLang].ratingText}
+              <i class="fa-solid fa-star"></i> ${product.rating || 5.0} ${translations[currentLang].ratingText}
             </div>
             
             <div class="weight-selector">
@@ -1601,19 +1852,24 @@
                     ${weightRules[w].label[currentLang]}
                   </button>
                 `).join('')}
-                <button class="weight-btn ${current.type === 'custom' ? 'selected' : ''}" 
-                        onclick="toggleCustomWeight(${product.id}, this)">
-                  ${translations[currentLang].customWeightBtn}
-                </button>
+                
+                ${allowCustom ? `
+                  <button class="weight-btn ${current.type === 'custom' ? 'selected' : ''}" 
+                          onclick="toggleCustomWeight(${product.id}, this)">
+                    ${translations[currentLang].customWeightBtn}
+                  </button>
+                ` : ''}
               </div>
 
-              <div class="custom-weight-box ${current.type === 'custom' ? 'active' : ''}" id="custom-box-${product.id}">
-                <input type="number" id="custom-val-${product.id}" value="${current.type === 'custom' ? current.val : 10}" min="1" oninput="updateCustomWeight(${product.id})">
-                <select id="custom-unit-${product.id}" onchange="updateCustomWeight(${product.id})">
-                  <option value="g" ${current.unit === 'g' ? 'selected' : ''}>${currentLang === 'ar' ? 'جرام (g)' : 'Grams (g)'}</option>
-                  <option value="kg" ${current.unit === 'kg' ? 'selected' : ''}>${currentLang === 'ar' ? 'كيلو (kg)' : 'Kilo (kg)'}</option>
-                </select>
-              </div>
+              ${allowCustom ? `
+                <div class="custom-weight-box ${current.type === 'custom' ? 'active' : ''}" id="custom-box-${product.id}">
+                  <input type="number" id="custom-val-${product.id}" value="${current.type === 'custom' ? current.val : 10}" min="1" oninput="updateCustomWeight(${product.id})">
+                  <select id="custom-unit-${product.id}" onchange="updateCustomWeight(${product.id})">
+                    <option value="g" ${current.unit === 'g' ? 'selected' : ''}>${currentLang === 'ar' ? 'جرام (g)' : 'Grams (g)'}</option>
+                    <option value="kg" ${current.unit === 'kg' ? 'selected' : ''}>${currentLang === 'ar' ? 'كيلو (kg)' : 'Kilo (kg)'}</option>
+                  </select>
+                </div>
+              ` : ''}
             </div>
 
             <div class="product-price-action">
