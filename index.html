@@ -11,7 +11,7 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Firebase App & Firestore SDKs (Compat version متوافقة مع الكود) -->
+  <!-- Firebase App & Firestore SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
@@ -636,7 +636,7 @@
     </div>
   </div>
 
-  <!-- Admin Login Modal -->
+  <!-- Admin Login Modal (آمن مع إخفاء كلمة المرور وزر العرض) -->
   <div class="modal-overlay" id="adminLoginModal">
     <div class="modal-content" style="max-width: 350px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -645,8 +645,13 @@
       </div>
       <form id="adminLoginForm">
         <div class="form-group">
-          <label>كلمة المرور الخاصة:</label>
-          <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور (1122)">
+          <label>كلمة المرور الخاصة (1122):</label>
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور" style="width: 100%; padding-left: 45px;">
+            <button type="button" id="togglePasswordBtn" style="position: absolute; left: 12px; background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1rem;" title="إظهار/إخفاء كلمة المرور">
+              <i class="fa-solid fa-eye" id="eyeIcon"></i>
+            </button>
+          </div>
         </div>
         <button type="submit" class="checkout-btn" style="background-color: var(--herbal-green);">دخول لوحة التحكم</button>
       </form>
@@ -689,7 +694,7 @@
         </div>
       </div>
 
-      <!-- Tab 2: Categories -->
+      <!-- Tab 2: Categories (بدون معرف القسم) -->
       <div id="adminTabCategories" class="admin-tab-content" style="display: none;">
         <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
           <input type="text" id="newCatArName" placeholder="اكتب اسم القسم الجديد هنا (مثال: حمص، مسليات...)" style="flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-main);">
@@ -801,7 +806,7 @@
     </div>
   </div>
 
-  <!-- ربط إعدادات Firebase الخاصة بمشروعك (madinah-f6558) -->
+  <!-- ربط إعدادات Firebase والتشغيل -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDFYqvRcSui00RJ4Lvu9s66KQkGrwHZCOg",
@@ -813,13 +818,11 @@
       measurementId: "G-8R24DC864T"
     };
 
-    // تهيئة فايربيس
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
     const db = firebase.firestore();
 
-    // البيانات الافتراضية الأولية في حال كانت القاعدة فارغة
     const defaultCategories = [
       { key: 'all', ar: 'الكل' },
       { key: 'spices', ar: 'بهارات وعطارة' },
@@ -898,6 +901,8 @@
     const closeAdminLoginModal = document.getElementById('closeAdminLoginModal');
     const adminLoginForm = document.getElementById('adminLoginForm');
     const adminPasswordInput = document.getElementById('adminPasswordInput');
+    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    const eyeIcon = document.getElementById('eyeIcon');
     const adminDashboardModal = document.getElementById('adminDashboardModal');
     const closeAdminDashboard = document.getElementById('closeAdminDashboard');
     const adminProductsList = document.getElementById('adminProductsList');
@@ -910,7 +915,19 @@
     const productEditForm = document.getElementById('productEditForm');
     const productFormTitle = document.getElementById('productFormTitle');
 
-    // الاتصال الفوري بـ Firestore وجلب البيانات لحظياً (Real-time Listeners)
+    // زر إظهار/إخفاء كلمة المرور الآمنة
+    togglePasswordBtn.addEventListener('click', () => {
+      if (adminPasswordInput.type === 'password') {
+        adminPasswordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      } else {
+        adminPasswordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      }
+    });
+
     function initCloudData() {
       db.collection('products').onSnapshot(snapshot => {
         if (snapshot.empty && navigator.onLine) {
@@ -1237,7 +1254,7 @@
       alert('شكراً لطلبك! تم تحويلك للواتساب. نرجو إرسال تقييمك لكل منتج وتجربتك مع البرنامج.');
     });
 
-    // الذكاء الاصطناعي للمنتجات
+    // الذكاء الاصطناعي
     function setupAIAssistant() {
       const aiBtn = document.getElementById('aiBtn');
       const aiDrawer = document.getElementById('aiDrawer');
@@ -1294,7 +1311,7 @@
       return 'عذراً، هذا الطلب أو المنتج غير متوفر حالياً في قائمتنا، ولكن يمكنك التواصل معنا مباشرة عبر الواتساب على 01286501000 لتوفيره لك فوراً 🌿!';
     }
 
-    // لوحة التحكم السحابية (الباسورد: 1122)
+    // لوحة التحكم (الباسورد: 1122)
     function setupAdminPanel() {
       adminPanelBtn.addEventListener('click', () => adminLoginModal.style.display = 'flex');
       closeAdminLoginModal.addEventListener('click', () => adminLoginModal.style.display = 'none');
@@ -1483,7 +1500,7 @@
       const fee = parseFloat(document.getElementById('newAreaFee').value);
       if (!name || isNaN(fee)) { alert('برجاء إدخال اسم المنطقة وسعر شحن صحيح!'); return; }
 
-      const docId = 'area_' + Date.Now();
+      const docId = 'area_' + Date.now();
       await db.collection('deliveryAreas').doc(docId).set({ name, fee });
       document.getElementById('newAreaName').value = '';
       document.getElementById('newAreaFee').value = '';
