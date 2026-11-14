@@ -11,6 +11,10 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <!-- Firebase App & Firestore SDKs (Compat version متوافقة مع الكود) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
   <style>
     @font-face {
       font-family: 'MomkenFont';
@@ -623,7 +627,7 @@
           <p style="margin-bottom: 4px;">💰 <strong>تفاصيل الحساب:</strong></p>
           <p>المجموع الفرعي: <span id="modalSubtotal">0.0</span> ج.م</p>
           <p>مصاريف الشحن: <span id="modalShipping" style="color: var(--text-muted);">يُحدد بعد اختيار المنطقة</span></p>
-          <p style="font-weight: bold; color: var(--warm-amber); margin-top: 4px;" id="modalTotalLine">الإجمالي الفرعي: <span id="modalTotal">0.0</span> ج.م</p>
+          <p style="font-weight: bold; color: var(--warm-amber); margin-top: 4px;" id="modalTotalLine">المجموع الفرعي: <span id="modalTotal">0.0</span> ج.م</p>
         </div>
         <button type="submit" class="checkout-btn" style="background-color: #25D366; margin-top: 15px;">
           إرسال الطلب عبر الواتساب <i class="fa-brands fa-whatsapp"></i>
@@ -642,7 +646,7 @@
       <form id="adminLoginForm">
         <div class="form-group">
           <label>كلمة المرور الخاصة:</label>
-          <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور">
+          <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور (1122)">
         </div>
         <button type="submit" class="checkout-btn" style="background-color: var(--herbal-green);">دخول لوحة التحكم</button>
       </form>
@@ -653,7 +657,7 @@
   <div class="modal-overlay" id="adminDashboardModal">
     <div class="modal-content" style="max-width: 950px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-        <h3>⚙️ لوحة تحكم المالك الشاملة</h3>
+        <h3>⚙️ لوحة تحكم المالك السحابية</h3>
         <button class="close-cart-btn" id="closeAdminDashboard"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
@@ -685,7 +689,7 @@
         </div>
       </div>
 
-      <!-- Tab 2: Categories (بدون معرف القسم) -->
+      <!-- Tab 2: Categories -->
       <div id="adminTabCategories" class="admin-tab-content" style="display: none;">
         <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
           <input type="text" id="newCatArName" placeholder="اكتب اسم القسم الجديد هنا (مثال: حمص، مسليات...)" style="flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-main);">
@@ -792,12 +796,30 @@
             <label><input type="checkbox" name="pWeight" value="1kg" checked> 1 كيلو</label>
           </div>
         </div>
-        <button type="submit" class="checkout-btn" style="background-color: var(--herbal-green);">حفظ المنتج</button>
+        <button type="submit" class="checkout-btn" style="background-color: var(--herbal-green);">حفظ بالسيرفر السحابي</button>
       </form>
     </div>
   </div>
 
+  <!-- ربط إعدادات Firebase الخاصة بمشروعك (madinah-f6558) -->
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDFYqvRcSui00RJ4Lvu9s66KQkGrwHZCOg",
+      authDomain: "madinah-f6558.firebaseapp.com",
+      projectId: "madinah-f6558",
+      storageBucket: "madinah-f6558.firebasestorage.app",
+      messagingSenderId: "34424441874",
+      appId: "1:34424441874:web:551e057e5365c8ba5c1ccb",
+      measurementId: "G-8R24DC864T"
+    };
+
+    // تهيئة فايربيس
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    // البيانات الافتراضية الأولية في حال كانت القاعدة فارغة
     const defaultCategories = [
       { key: 'all', ar: 'الكل' },
       { key: 'spices', ar: 'بهارات وعطارة' },
@@ -820,18 +842,17 @@
     ];
 
     const defaultProducts = [
-      { id: 1, name: "كمون بلدي مطحون طازج", category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80", allowedWeights: ["100g", "250g", "500g", "1kg"] },
-      { id: 2, name: "شيبسي طبيعي مقرمش", category: "snacks", basePrice: 60, rating: 4.7, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=400&q=80", allowedWeights: ["100g", "250g", "500g", "1kg"] }
+      { id: '1', name: "كمون بلدي مطحون طازج", category: "spices", basePrice: 240, rating: 4.8, image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=400&q=80", allowedWeights: ["100g", "250g", "500g", "1kg"] },
+      { id: '2', name: "شيبسي طبيعي مقرمش", category: "snacks", basePrice: 60, rating: 4.7, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=400&q=80", allowedWeights: ["100g", "250g", "500g", "1kg"] }
     ];
 
     const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1629649407271-2dac934c1f1b?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D";
 
-    let categories = JSON.parse(localStorage.getItem('store_categories')) || defaultCategories;
-    let deliveryAreas = JSON.parse(localStorage.getItem('store_areas')) || defaultDeliveryAreas;
-    let customerReviews = JSON.parse(localStorage.getItem('store_reviews')) || defaultReviews;
-    let products = JSON.parse(localStorage.getItem('store_products')) || defaultProducts;
+    let categories = [];
+    let deliveryAreas = [];
+    let customerReviews = [];
+    let products = [];
 
-    // عدم تحديد أي منطقة افتراضياً حتى يختارها العميل
     let currentArea = '';
     let shippingFee = null;
 
@@ -889,22 +910,73 @@
     const productEditForm = document.getElementById('productEditForm');
     const productFormTitle = document.getElementById('productFormTitle');
 
-    function init() {
-      products.forEach(p => {
-        const defaultW = '1kg';
-        selectedWeights[p.id] = { type: 'preset', key: defaultW, ratio: weightRules[defaultW].ratio };
+    // الاتصال الفوري بـ Firestore وجلب البيانات لحظياً (Real-time Listeners)
+    function initCloudData() {
+      db.collection('products').onSnapshot(snapshot => {
+        if (snapshot.empty && navigator.onLine) {
+          defaultProducts.forEach(p => db.collection('products').doc(String(p.id)).set(p));
+        } else {
+          products = [];
+          snapshot.forEach(doc => { products.push({ id: doc.id, ...doc.data() }); });
+          products.forEach(p => {
+            if (!selectedWeights[p.id]) selectedWeights[p.id] = { type: 'preset', key: '1kg', ratio: weightRules['1kg'].ratio };
+          });
+          renderProducts(products);
+          if (document.getElementById('adminDashboardModal').style.display === 'flex') {
+            renderAdminProductsTable();
+          }
+        }
       });
 
-      renderCategoriesNav();
-      renderProducts(products);
-      renderCustomerReviews();
+      db.collection('categories').onSnapshot(snapshot => {
+        if (snapshot.empty) {
+          defaultCategories.forEach(c => db.collection('categories').doc(c.key).set(c));
+        } else {
+          categories = [];
+          snapshot.forEach(doc => { categories.push(doc.data()); });
+          renderCategoriesNav();
+          fillCategoryDropdownInForm();
+          if (document.getElementById('adminDashboardModal').style.display === 'flex') {
+            renderAdminCategoriesTable();
+          }
+        }
+      });
+
+      db.collection('deliveryAreas').onSnapshot(snapshot => {
+        if (snapshot.empty) {
+          defaultDeliveryAreas.forEach((a, idx) => db.collection('deliveryAreas').doc('area_' + idx).set(a));
+        } else {
+          deliveryAreas = [];
+          snapshot.forEach(doc => { deliveryAreas.push({ docId: doc.id, ...doc.data() }); });
+          updateDeliveryAreasDropdown();
+          if (document.getElementById('adminDashboardModal').style.display === 'flex') {
+            renderAdminAreasTable();
+          }
+        }
+      });
+
+      db.collection('reviews').onSnapshot(snapshot => {
+        if (snapshot.empty) {
+          defaultReviews.forEach((r, idx) => db.collection('reviews').doc('rev_' + idx).set(r));
+        } else {
+          customerReviews = [];
+          snapshot.forEach(doc => { customerReviews.push({ docId: doc.id, ...doc.data() }); });
+          renderCustomerReviews();
+          if (document.getElementById('adminDashboardModal').style.display === 'flex') {
+            renderAdminReviewsTable();
+          }
+        }
+      });
+    }
+
+    function init() {
+      initCloudData();
       setupTheme();
       initBannerSlider();
       setupScrollEvents();
       setupScrollAnimations();
       setupAIAssistant();
       setupAdminPanel();
-      updateDeliveryAreasDropdown();
     }
 
     function renderCategoriesNav() {
@@ -971,7 +1043,7 @@
           <div class="weight-options">
             ${allowedW.map(wKey => `
               <button class="weight-btn ${(current.type === 'preset' && current.key === wKey) ? 'selected' : ''}" 
-                      onclick="selectPresetWeight(${product.id}, '${wKey}', this)">
+                      onclick="selectPresetWeight('${product.id}', '${wKey}', this)">
                 ${weightRules[wKey] ? weightRules[wKey].label : wKey}
               </button>
             `).join('')}
@@ -992,7 +1064,7 @@
                 <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">السعر:</span>
                 <span class="product-price" id="price-${product.id}">${calculatedPrice} ج.م</span>
               </div>
-              <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+              <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">
                 <i class="fa-solid fa-plus"></i> أضف للسلة
               </button>
             </div>
@@ -1009,19 +1081,19 @@
       const ratio = weightRules[weightKey].ratio;
       selectedWeights[productId] = { type: 'preset', key: weightKey, ratio: ratio };
       
-      const product = products.find(p => p.id === productId);
+      const product = products.find(p => p.id == productId);
       const newPrice = (product.basePrice * ratio).toFixed(1);
       const priceElem = document.getElementById(`price-${productId}`);
       if (priceElem) priceElem.innerText = `${newPrice} ج.م`;
     };
 
     window.addToCart = function(productId) {
-      const product = products.find(p => p.id === productId);
+      const product = products.find(p => p.id == productId);
       const current = selectedWeights[productId];
       const itemPrice = parseFloat((product.basePrice * current.ratio).toFixed(1));
       const itemKeyLabel = weightRules[current.key] ? weightRules[current.key].label : current.key;
 
-      const existingIndex = cart.findIndex(item => item.id === productId && item.weightKey === current.key);
+      const existingIndex = cart.findIndex(item => item.id == productId && item.weightKey === current.key);
 
       if (existingIndex > -1) {
         cart[existingIndex].qty += 1;
@@ -1049,7 +1121,7 @@
       }
 
       cartItemsContainer.innerHTML = cart.map((item, index) => {
-        const product = products.find(p => p.id === item.id);
+        const product = products.find(p => p.id == item.id);
         const productName = product ? (typeof product.name === 'string' ? product.name : product.name.ar) : '';
         return `
           <div class="cart-item">
@@ -1088,7 +1160,6 @@
     closeCartBtn.addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
-    // تحديث قائمة المناطق بحيث تبدأ بخيار "اختر منطقة التوصيل"
     function updateDeliveryAreasDropdown() {
       if (checkoutAreaSelect) {
         checkoutAreaSelect.innerHTML = `<option value="" data-fee="">-- اختر منطقة التوصيل --</option>` +
@@ -1153,7 +1224,7 @@
       const totalVal = subTotalVal + shippingFee;
 
       let orderListText = cart.map((item, idx) => {
-        const product = products.find(p => p.id === item.id);
+        const product = products.find(p => p.id == item.id);
         const productName = product ? (typeof product.name === 'string' ? product.name : product.name.ar) : '';
         return `${idx + 1}. *${productName}*\n   - الوزن: ${item.weightLabel}\n   - الكمية: ${item.qty}\n   - السعر: ${item.price * item.qty} ج.م`;
       }).join('\n\n');
@@ -1166,7 +1237,7 @@
       alert('شكراً لطلبك! تم تحويلك للواتساب. نرجو إرسال تقييمك لكل منتج وتجربتك مع البرنامج.');
     });
 
-    // الذكاء الاصطناعي
+    // الذكاء الاصطناعي للمنتجات
     function setupAIAssistant() {
       const aiBtn = document.getElementById('aiBtn');
       const aiDrawer = document.getElementById('aiDrawer');
@@ -1223,7 +1294,7 @@
       return 'عذراً، هذا الطلب أو المنتج غير متوفر حالياً في قائمتنا، ولكن يمكنك التواصل معنا مباشرة عبر الواتساب على 01286501000 لتوفيره لك فوراً 🌿!';
     }
 
-    // لوحة التحكم (الباسورد الجديد 1122)
+    // لوحة التحكم السحابية (الباسورد: 1122)
     function setupAdminPanel() {
       adminPanelBtn.addEventListener('click', () => adminLoginModal.style.display = 'flex');
       closeAdminLoginModal.addEventListener('click', () => adminLoginModal.style.display = 'none');
@@ -1245,13 +1316,13 @@
         document.getElementById('editProductId').value = '';
         document.getElementById('productEditForm').reset();
         fillCategoryDropdownInForm();
-        productFormTitle.innerText = 'إضافة منتج جديد';
+        productFormTitle.innerText = 'إضافة منتج جديد سحابياً';
         productFormModal.style.display = 'flex';
       });
 
       closeProductFormModal.addEventListener('click', () => productFormModal.style.display = 'none');
 
-      productEditForm.addEventListener('submit', (e) => {
+      productEditForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('editProductId').value;
         const nameAr = document.getElementById('prodNameAr').value;
@@ -1264,34 +1335,25 @@
         checkedWeights.forEach(ch => allowedWeights.push(ch.value));
         if (allowedWeights.length === 0) allowedWeights = ["1kg", "500g", "250g", "100g"];
 
+        const productData = {
+          name: nameAr,
+          category: category,
+          basePrice: basePrice,
+          rating: 5.0,
+          image: image,
+          allowedWeights: allowedWeights
+        };
+
         if (id) {
-          const p = products.find(item => item.id == id);
-          if (p) {
-            p.name = nameAr;
-            p.category = category;
-            p.basePrice = basePrice;
-            p.image = image;
-            p.allowedWeights = allowedWeights;
-          }
+          await db.collection('products').doc(String(id)).update(productData);
         } else {
-          const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-          products.push({
-            id: newId,
-            name: nameAr,
-            category: category,
-            basePrice: basePrice,
-            rating: 5.0,
-            image: image,
-            allowedWeights: allowedWeights
-          });
-          selectedWeights[newId] = { type: 'preset', key: '1kg', ratio: weightRules['1kg'].ratio };
+          const newId = 'prod_' + Date.now();
+          productData.id = newId;
+          await db.collection('products').doc(newId).set(productData);
         }
 
-        saveAllToStorage();
         productFormModal.style.display = 'none';
-        renderAdminProductsTable();
-        renderProducts(products);
-        alert('تم حفظ المنتج بنجاح!');
+        alert('تم الحفظ في السيرفر السحابي بنجاح!');
       });
     }
 
@@ -1343,8 +1405,8 @@
             <td style="padding: 10px;">${catName}</td>
             <td style="padding: 10px; color: var(--herbal-green); font-weight: bold;">${p.basePrice} ج.م</td>
             <td style="padding: 10px; text-align: center;">
-              <button onclick="editProduct(${p.id})" style="background: var(--primary-gold); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-left: 5px;"><i class="fa-solid fa-pen"></i></button>
-              <button onclick="deleteProduct(${p.id})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+              <button onclick="editProduct('${p.id}')" style="background: var(--primary-gold); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-left: 5px;"><i class="fa-solid fa-pen"></i></button>
+              <button onclick="deleteProduct('${p.id}')" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
             </td>
           </tr>
         `;
@@ -1365,20 +1427,17 @@
         ch.checked = allowed.includes(ch.value);
       });
 
-      productFormTitle.innerText = 'تعديل المنتج';
+      productFormTitle.innerText = 'تعديل المنتج سحابياً';
       productFormModal.style.display = 'flex';
     };
 
-    window.deleteProduct = function(id) {
-      if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
-        products = products.filter(item => item.id != id);
-        saveAllToStorage();
-        renderAdminProductsTable();
-        renderProducts(products);
+    window.deleteProduct = async function(id) {
+      if (confirm('هل أنت متأكد من حذف هذا المنتج من السيرفر السحابي؟')) {
+        await db.collection('products').doc(String(id)).delete();
+        alert('تم الحذف بنجاح!');
       }
     };
 
-    // إدارة الأقسام (توليد المعرف تلقائياً بدون ظهوره للمستخدم)
     function renderAdminCategoriesTable() {
       adminCategoriesList.innerHTML = categories.filter(c => c.key !== 'all').map(c => `
         <tr style="border-bottom: 1px solid var(--border-color);">
@@ -1390,109 +1449,85 @@
       `).join('');
     }
 
-    window.addNewCategory = function() {
+    window.addNewCategory = async function() {
       const ar = document.getElementById('newCatArName').value.trim();
       if (!ar) { alert('برجاء كتابة اسم القسم أولاً!'); return; }
       if (categories.some(c => c.ar === ar)) { alert('هذا القسم موجود مسبقاً!'); return; }
 
       const autoKey = 'cat_' + Date.now();
-      categories.push({ key: autoKey, ar });
-      saveAllToStorage();
-      renderAdminCategoriesTable();
-      renderCategoriesNav();
+      await db.collection('categories').doc(autoKey).set({ key: autoKey, ar });
       document.getElementById('newCatArName').value = '';
-      alert('تم إضافة القسم بنجاح!');
+      alert('تم إضافة القسم للسيرفر بنجاح!');
     };
 
-    window.deleteCategory = function(key) {
+    window.deleteCategory = async function(key) {
       if (confirm('هل أنت متأكد من حذف هذا القسم؟')) {
-        categories = categories.filter(c => c.key !== key);
-        saveAllToStorage();
-        renderAdminCategoriesTable();
-        renderCategoriesNav();
+        await db.collection('categories').doc(key).delete();
       }
     };
 
     function renderAdminAreasTable() {
-      adminAreasList.innerHTML = deliveryAreas.map((area, idx) => `
+      adminAreasList.innerHTML = deliveryAreas.map(area => `
         <tr style="border-bottom: 1px solid var(--border-color);">
           <td style="padding: 10px; font-weight: bold;">${area.name}</td>
           <td style="padding: 10px; color: var(--herbal-green);">${area.fee} ج.م</td>
           <td style="padding: 10px; text-align: center;">
-            <button onclick="deleteDeliveryArea(${idx})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+            <button onclick="deleteDeliveryArea('${area.docId}')" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
           </td>
         </tr>
       `).join('');
     }
 
-    window.addNewDeliveryArea = function() {
+    window.addNewDeliveryArea = async function() {
       const name = document.getElementById('newAreaName').value.trim();
       const fee = parseFloat(document.getElementById('newAreaFee').value);
       if (!name || isNaN(fee)) { alert('برجاء إدخال اسم المنطقة وسعر شحن صحيح!'); return; }
 
-      deliveryAreas.push({ name, fee });
-      saveAllToStorage();
-      renderAdminAreasTable();
-      updateDeliveryAreasDropdown();
+      const docId = 'area_' + Date.Now();
+      await db.collection('deliveryAreas').doc(docId).set({ name, fee });
       document.getElementById('newAreaName').value = '';
       document.getElementById('newAreaFee').value = '';
-      alert('تم إضافة المنطقة بنجاح!');
+      alert('تم إضافة المنطقة للسيرفر بنجاح!');
     };
 
-    window.deleteDeliveryArea = function(idx) {
+    window.deleteDeliveryArea = async function(docId) {
       if (confirm('هل أنت متأكد من حذف هذه المنطقة؟')) {
-        deliveryAreas.splice(idx, 1);
-        saveAllToStorage();
-        renderAdminAreasTable();
-        updateDeliveryAreasDropdown();
+        await db.collection('deliveryAreas').doc(docId).delete();
       }
     };
 
     function renderAdminReviewsTable() {
-      adminReviewsList.innerHTML = customerReviews.map((rev, idx) => `
+      adminReviewsList.innerHTML = customerReviews.map(rev => `
         <tr style="border-bottom: 1px solid var(--border-color);">
           <td style="padding: 10px; font-weight: bold;">${rev.name}</td>
           <td style="padding: 10px; color: var(--primary-gold);">${'⭐'.repeat(rev.stars)}</td>
           <td style="padding: 10px; font-size: 0.85rem; color: var(--text-muted);">${rev.text}</td>
           <td style="padding: 10px; text-align: center;">
-            <button onclick="deleteReview(${idx})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+            <button onclick="deleteReview('${rev.docId}')" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
           </td>
         </tr>
       `).join('');
     }
 
-    window.addNewReview = function() {
+    window.addNewReview = async function() {
       const name = document.getElementById('newRevName').value.trim();
       const stars = parseInt(document.getElementById('newRevStars').value);
       const text = document.getElementById('newRevText').value.trim();
 
       if (!name || !text) { alert('برجاء إدخال اسم العميل ونص التعليق!'); return; }
 
-      customerReviews.push({ name, stars, text });
-      saveAllToStorage();
-      renderAdminReviewsTable();
-      renderCustomerReviews();
-
+      const docId = 'rev_' + Date.now();
+      await db.collection('reviews').doc(docId).set({ name, stars, text });
       document.getElementById('newRevName').value = '';
       document.getElementById('newRevText').value = '';
-      alert('تم إضافة التقييم بنجاح للموقع!');
+      alert('تم إضافة التقييم للسيرفر بنجاح!');
     };
 
-    window.deleteReview = function(idx) {
+    window.deleteReview = async function(docId) {
       if (confirm('هل أنت متأكد من حذف هذا التقييم؟')) {
-        customerReviews.splice(idx, 1);
-        saveAllToStorage();
-        renderAdminReviewsTable();
-        renderCustomerReviews();
+        await db.collection('reviews').doc(docId).delete();
       }
     };
-
-    function saveAllToStorage() {
-      localStorage.setItem('store_products', JSON.stringify(products));
-      localStorage.setItem('store_categories', JSON.stringify(categories));
-      localStorage.setItem('store_areas', JSON.stringify(deliveryAreas));
-      localStorage.setItem('store_reviews', JSON.stringify(customerReviews));
-    }
 
     function setupScrollAnimations() {
       const observer = new IntersectionObserver((entries, obs) => {
