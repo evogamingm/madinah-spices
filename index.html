@@ -396,6 +396,7 @@
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; margin-bottom: 5px; font-size: 0.9rem; font-weight: 600; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-main); outline: none; }
+    .form-group select option { background-color: var(--card-bg); color: var(--text-main); }
     .instapay-box { background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--primary-gold); padding: 12px; border-radius: 8px; margin-top: 10px; display: none; }
     .copy-btn { background: var(--primary-gold); color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
 
@@ -447,7 +448,7 @@
 
   <!-- Top Announcement Bar -->
   <div class="top-bar">
-    <span><i class="fa-solid fa-location-dot"></i> التوصيل إلى: <span id="currentAreaDisplay">حدائق الأهرام</span></span>
+    <span><i class="fa-solid fa-location-dot"></i> التوصيل إلى: <span id="currentAreaDisplay">يرجى تحديد المنطقة عند الطلب</span></span>
     <span><i class="fa-solid fa-phone"></i> الطلب المباشر: 01286501000</span>
   </div>
 
@@ -576,7 +577,6 @@
         <span>المجموع الفرعي:</span>
         <span id="subtotalPrice">0.0 ج.م</span>
       </div>
-      <!-- تم إلغاء ظهور سعر التوصيل هنا بناءً على طلبك، ويبقى زر إكمال الطلب فقط -->
       <button class="checkout-btn" id="openCheckoutBtn">إتمام الطلب <i class="fa-solid fa-arrow-left"></i></button>
     </div>
   </div>
@@ -619,11 +619,11 @@
             <button type="button" class="copy-btn" onclick="navigator.clipboard.writeText('01286501000');alert('تم النسخ!');">نسخ الرقم</button>
           </div>
         </div>
-        <div style="margin-top: 15px; padding: 10px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 0.85rem;">
-          <p>💰 **تفاصيل الحساب:**</p>
+        <div style="margin-top: 15px; padding: 12px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; font-size: 0.9rem;">
+          <p style="margin-bottom: 4px;">💰 <strong>تفاصيل الحساب:</strong></p>
           <p>المجموع الفرعي: <span id="modalSubtotal">0.0</span> ج.م</p>
-          <p>مصاريف الشحن: <span id="modalShipping">30</span> ج.م</p>
-          <p style="font-weight: bold; color: var(--warm-amber);">الإجمالي النهائي: <span id="modalTotal">0.0</span> ج.م</p>
+          <p>مصاريف الشحن: <span id="modalShipping" style="color: var(--text-muted);">يُحدد بعد اختيار المنطقة</span></p>
+          <p style="font-weight: bold; color: var(--warm-amber); margin-top: 4px;" id="modalTotalLine">الإجمالي الفرعي: <span id="modalTotal">0.0</span> ج.م</p>
         </div>
         <button type="submit" class="checkout-btn" style="background-color: #25D366; margin-top: 15px;">
           إرسال الطلب عبر الواتساب <i class="fa-brands fa-whatsapp"></i>
@@ -642,7 +642,7 @@
       <form id="adminLoginForm">
         <div class="form-group">
           <label>كلمة المرور الخاصة:</label>
-          <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور (افتراضي: 1234)">
+          <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور">
         </div>
         <button type="submit" class="checkout-btn" style="background-color: var(--herbal-green);">دخول لوحة التحكم</button>
       </form>
@@ -685,20 +685,18 @@
         </div>
       </div>
 
-      <!-- Tab 2: Categories -->
+      <!-- Tab 2: Categories (بدون معرف القسم) -->
       <div id="adminTabCategories" class="admin-tab-content" style="display: none;">
-        <div style="margin-bottom: 15px; display: flex; gap: 10px;">
-          <input type="text" id="newCatKeyName" placeholder="معرف القسم (مثل: snacks)" style="flex: 1;">
-          <input type="text" id="newCatArName" placeholder="اسم القسم بالعربي (مثل: مسليات)" style="flex: 1;">
-          <button type="button" class="checkout-btn" onclick="addNewCategory()" style="background-color: var(--herbal-green); width: auto; margin-top:0; padding: 8px 15px;">إضافة قسم</button>
+        <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
+          <input type="text" id="newCatArName" placeholder="اكتب اسم القسم الجديد هنا (مثال: حمص، مسليات...)" style="flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-main);">
+          <button type="button" class="checkout-btn" onclick="addNewCategory()" style="background-color: var(--herbal-green); width: auto; margin-top: 0; padding: 10px 20px;">إضافة قسم</button>
         </div>
         <div style="max-height: 50vh; overflow-y: auto;">
           <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
             <thead>
               <tr style="background: var(--bg-color); border-bottom: 2px solid var(--border-color); text-align: right;">
-                <th style="padding: 10px;">المعرف</th>
-                <th style="padding: 10px;">الاسم بالعربي</th>
-                <th style="padding: 10px; text-align: center;">حذف</th>
+                <th style="padding: 10px;">اسم القسم</th>
+                <th style="padding: 10px; text-align: center; width: 100px;">حذف</th>
               </tr>
             </thead>
             <tbody id="adminCategoriesList"></tbody>
@@ -708,10 +706,10 @@
 
       <!-- Tab 3: Delivery Areas -->
       <div id="adminTabAreas" class="admin-tab-content" style="display: none;">
-        <div style="margin-bottom: 15px; display: flex; gap: 10px;">
-          <input type="text" id="newAreaName" placeholder="اسم المنطقة" style="flex: 2;">
-          <input type="number" id="newAreaFee" placeholder="سعر الشحن (ج.م)" style="flex: 1;">
-          <button type="button" class="checkout-btn" onclick="addNewDeliveryArea()" style="background-color: var(--herbal-green); width: auto; margin-top:0; padding: 8px 15px;">إضافة منطقة</button>
+        <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
+          <input type="text" id="newAreaName" placeholder="اسم المنطقة" style="flex: 2; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-main);">
+          <input type="number" id="newAreaFee" placeholder="سعر الشحن (ج.م)" style="flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-main);">
+          <button type="button" class="checkout-btn" onclick="addNewDeliveryArea()" style="background-color: var(--herbal-green); width: auto; margin-top: 0; padding: 10px 20px;">إضافة منطقة</button>
         </div>
         <div style="max-height: 50vh; overflow-y: auto;">
           <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
@@ -719,7 +717,7 @@
               <tr style="background: var(--bg-color); border-bottom: 2px solid var(--border-color); text-align: right;">
                 <th style="padding: 10px;">اسم المنطقة</th>
                 <th style="padding: 10px;">سعر الشحن</th>
-                <th style="padding: 10px; text-align: center;">حذف</th>
+                <th style="padding: 10px; text-align: center; width: 100px;">حذف</th>
               </tr>
             </thead>
             <tbody id="adminAreasList"></tbody>
@@ -732,8 +730,8 @@
         <div style="margin-bottom: 15px; background: var(--bg-color); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color);">
           <h4 style="margin-bottom: 10px; font-size: 0.95rem;">إضافة رأي أو تقييم جديد للعملاء:</h4>
           <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
-            <input type="text" id="newRevName" placeholder="اسم العميل ومكان إقامته" style="flex: 2;">
-            <select id="newRevStars" style="flex: 1;">
+            <input type="text" id="newRevName" placeholder="اسم العميل ومكان إقامته" style="flex: 2; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--card-bg); color: var(--text-main);">
+            <select id="newRevStars" style="flex: 1; padding: 8px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--card-bg); color: var(--text-main);">
               <option value="5">⭐⭐⭐⭐⭐ (5 نجوم)</option>
               <option value="4">⭐⭐⭐⭐ (4 نجوم)</option>
               <option value="3">⭐⭐⭐ (3 نجوم)</option>
@@ -833,8 +831,9 @@
     let customerReviews = JSON.parse(localStorage.getItem('store_reviews')) || defaultReviews;
     let products = JSON.parse(localStorage.getItem('store_products')) || defaultProducts;
 
-    let currentArea = deliveryAreas[0] ? deliveryAreas[0].name : 'حدائق الأهرام';
-    let shippingFee = deliveryAreas[0] ? deliveryAreas[0].fee : 30;
+    // عدم تحديد أي منطقة افتراضياً حتى يختارها العميل
+    let currentArea = '';
+    let shippingFee = null;
 
     const weightRules = {
       '100g': { label: '100 جرام', ratio: 0.10 },
@@ -871,7 +870,7 @@
     const customerReviewsGrid = document.getElementById('customerReviewsGrid');
     const modalSubtotal = document.getElementById('modalSubtotal');
     const modalShipping = document.getElementById('modalShipping');
-    const modalTotal = document.getElementById('modalTotal');
+    const modalTotalLine = document.getElementById('modalTotalLine');
 
     const adminPanelBtn = document.getElementById('adminPanelBtn');
     const adminLoginModal = document.getElementById('adminLoginModal');
@@ -892,7 +891,7 @@
 
     function init() {
       products.forEach(p => {
-        const defaultW = '1kg'; // الافتراضي 1 كيلو
+        const defaultW = '1kg';
         selectedWeights[p.id] = { type: 'preset', key: defaultW, ratio: weightRules[defaultW].ratio };
       });
 
@@ -1016,7 +1015,6 @@
       if (priceElem) priceElem.innerText = `${newPrice} ج.م`;
     };
 
-    // السلة (لا تفتح تلقائياً عند الإضافة بناءً على طلبك)
     window.addToCart = function(productId) {
       const product = products.find(p => p.id === productId);
       const current = selectedWeights[productId];
@@ -1038,7 +1036,6 @@
       }
 
       updateCartUI();
-      // تم إلغاء openCart() هنا لكي لا تفتح السلة تلقائياً
     };
 
     function updateCartUI() {
@@ -1091,11 +1088,13 @@
     closeCartBtn.addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
+    // تحديث قائمة المناطق بحيث تبدأ بخيار "اختر منطقة التوصيل"
     function updateDeliveryAreasDropdown() {
       if (checkoutAreaSelect) {
-        checkoutAreaSelect.innerHTML = deliveryAreas.map(area => `
-          <option value="${area.name}" data-fee="${area.fee}">${area.name} (شحن: ${area.fee} ج.م)</option>
-        `).join('');
+        checkoutAreaSelect.innerHTML = `<option value="" data-fee="">-- اختر منطقة التوصيل --</option>` +
+          deliveryAreas.map(area => `
+            <option value="${area.name}" data-fee="${area.fee}">${area.name} (شحن: ${area.fee} ج.م)</option>
+          `).join('');
       }
     }
 
@@ -1103,8 +1102,9 @@
       checkoutAreaSelect.addEventListener('change', (e) => {
         const selectedOption = e.target.options[e.target.selectedIndex];
         currentArea = selectedOption.value;
-        shippingFee = parseFloat(selectedOption.getAttribute('data-fee'));
-        currentAreaDisplay.innerText = currentArea;
+        const feeAttr = selectedOption.getAttribute('data-fee');
+        shippingFee = feeAttr !== '' ? parseFloat(feeAttr) : null;
+        currentAreaDisplay.innerText = currentArea || 'يرجى تحديد المنطقة عند الطلب';
         updateModalTotals();
       });
     }
@@ -1112,13 +1112,23 @@
     function updateModalTotals() {
       const sub = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       modalSubtotal.innerText = sub.toFixed(1);
-      modalShipping.innerText = shippingFee;
-      modalTotal.innerText = (sub + shippingFee).toFixed(1);
+      if (shippingFee === null || currentArea === '') {
+        modalShipping.innerText = 'يُحدد بعد اختيار المنطقة';
+        modalShipping.style.color = 'var(--text-muted)';
+        modalTotalLine.innerHTML = `المجموع بدون الشحن: <span>${sub.toFixed(1)}</span> ج.م`;
+      } else {
+        modalShipping.innerText = `${shippingFee} ج.م`;
+        modalShipping.style.color = 'inherit';
+        modalTotalLine.innerHTML = `الإجمالي النهائي: <span>${(sub + shippingFee).toFixed(1)}</span> ج.م`;
+      }
     }
 
     openCheckoutBtn.addEventListener('click', () => {
       if (cart.length === 0) { alert('برجاء إضافة منتجات للسلة أولاً!'); return; }
       closeCart();
+      updateDeliveryAreasDropdown();
+      currentArea = '';
+      shippingFee = null;
       updateModalTotals();
       checkoutModal.style.display = 'flex';
     });
@@ -1130,6 +1140,10 @@
 
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (!currentArea || shippingFee === null) {
+        alert('برجاء اختيار منطقة التوصيل أولاً!');
+        return;
+      }
       const name = document.getElementById('custName').value;
       const phone = document.getElementById('custPhone').value;
       const address = document.getElementById('custAddress').value;
@@ -1152,7 +1166,7 @@
       alert('شكراً لطلبك! تم تحويلك للواتساب. نرجو إرسال تقييمك لكل منتج وتجربتك مع البرنامج.');
     });
 
-    // الذكاء الاصطناعي مع المطابقة الدقيقة للمنتجات
+    // الذكاء الاصطناعي
     function setupAIAssistant() {
       const aiBtn = document.getElementById('aiBtn');
       const aiDrawer = document.getElementById('aiDrawer');
@@ -1209,14 +1223,14 @@
       return 'عذراً، هذا الطلب أو المنتج غير متوفر حالياً في قائمتنا، ولكن يمكنك التواصل معنا مباشرة عبر الواتساب على 01286501000 لتوفيره لك فوراً 🌿!';
     }
 
-    // لوحة التحكم والمدير
+    // لوحة التحكم (الباسورد الجديد 1122)
     function setupAdminPanel() {
       adminPanelBtn.addEventListener('click', () => adminLoginModal.style.display = 'flex');
       closeAdminLoginModal.addEventListener('click', () => adminLoginModal.style.display = 'none');
 
       adminLoginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (adminPasswordInput.value === '1234') {
+        if (adminPasswordInput.value === '1122') {
           adminLoginModal.style.display = 'none';
           adminPasswordInput.value = '';
           openAdminDashboard();
@@ -1364,11 +1378,11 @@
       }
     };
 
+    // إدارة الأقسام (توليد المعرف تلقائياً بدون ظهوره للمستخدم)
     function renderAdminCategoriesTable() {
       adminCategoriesList.innerHTML = categories.filter(c => c.key !== 'all').map(c => `
         <tr style="border-bottom: 1px solid var(--border-color);">
-          <td style="padding: 10px; font-weight: bold;">${c.key}</td>
-          <td style="padding: 10px;">${c.ar}</td>
+          <td style="padding: 10px; font-weight: bold;">${c.ar}</td>
           <td style="padding: 10px; text-align: center;">
             <button onclick="deleteCategory('${c.key}')" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
           </td>
@@ -1377,16 +1391,15 @@
     }
 
     window.addNewCategory = function() {
-      const key = document.getElementById('newCatKeyName').value.trim().toLowerCase();
       const ar = document.getElementById('newCatArName').value.trim();
-      if (!key || !ar) { alert('برجاء إدخال الحقول المطلوبة!'); return; }
-      if (categories.some(c => c.key === key)) { alert('هذا القسم موجود مسبقاً!'); return; }
+      if (!ar) { alert('برجاء كتابة اسم القسم أولاً!'); return; }
+      if (categories.some(c => c.ar === ar)) { alert('هذا القسم موجود مسبقاً!'); return; }
 
-      categories.push({ key, ar });
+      const autoKey = 'cat_' + Date.now();
+      categories.push({ key: autoKey, ar });
       saveAllToStorage();
       renderAdminCategoriesTable();
       renderCategoriesNav();
-      document.getElementById('newCatKeyName').value = '';
       document.getElementById('newCatArName').value = '';
       alert('تم إضافة القسم بنجاح!');
     };
